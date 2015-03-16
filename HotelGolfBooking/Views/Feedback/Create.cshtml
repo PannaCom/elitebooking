@@ -1,0 +1,69 @@
+﻿@model HotelGolfBooking.Models.customer_feedback
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>customer_feedback</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cname)
+            @Html.ValidationMessageFor(model => model.cname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cemail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cemail)
+            @Html.ValidationMessageFor(model => model.cemail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.caddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.caddress)
+            @Html.ValidationMessageFor(model => model.caddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.topic)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.topic)
+            @Html.ValidationMessageFor(model => model.topic)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fullcontent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fullcontent)
+            @Html.ValidationMessageFor(model => model.fullcontent)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

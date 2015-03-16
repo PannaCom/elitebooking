@@ -1,0 +1,129 @@
+﻿@model HotelGolfBooking.Models.hotel_booking
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Sửa thông tin khách hàng</h2>
+<fieldset>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" style="display:block;width:auto;"><span class="required">*</span> Họ Tên</label>
+                <input name="cname" type="text" id="cname" class="form-control" value="@Model.cname"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> E-mail</label>
+                <input name="cemail" type="text" id="cemail" value="@Model.cemail" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Di động</label>
+                <input name="cphone" type="text" id="cphone" value="@Model.cphone" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Địa chỉ</label>
+                <input name="caddress" type="text" id="caddress" value="@Model.caddress" class="form-control"/>
+              </div>
+            </div>
+          <div class="col-md-6">     
+              <div class="form-group">
+                <label for="email" accesskey="E" class="wauto">Chọn hình thức thanh toán</label>
+				    <select class="form-control" name="paymenttype" id="paymenttype">                  
+                      <option value="@HotelGolfBooking.Config.payment_method1">@HotelGolfBooking.Config.payment_method1</option>
+                      <option value="@HotelGolfBooking.Config.payment_method2">@HotelGolfBooking.Config.payment_method2</option>
+                      <option value="@HotelGolfBooking.Config.payment_method3">@HotelGolfBooking.Config.payment_method3</option>
+				      <option value="@HotelGolfBooking.Config.payment_method4">@HotelGolfBooking.Config.payment_method4</option>				                      
+                    </select>
+              </div>   
+          </div>
+          <div class="col-md-6">   
+              <div class="form-group">
+                    <label style="width:auto;display:block;">Ngày nhận phòng</label>
+                    <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.fromdate.ToString())" class="form-control" placeholder="từ ngày"/>                                            
+              </div>
+           </div>  
+          <div class="col-md-6">   
+              <div class="form-group">
+                    <label style="width:auto;display:block;">Ngày trả phòng</label>
+                    <input name="checkout" type="text" id="checkout" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.todate.ToString())" class="form-control" placeholder="đến ngày"/>                                                 
+              </div>   
+           </div>  
+          <div class="col-md-6">        
+              <div class="form-group">
+                <label for="comments" accesskey="C"> Ghi chú</label>
+                <textarea name="cnote" rows="9" id="cnote" class="form-control">@Model.cnote</textarea>
+              </div>    
+          </div>                       
+          <button type="button" class="btn btn-info" onclick="confirm();">Xác nhận</button>
+</fieldset>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    $("#paymenttype").val("@Html.Raw(@Model.paymenttype)");
+    function confirm() {
+        //check field
+        
+        if($("#cname").val()==""){
+            alert("Nhập họ tên khách hàng");
+            $("#cname").focus();
+            return;
+        }
+        if($("#cemail").val()==""){
+            alert("Nhập email");
+            $("#cemail").focus();
+            return;
+        }
+        if($("#cphone").val()==""){
+            alert("Nhập số điện thoại");
+            $("#cphone").focus();
+            return;
+        }
+        if($("#checkin").val()==""){
+            alert("Nhập ngày nhận phòng");
+            $("#checkin").focus();
+            return;
+        }
+        if($("#checkout").val()==""){
+            alert("Nhập ngày trả phòng");
+            $("#checkout").focus();
+            return;
+        }
+        var fdate = getDateId($("#checkin").val());
+        var tdate = getDateId($("#checkout").val());
+
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", @Model.idhotel);
+        formdata.append("code", "@Model.idsession");
+        formdata.append("cname", $("#cname").val());
+        formdata.append("cemail", $("#cemail").val());
+        formdata.append("cphone", $("#cphone").val());
+        formdata.append("caddress", $("#caddress").val()); 
+        formdata.append("paymenttype", $("#paymenttype").val());
+        formdata.append("cnote", $("#cnote").val());
+        formdata.append("fromdate", fdate);
+        formdata.append("todate", tdate);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/updateBookingAdmin');
+        xhr.send(formdata);        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                if(xhr.responseText!="0"){
+                    //alert("Xác nhận đặt phòng thành công! Chúng tôi sẽ liên hệ với khách hàng qua email và điện thoại sớm nhất!");
+                    //if ($("#paymenttype").val()=="Chuyển khoản Ebanking"){
+                        //window.location.href="/HotelBooking/Payment?idhotel=@ViewBag.idhotel&code=@ViewBag.code";
+                    //}else{
+                        window.location.href="/HotelBooking/Index";
+                    //}
+                }else{
+                    alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                }
+            }
+        }
+    }
+</script>

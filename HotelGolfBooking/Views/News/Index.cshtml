@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.news>
+@using PagedList.Mvc; 
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Danh sách Bài viết</h2>
+<div class="col-md-12">
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên bài viết</label>
+                <input name="name" type="text" id="name" value="@ViewBag.name" class="form-control" style="width:auto;"/>                                  
+                <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button>  
+                <button type="button" class="btn  btn-lg btn-info" style="float:right;" onclick="add();">Thêm mới</button> 
+        </div>
+</div>
+<table class="tbl_price_room">
+    <tr style="border-bottom:solid 1px #808080;">
+        <th>
+            Tên bài viết
+        </th>
+        <th>
+            Chuyên mục
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th></th>
+    </tr>
+@foreach (var item in Model) {
+    <tr style="border-bottom:solid 1px #808080;">
+        <td>
+            <h4>@Html.Raw(@item.title)</h4>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.catname)
+        </td>
+        <td>
+            <img src="@item.image" width="200px" height="200px">
+        </td>
+        <td>
+            <b>@Html.ActionLink("Sửa", "Edit", new { id=item.id }) |            
+            @Html.ActionLink("Xóa", "Delete", new { id=item.id })</b>
+        </td>
+    </tr>
+}
+</table>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+                            <text><li><a href="/News/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
+                        }
+</ul>
+</div>
+<script>
+    function search() {
+        window.location.href = "/News/Index?name=" + document.getElementById("name").value;
+    }
+    function add() {
+        window.location.href = "/News/Create";
+    }
+</script>

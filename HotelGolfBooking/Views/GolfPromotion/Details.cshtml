@@ -1,0 +1,12 @@
+﻿@model HotelGolfBooking.Models.golf_promotion
+@{
+    ViewBag.title = "Xem chi tiết khuyến mại sân golf "+ViewBag.golf;
+    ViewBag.des = ViewBag.title;
+    
+    Layout = "~/Views/Shared/_LayoutNewsDetail.cshtml";
+}
+<article>
+<div class="col-md-8" id="fullcontentdetail">
+<p>@Html.Raw(@Model.note)</p>
+</div>
+</article>

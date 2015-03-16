@@ -1,0 +1,38 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.customer_list_email>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Danh sách email khách hàng</h2>
+<div class="col-md-12">
+        <div class="form-group">
+               
+                <button type="button" class="btn  btn-lg btn-info" style="float:right;" onclick="add();">Thêm mới</button> 
+        </div>
+</div>
+<table class="tbl_price_room">
+    <tr style="border-bottom:solid 1px #808080;">
+        <th>Email</th>        
+        <th>Cập nhật ngày</th>
+    </tr>
+@foreach (var item in Model) {
+    <tr style="border-bottom:solid 1px #808080;">
+        <td style="border-right:1px solid #808080">
+            @Html.Raw(@item.cemail)
+        </td>     
+        <td style="border-right:1px solid #808080">
+            @Html.Raw(@item.date)
+        </td>   
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.id }) |
+        </td>
+    </tr>
+}
+</table>
+<script>
+    function add() {
+        window.location.href = "/CustomerEmail/Create";
+    }
+</script>

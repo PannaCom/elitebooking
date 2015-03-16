@@ -1,0 +1,50 @@
+﻿@model HotelGolfBooking.Models.hotel_image
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>hotel_image</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idhotel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idhotel)
+            @Html.ValidationMessageFor(model => model.idhotel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.caption)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.caption)
+            @Html.ValidationMessageFor(model => model.caption)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

@@ -1,0 +1,122 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.hotel>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section id="reservation-form">
+  <div class="container mt70">
+<div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên khách sạn</label>
+                <input name="hotelname" type="text" id="hotelname" value="" class="form-control" style="width:auto;" onkeyup="searchHotel();"/>   
+            </div>
+        </div>
+         <div class="col-sm-2">
+            <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tỉnh thành</label>
+                <select class="form-control" name="provin" id="provin" style="width:150px;">
+                </select>                                   
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+               <button type="button" class="btn btn-info" style="float:right;" onclick="add();">Thêm mới</button> 
+            </div>
+        </div>
+        
+</div>
+</div>
+</section>
+<h2>Danh sách Khách sạn</h2>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i != ViewBag.page){
+               <text><li><a href="/Hotels/Index?name=@ViewBag.name&provin=@ViewBag.provin&page=@i">@i</a></li></text>
+            }else{
+               <text><li><a href="/Hotels/Index?name=@ViewBag.name&provin=@ViewBag.provin&page=@i" style="background-color:#8a6d3b;">@i</a></li></text>
+            }
+        }
+</ul>
+</div>
+<div class="col-md-12">
+<table class="tbl_price_room">
+    <tr style="border-bottom:solid 1px #808080;">
+        <th>
+            Tên
+        </th>
+        <th>
+            Ảnh
+        </th>        
+        <th></th>
+    </tr>
+@foreach (var item in Model)
+{
+    <tr style="border-bottom:solid 1px #808080;">
+        <td>
+            <b>@Html.Raw(@item.name)</b><br/>
+            <p>Địa chỉ:@Html.Raw(@item.address)</p>
+        </td>
+        <td>
+            <div class="item"><a href="@item.image" data-rel="prettyPhoto[gallery1]"><img src="@HotelGolfBooking.Config.domain/@item.image" class="img-responsive" width="200" height="126" alt="@item.name"><i class="fa fa-search"></i></a></div>
+        </td>
+        
+        <td>
+            <b><a href="/Hotels/Edit/@item.id" target="_blank">Quản lý thông tin</a></b> |            
+            <b>@Html.ActionLink("Xóa", "Delete", new { id = item.id })</b>
+        </td>
+    </tr>
+}
+</table>
+</div>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+            if (i != ViewBag.page){
+               <text><li><a href="/Hotels/Index?name=@ViewBag.name&provin=@ViewBag.provin&page=@i">@i</a></li></text>
+            }else{
+               <text><li><a href="/Hotels/Index?name=@ViewBag.name&provin=@ViewBag.provin&page=@i" style="background-color:#8a6d3b;">@i</a></li></text>
+            }
+        }
+</ul>
+</div>
+<script>
+    function search() {
+        window.location.href = "/Hotels/Index?name=" + document.getElementById("hotelname").value + "&provin=" + document.getElementById("provin").value;
+    }
+    function add() {
+        window.location.href = "/Hotels/Create";
+    }
+    function getListProvin(val) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Hotels/getListProvince');
+        xhr.send();
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                $("#provin").html("<option value=\"\" selected disable>Chọn tỉnh thành</option>");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        $("#provin").append("<option value=\"" + json_parsed.news[i] + "\">" + json_parsed.news[i] + "</option>");
+                    }
+                }
+                $("#provin").val(val);
+            }
+        }
+    }
+    getListProvin("@Html.Raw(@ViewBag.provin)");
+</script>

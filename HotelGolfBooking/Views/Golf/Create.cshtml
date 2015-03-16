@@ -1,0 +1,212 @@
+﻿@model HotelGolfBooking.Models.golf
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>        
+<script src="/Scripts/jquery.geocomplete.js"></script>  
+<div class="map_canvas" style="display:none;"></div>
+<h2>Thêm mới sân Golf</h2>
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+@using (Html.BeginForm("Create", "Golf", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên sân golf</label>
+                <input name="name" type="text" id="name" value="" class="form-control" placeholder="Gõ tên"/>                
+              </div>
+        </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Địa chỉ</label>
+                <input name="address" type="text" id="address" value="" class="form-control"/> 
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Thuộc tỉnh thành</label>                
+                <select class="form-control" name="provin" id="provin" onchange="selectDis(this);">
+                </select>                         
+              </div>
+        </div>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh đại diện(800x504)</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" style="height:auto;" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         </div>      
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh</label>
+                <input name="image" type="hidden" id="image" value="" class="form-control" />                  
+                <div id="imageShow" style="width:200px;height:126px;"></div>
+                    
+              </div>
+         </div>                 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Contact</label>
+                <input name="contact" type="text" id="contact" value="" class="form-control" placeholder="Gõ các số điện thoại liên hệ"/>                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Website</label>
+                <input name="website" type="text" id="website" value="" class="form-control" placeholder="Website"/>                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Giới thiệu:</label>
+                <textarea name="des" id="des" rows="9">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('des');
+                </script> 
+              </div>
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Chú thích:</label>
+                <textarea name="note" id="note" rows="9">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('note');
+                </script> 
+              </div>
+        </div>        
+        <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    getProvinList("Hà Nội");
+    getDisList("Hà Nội", "");
+    $(function () {
+        var long;
+        var lat;
+        var options = {
+            map: ".map_canvas"
+        };
+        $("#address").geocomplete(options)
+          .bind("geocode:result", function (event, result) {
+              //$("#lon").val(result.geometry.location.lng());
+              //$("#lat").val(result.geometry.location.lat());
+              //alert("long" + result.geometry.location.lng() + ", lat=" + result.geometry.location.lat());
+          })
+          .bind("geocode:error", function (event, status) {
+              $.log("ERROR: " + status);
+          })
+          .bind("geocode:multiple", function (event, results) {
+              $.log("Multiple: " + results.length + " results found");
+          });
+    });
+
+
+    //Image upload
+    function uploadProcess() {
+        var name = unicodeToNoMark($("#name").val());
+        var provin = unicodeToNoMark($("#provin").val());
+        if (name.trim() == "") {
+            alert("Nhập tên sân golf trước");
+            document.getElementById("name").focus();
+            document.getElementById('imageFile').value = "";
+            return;
+        }
+        if (provin.trim() == "") {
+            alert("Nhập tỉnh thành trước");
+            document.getElementById("provin").focus();
+            document.getElementById('imageFile').value = "";
+            return;
+        }
+        name = name + "-" + provin;
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", name);
+        showLoadingImage();
+        //alert("ok2");
+        //formdata.append("countTotalFile", document.getElementById("countTotalFile").value);
+        //Creating an XMLHttpRequest and sending
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        //alert("ok3");
+        xhr.open('POST', '/Golf/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#image').val(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+    function checkField() {
+        if (document.getElementById("name").value == "") {
+            alert("Nhập tên sân golf!");
+            document.getElementById("name").focus();
+            return false;
+        }        
+        if (document.getElementById("address").value == "") {
+            alert("Nhập địa chỉ!");
+            document.getElementById("address").focus();
+            return false;
+        }
+        if (document.getElementById("provin").value == "") {
+            alert("Nhập tỉnh thành phố!");
+            document.getElementById("provin").focus();
+            return false;
+        }
+       
+        if (document.getElementById("imageFile").value == "") {
+            alert("Upload ảnh đại diện!");
+            document.getElementById("imageFile").focus();
+            return false;
+        }
+        if (document.getElementById("website").value == "") {
+            alert("Nhập website!");
+            document.getElementById("website").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+    function selectDis(obj) {
+        var name = obj.value;
+        //alert(name);
+        getDisList(name, "");
+    }
+</script>

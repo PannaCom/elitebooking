@@ -1,0 +1,29 @@
+﻿@model HotelGolfBooking.Models.catnew
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>catnew</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.catname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.catname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

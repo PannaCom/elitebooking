@@ -1,0 +1,40 @@
+﻿@model HotelGolfBooking.Models.list_services
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa dịch vụ phòng</h2>
+
+@using (Html.BeginForm("Edit", "ListServices", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="form-group">
+                <label for="room" style="display:block;width:auto;">Tên dịch vụ:</label>
+                <input name="name" type="text" id="name" value="@Model.name" class="form-control" style="width:60%;" placeholder="Gõ tên "/>
+                @Html.ValidationMessageFor(model => model.name)
+        </div>
+        <p>
+            <input type="button" class="btn btn-info" value="Sửa" onclick="checkField();"/>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    function checkField() {
+        if (document.getElementById("name").value == "") {
+            alert("Nhập dịch vụ!");
+            document.getElementById("name").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

@@ -1,0 +1,57 @@
+﻿@model HotelGolfBooking.Models.list_address
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa</h2>
+
+@using (Html.BeginForm("Edit", "ListAddress", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên quận huyện(khu vực)</label>
+                <input name="dis" type="text" id="dis" value="@Model.dis" class="form-control" placeholder="Gõ tên"/>
+                @Html.ValidationMessageFor(model => model.dis)
+              </div>
+         </div>
+         <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Thuộc tỉnh thành</label>                
+                <select class="form-control" name="provin" id="provin">
+                </select>                
+              </div>
+         </div>
+        <p>
+            <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    getProvinList("@Html.Raw(@Model.provin)");
+    //document.getElementById("provin").value = "@Html.Raw(@Model.provin)";
+    
+    function checkField() {
+        if (document.getElementById("provin").value.trim() == "") {
+            alert("Nhập tỉnh thành!");
+            document.getElementById("provin").focus();
+            return false;
+        }
+        if (document.getElementById("dis").value.trim() == "") {
+            alert("Nhập tên quận huyện!");
+            document.getElementById("dis").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

@@ -1,0 +1,71 @@
+﻿@model HotelGolfBooking.Models.hotel_room
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_room</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.roomname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.roomname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.sprice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.sprice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.breakfast)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.breakfast)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.extrabed)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.extrabed)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.maxofadult)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.maxofadult)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.nonsmoking)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.nonsmoking)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.noofroom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.noofroom)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

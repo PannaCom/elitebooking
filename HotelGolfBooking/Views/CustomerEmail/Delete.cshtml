@@ -1,0 +1,19 @@
+﻿@model HotelGolfBooking.Models.customer_list_email
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn xóa?</h3>
+<fieldset>
+    <div class="display-field">
+        <label for="room">email:</label><h4>@Model.cemail</h4>
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Xóa" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -1,0 +1,68 @@
+﻿@model HotelGolfBooking.Models.golf_choupon
+
+@{
+    ViewBag.Title = "Sửa";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-8">
+<h2>Sửa Choupon cho khách sạn @Session["hotelName"]</h2>
+@using (Html.BeginForm("Edit", "GolfChoupon", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Giá choupon</label>
+                <input name="chouponprice" type="text" id="chouponprice" value="@Model.chouponprice" class="form-control" placeholder="Nhập giá choupon" onblur="checkPrice();"/>                                
+                 <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />   
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số lượng</label>
+                <input name="total" type="text" id="total" value="@Model.total" class="form-control" placeholder="gõ số lượng" onblur="checkTotal();"/>                                
+              </div>
+         </div>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">ữu đãi</label>
+                <input name="facility1" type="text" id="facility1" value="@Model.facility1" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+         </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/GolfChoupon/Create/">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    
+
+    function checkTotal() {
+        document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
+    }
+    function checkPrice() {
+        document.getElementById("chouponprice").value = parseInt(removeSpecialCharater(document.getElementById("chouponprice").value));
+    }
+    function checkField() {
+    
+        if (document.getElementById("chouponprice").value == "") {
+            alert("Nhập giá phòng shoupon!");
+            document.getElementById("chouponprice").focus();
+            return false;
+        }
+        if (document.getElementById("total").value == "") {
+            alert("Nhập số lượng shoupon!");
+            document.getElementById("total").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

@@ -1,0 +1,33 @@
+
+
+@media screen and (max-width: 700px){
+
+	
+
+}
+
+
+@media screen and (max-width: 600px){
+	
+}
+@media screen and (max-width: 360px){	
+	
+}
+@media screen and (max-width: 1280px){	
+	/*top post item
+    .bannercontainer{
+      height: 350px;
+      width: 100%;
+    }
+	.banner{
+      height: 350px;
+      width: 100%;
+    }*/
+	#reservation-form {
+	margin-top: -120px;
+	}
+}
+.wauto {
+    display:block;
+    width:auto;
+}

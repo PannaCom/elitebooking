@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "SiteMap";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Tạo SiteMap cho Google Index và cập nhật tìm kiếm dữ liệu mới.</h2>
+<div class="col-md-6">
+    <input type="button" id="startbtn" value="Click vào đây để bắt đầu" onclick="backup();">
+    <div id="progressbar" class="progressbar">
+        <div id="progresslabel" class="progressbarlabel"></div>
+    </div> 
+    <div id="notice"></div>
+</div>
+<script>
+    function backup() {
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        xhr.open('POST', '/Admin/SiteMapProcess');
+        xhr.send();
+        document.getElementById("startbtn").disabled = true;
+        $("#notice").html("Đang tạo, xin chờ...");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == "1") {
+                    document.getElementById("startbtn").disabled = false;
+                    alert("Tạo sitemap thành công!");
+                    $("#notice").html("Download tại đây: <a href=\"@HotelGolfBooking.Config.domain/sitemap.xml\">download</a>");
+                } else {
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");
+                }
+            }
+        }
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+</script>

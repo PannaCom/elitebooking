@@ -1,0 +1,88 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.hotel_service>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-10" >
+<h2>Cập nhật các dịch vụ phòng khách sạn @Session["hotelname"]</h2>
+<i>Xóa những dịch vụ mà khách sạn không có</i>
+</div>
+<div class="col-md-10" id="listFacilities">
+@foreach (var item in Model) {
+    <div class="alert alert-info alert-dismissable" id="item_@item.id" style="width:auto;height:auto;position:inherit;display:block;">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="removeService(@item.id);">×</button>
+          @Html.Raw(@item.service)
+    </div>
+}
+</div>
+<div class="col-md-10" style="width:100%;position:relative;display:block;float:left;">
+    <div class="col-md-10">
+              <div class="form-group">
+                <label for="room">Thêm dịch vụ</label>                
+                <select class="form-control" name="service" id="service" style="width:170px;">
+                    
+                </select>                         
+                  <p>
+                    <button type="button" class="btn btn-info" onclick="insertServices();">Thêm mới</button>
+                  </p>
+              </div>
+              <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>     
+        </div>
+</div>
+
+<script>
+    function insertServices() {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", @Session["idhotel"]);
+        formdata.append("service", $("#service").val());
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelService/insertServices');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Cập nhật thành công");
+                location.reload();
+            }
+        }
+    }
+    function removeService(id) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelService/removeService');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Đã xóa");
+                $("#item_" + id).hide();
+            }
+        }
+    }
+    function loadServices() {
+        //var formdata = new FormData(); //FormData object
+        //formdata.append("idhotel", @Session["idhotel"]);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelService/getServices');
+        xhr.send();
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                var json_parsed = $.parseJSON(news);
+                $("#service").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var name = json_parsed.news[i].name;
+                        //alert(name);
+                        $("#service").append("<option value='" + name + "'>" + name + "</option>");
+                    }
+                }
+                
+                //alert(news);
+            }
+        }
+    }
+    loadServices();
+</script>

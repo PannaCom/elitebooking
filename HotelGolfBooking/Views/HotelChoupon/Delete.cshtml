@@ -1,0 +1,17 @@
+﻿@model HotelGolfBooking.Models.hotel_choupon
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn xóa?</h3>
+<fieldset>
+    <label for="room">@Model.roomname, giá choupon: @Model.chouponprice, số lượng @Model.total</label>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Xóa" /> |
+        <a href="/HotelChoupon/Create/">Quay lại</a> 
+    </p>
+}

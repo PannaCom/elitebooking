@@ -1,0 +1,30 @@
+﻿@model HotelGolfBooking.Models.hotel_facility
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_facility</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idfacility)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idfacility)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

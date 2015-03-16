@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "Đặt sân Golf";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+  <div class="row">
+    <!-- Contact details -->
+    <section class="contact-details">
+      <div class="col-md-5">
+        <h2 class="lined-heading  mt50"><span>Tour</span></h2>
+        <!-- Panel -->
+        <div class="panel panel-default text-center">
+          <div class="panel-heading">
+            <div class="panel-title"><i class="fa fa-star"></i> <strong>Tin tức</strong></div>
+          </div>
+          <div class="panel-body" style="text-align:left;">
+            <p style="text-align:left;float:left;display:block;">@Html.Raw(@ViewBag.des)</p>
+			<table id="listNewsGolf">
+				
+			</table>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Contact form -->
+    <section id="contact-form" class="mt50">
+      <div class="col-md-7">
+        <h2 class="lined-heading"><span>Đặt chỗ @ViewBag.golfname</span></h2>
+        <p>Với nhiều Golf Tours, Package, Events hấp dẫn!</p>
+        <div id="message"></div>
+        <!-- Error message display -->
+        <form>
+        <fieldset>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" class="wauto"><span class="required">*</span> Họ Tên</label>
+                <input name="cname" type="text" id="cname" class="form-control" value=""/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> E-mail</label>
+                <input name="cemail" type="text" id="cemail" value="" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Số điện thoại</label>
+                <input name="cphone" type="text" id="cphone" value="" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E">Địa chỉ</label>
+                <input name="caddress" type="text" id="caddress" value="" class="form-control"/>
+              </div>
+            </div>		
+             <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số người chơi</label>                
+                <select class="form-control" name="numofguest" id="numofguest">
+                  <option selected="selected" value="1">1</option>
+                  <option value="2">2</option>    
+                  <option value="3">3</option>  
+                  <option value="4">4</option>    
+                  <option value="5">5</option>
+                  <option value="6">6</option>    
+                  <option value="7">7</option> 
+                  <option value="8">8</option>  
+                  <option value="9">9</option> 
+                  <option value="10">10</option>   
+                  <option value="11">11</option>    
+                  <option value="12">12</option>                                         
+                </select>
+              </div>
+            </div>  	
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="width:auto;display:block;"><span class="required">*</span>Teetime</label>
+                    <input name="teetime" type="text" id="teetime" value="" class="form-control" placeholder="ví dụ: 09:00" onblur="getCheckIn();"/>
+                </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="room"><span class="required">*</span>Checkin</label>                
+                <input name="hcheckin" type="text" id="hcheckin" value="" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số xe Buggy</label>                
+                <select class="form-control" name="numofbuggies" id="numofbuggies">
+                  <option selected="selected" value="1">1</option>
+                  <option value="2">2</option>    
+                  <option value="3">3</option>  
+                  <option value="4">4</option>    
+                  <option value="5">5</option>
+                  <option value="6">6</option>    
+                  <option value="7">7</option> 
+                  <option value="8">8</option>  
+                  <option value="9">9</option> 
+                  <option value="10">10</option>   
+                  <option value="11">11</option>    
+                  <option value="12">12</option>                                         
+                </select>
+              </div>
+            </div>    
+            <div class="col-md-6">
+                <div class="form-group">
+                        <label style="width:auto;display:block;"><span class="required">*</span>Ngày chơi</label>
+                        <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.checkin.ToString())" class="form-control" placeholder="Ngày chơi"/> 
+                        <input name="dateplay" type="hidden" id="dateplay" value=""/>                                                 
+                </div>
+            </div>	              		
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email" accesskey="E" class="wauto"><span class="required">*</span>Chọn hình thức thanh toán</label>
+				    <select class="form-control" name="paymenttype" id="paymenttype">                  
+                      <option value="@HotelGolfBooking.Config.payment_method1">@HotelGolfBooking.Config.payment_method1</option>
+                      <option value="@HotelGolfBooking.Config.payment_method2" selected>@HotelGolfBooking.Config.payment_method2</option>
+                      <option value="@HotelGolfBooking.Config.payment_method3">@HotelGolfBooking.Config.payment_method3</option>
+				      <option value="@HotelGolfBooking.Config.payment_method4">@HotelGolfBooking.Config.payment_method4</option>				                       
+                    </select>
+                </div>
+            </div>            
+          </div>          
+          <div class="col-md-6">
+                <div class="form-group">
+                        <label style="width:auto;display:block;"><span class="required">*</span>Thành tiền: @HotelGolfBooking.Config.formatNumber(@ViewBag.totalprice)</label>
+                        <input name="totalprice" type="hidden" id="totalprice" value="@ViewBag.totalprice"/>                                                 
+                </div>
+          </div>	  
+          <div class="form-group">
+            <label for="comments" accesskey="C"><span class="required">*</span> Ghi chú</label>
+            <textarea name="note" rows="9" id="note" class="form-control"></textarea>
+          </div>
+          <button type="button" class="btn btn-info" onclick="checkField();" id="btnregister">Đăng ký</button>
+        </fieldset>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- Gallery -->
+<section class="gallery-slider mt100">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="lined-heading"><span>Sân golf nhiều người quan tâm</span></h2>
+      </div>
+    </div>
+  </div>
+  <div id="owl-gallery" class="owl-carousel" >
+        @Html.Raw(@ViewBag.gallery)
+  </div>
+</section>
+<script>
+    function getCheckIn(){
+        if(!checkTimeFormat($("#teetime").val())){
+            alert("Nhập teetime sai định dạng hh:mm");
+            $("#teetime").focus();
+            return;
+        }
+        var obj=document.getElementById("teetime");
+        var hh= obj.value.substring(0, 2);
+        var mm= obj.value.substring(3, 5);
+        var total=parseInt(hh)*60+parseInt(mm)-30;
+        hh=total/60;
+        hh=parseInt(hh);
+        mm=total%60;
+        if (hh<10) hh="0"+hh;
+        if (mm<10) mm="0"+mm;
+        $("#hcheckin").val(hh+":"+mm);
+    }
+    function checkField() {
+        //check field
+        //alert($("#time").val());
+        
+        if($("#cname").val()==""){
+            alert("Nhập họ tên khách hàng");
+            $("#cname").focus();
+            return;
+        }
+        if($("#cemail").val()==""){
+            alert("Nhập email");
+            $("#cemail").focus();
+            return;
+        }
+        if($("#cphone").val()==""){
+            alert("Nhập số điện thoại");
+            $("#cphone").focus();
+            return;
+        }
+        if($("#teetime").val()==""){
+            alert("Nhập teetime");
+            $("#teetime").focus();
+            return;
+        }
+        if($("#numofguest").val()==""){
+            alert("Nhập số người chơi");
+            $("#numofguest").focus();
+            return;
+        }
+        if($("#numofbuggies").val()==""){
+            alert("Nhập số xe buggy");
+            $("#numofbuggies").focus();
+            return;
+        }
+        document.getElementById("btnregister").disabled=true;
+        
+        //document.getElementById("fromtime").value=document.getElementById("checkin").value+" "+document.getElementById("ffromtime").value;
+        //document.getElementById("totime").value=document.getElementById("checkin").value+" "+document.getElementById("ttotime").value;
+        //document.getElementById("EditForm").submit();
+        document.getElementById("dateplay").value=getDateId(document.getElementById("checkin").value);
+        //alert(document.getElementById("dateplay").value);
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", @ViewBag.idgolf);
+        formdata.append("golfname", "@Html.Raw(@ViewBag.golfname)");
+        formdata.append("provin", "@Html.Raw(@ViewBag.provin)");
+        formdata.append("cname", $("#cname").val());
+        formdata.append("cemail", $("#cemail").val());
+        formdata.append("cphone", $("#cphone").val());
+        formdata.append("numofbuggies", $("#numofbuggies").val());
+        formdata.append("numofguest", $("#numofguest").val());
+        formdata.append("caddress", $("#caddress").val());
+        formdata.append("checkin", document.getElementById("hcheckin").value);
+        formdata.append("teetime", document.getElementById("teetime").value);     
+        formdata.append("dateplay", document.getElementById("dateplay").value);
+        formdata.append("note", $("#note").val());
+        formdata.append("paymenttype", $("#paymenttype").val());
+        formdata.append("totalprice", $("#totalprice").val());
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/addNewChoupon');
+        xhr.send(formdata);        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                if(xhr.responseText!="0"){
+                    //alert("Xác nhận đặt phòng thành công! Chúng tôi sẽ liên hệ với khách hàng qua email và điện thoại sớm nhất!");
+                    //if ($("#paymenttype").val()=="Chuyển khoản Ebanking"){
+                    //window.location.href="/HotelBooking/Payment?idhotel=@ViewBag.idhotel&code=@ViewBag.code";
+                    //}else{
+                    window.location.href="/GolfBooking/ConfirmEmail";
+                    //}
+                }else{
+                    alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                }
+            }
+        }
+    }
+    //getNewsGolfList();
+    //getGolfListGallery();
+</script>

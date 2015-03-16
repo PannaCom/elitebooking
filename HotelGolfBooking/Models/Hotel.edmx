@@ -1,0 +1,1496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="hotelbookingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="hotelbookingModelStoreContainer">
+          <EntitySet Name="catnews" EntityType="hotelbookingModel.Store.catnews" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="company_address" EntityType="hotelbookingModel.Store.company_address" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="company_banking" EntityType="hotelbookingModel.Store.company_banking" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="company_introduction" EntityType="hotelbookingModel.Store.company_introduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="customer_feedback" EntityType="hotelbookingModel.Store.customer_feedback" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="customer_hotel_price" EntityType="hotelbookingModel.Store.customer_hotel_price" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="customer_list_email" EntityType="hotelbookingModel.Store.customer_list_email" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf" EntityType="hotelbookingModel.Store.golf" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_booking" EntityType="hotelbookingModel.Store.golf_booking" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_booking_invoice" EntityType="hotelbookingModel.Store.golf_booking_invoice" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_choupon" EntityType="hotelbookingModel.Store.golf_choupon" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_payment_info" EntityType="hotelbookingModel.Store.golf_payment_info" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_price" EntityType="hotelbookingModel.Store.golf_price" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_promotion" EntityType="hotelbookingModel.Store.golf_promotion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="golf_rule" EntityType="hotelbookingModel.Store.golf_rule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel" EntityType="hotelbookingModel.Store.hotel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_booking" EntityType="hotelbookingModel.Store.hotel_booking" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_booking_invoice" EntityType="hotelbookingModel.Store.hotel_booking_invoice" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_choupon" EntityType="hotelbookingModel.Store.hotel_choupon" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_facility" EntityType="hotelbookingModel.Store.hotel_facility" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_image" EntityType="hotelbookingModel.Store.hotel_image" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_payment_info" EntityType="hotelbookingModel.Store.hotel_payment_info" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_promotion" EntityType="hotelbookingModel.Store.hotel_promotion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_room" EntityType="hotelbookingModel.Store.hotel_room" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_room_price" EntityType="hotelbookingModel.Store.hotel_room_price" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_rule" EntityType="hotelbookingModel.Store.hotel_rule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotel_service" EntityType="hotelbookingModel.Store.hotel_service" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="hotline" EntityType="hotelbookingModel.Store.hotline" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="list_address" EntityType="hotelbookingModel.Store.list_address" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="list_facilities" EntityType="hotelbookingModel.Store.list_facilities" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="list_provin" EntityType="hotelbookingModel.Store.list_provin" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="list_services" EntityType="hotelbookingModel.Store.list_services" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="news" EntityType="hotelbookingModel.Store.news" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="slide" EntityType="hotelbookingModel.Store.slide" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="users" EntityType="hotelbookingModel.Store.users" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="catnews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="catname" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="company_address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="company_banking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="company_introduction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="ntext" />
+        </EntityType>
+        <EntityType Name="customer_feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="cname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="cemail" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="caddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="topic" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="fullcontent" Type="ntext" Nullable="false" />
+          <Property Name="hotelname" Type="nvarchar" MaxLength="50" />
+          <Property Name="golfname" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="tinyint" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="customer_hotel_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="requirement" Type="ntext" />
+          <Property Name="datetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="customer_list_email">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="cemail" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="golf">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="image" Type="nvarchar" MaxLength="150" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="dis" Type="nvarchar" MaxLength="50" />
+          <Property Name="provin" Type="nvarchar" MaxLength="50" />
+          <Property Name="des" Type="ntext" />
+          <Property Name="website" Type="nvarchar" MaxLength="50" />
+          <Property Name="contact" Type="nvarchar" MaxLength="150" />
+          <Property Name="deleted" Type="tinyint" />
+          <Property Name="minprice" Type="int" />
+          <Property Name="haspromotion" Type="tinyint" />
+          <Property Name="note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="golf_booking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idsession" Type="nvarchar" MaxLength="50" />
+          <Property Name="idgolf" Type="int" Nullable="false" />
+          <Property Name="golfname" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="provin" Type="nvarchar" MaxLength="50" />
+          <Property Name="cname" Type="nvarchar" MaxLength="50" />
+          <Property Name="cemail" Type="nvarchar" MaxLength="20" />
+          <Property Name="cphone" Type="nvarchar" MaxLength="20" />
+          <Property Name="caddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="holes" Type="int" />
+          <Property Name="buggies" Type="int" />
+          <Property Name="numofbuggies" Type="int" />
+          <Property Name="numofguest" Type="int" />
+          <Property Name="checkin" Type="nvarchar" MaxLength="10" />
+          <Property Name="teetime" Type="nvarchar" MaxLength="10" />
+          <Property Name="dateplay" Type="int" />
+          <Property Name="note" Type="ntext" />
+          <Property Name="paymenttype" Type="nvarchar" MaxLength="70" />
+          <Property Name="status" Type="nvarchar" MaxLength="450" />
+          <Property Name="statusadmin" Type="nvarchar" MaxLength="50" />
+          <Property Name="countmail" Type="int" />
+          <Property Name="datebook" Type="datetime" />
+          <Property Name="totalprice" Type="int" />
+          <Property Name="typebook" Type="int" />
+        </EntityType>
+        <EntityType Name="golf_booking_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idbooking" Type="int" Nullable="false" />
+          <Property Name="playdate" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="int" />
+          <Property Name="pricebuggies" Type="int" />
+          <Property Name="priceextralhole" Type="int" />
+          <Property Name="priceextralbuggies" Type="int" />
+          <Property Name="numofguest" Type="int" />
+          <Property Name="numofbuggies" Type="int" />
+          <Property Name="totalprice" Type="int" />
+          <Property Name="noteextrafee" Type="nvarchar" MaxLength="700" />
+        </EntityType>
+        <EntityType Name="golf_choupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="int" Nullable="false" />
+          <Property Name="golfname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="chouponprice" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="facility1" Type="nvarchar" MaxLength="1500" />
+          <Property Name="facility2" Type="nvarchar" MaxLength="1500" />
+          <Property Name="facility3" Type="nvarchar" MaxLength="1500" />
+          <Property Name="facility4" Type="nvarchar" MaxLength="1500" />
+          <Property Name="facility5" Type="nvarchar" MaxLength="1500" />
+          <Property Name="facility6" Type="nvarchar" MaxLength="1500" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="golf_payment_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="info" Type="ntext" />
+          <Property Name="amount" Type="int" />
+          <Property Name="transactionNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="datetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="golf_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="int" Nullable="false" />
+          <Property Name="golfname" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="price" Type="int" />
+          <Property Name="priceweekend" Type="int" />
+          <Property Name="pricebuggy" Type="int" />
+          <Property Name="month" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="int" />
+        </EntityType>
+        <EntityType Name="golf_promotion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="int" Nullable="false" />
+          <Property Name="golfname" Type="nvarchar" MaxLength="150" />
+          <Property Name="discount" Type="int" />
+          <Property Name="fdate" Type="int" />
+          <Property Name="tdate" Type="int" />
+          <Property Name="note" Type="ntext" />
+        </EntityType>
+        <EntityType Name="golf_rule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="rulegolf" Type="ntext" />
+        </EntityType>
+        <EntityType Name="hotel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="image" Type="nvarchar" MaxLength="150" />
+          <Property Name="des" Type="ntext" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="hcheckin" Type="nvarchar" MaxLength="10" />
+          <Property Name="hcheckout" Type="nvarchar" MaxLength="10" />
+          <Property Name="include" Type="nvarchar" MaxLength="150" />
+          <Property Name="dis" Type="nvarchar" MaxLength="50" />
+          <Property Name="provin" Type="nvarchar" MaxLength="50" />
+          <Property Name="rate" Type="int" />
+          <Property Name="ruleroom" Type="ntext" />
+          <Property Name="ruleextra" Type="ntext" />
+          <Property Name="type" Type="int" />
+          <Property Name="lon" Type="float" />
+          <Property Name="lat" Type="float" />
+          <Property Name="geocode" Type="geography" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="dateid" Type="int" />
+          <Property Name="minprice" Type="int" />
+          <Property Name="haspromotion" Type="tinyint" />
+          <Property Name="deleted" Type="tinyint" />
+          <Property Name="totalviews" Type="int" />
+          <Property Name="invisibleprice" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="hotel_booking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idsession" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="hotelname" Type="nvarchar" MaxLength="150" />
+          <Property Name="provin" Type="nvarchar" MaxLength="150" />
+          <Property Name="idroom" Type="int" />
+          <Property Name="roomname" Type="nvarchar" MaxLength="50" />
+          <Property Name="numofroom" Type="int" />
+          <Property Name="numofguest" Type="int" />
+          <Property Name="fromdate" Type="int" />
+          <Property Name="todate" Type="int" />
+          <Property Name="datebook" Type="datetime" Nullable="false" />
+          <Property Name="cname" Type="nvarchar" MaxLength="50" />
+          <Property Name="cphone" Type="nvarchar" MaxLength="50" />
+          <Property Name="cemail" Type="nvarchar" MaxLength="50" />
+          <Property Name="caddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="cnote" Type="ntext" />
+          <Property Name="cip" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="nvarchar" MaxLength="450" />
+          <Property Name="typebook" Type="int" />
+          <Property Name="paymenttype" Type="nvarchar" MaxLength="80" />
+          <Property Name="statusadmin" Type="nvarchar" MaxLength="50" />
+          <Property Name="countmail" Type="int" />
+          <Property Name="extrabedfee" Type="tinyint" />
+          <Property Name="extraotherfee" Type="tinyint" />
+          <Property Name="totalprice" Type="int" />
+        </EntityType>
+        <EntityType Name="hotel_booking_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idbooking" Type="int" Nullable="false" />
+          <Property Name="fromdate" Type="nvarchar" MaxLength="50" />
+          <Property Name="todate" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="int" />
+          <Property Name="numofroom" Type="int" />
+          <Property Name="totalday" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="totalextrabed" Type="int" />
+          <Property Name="totalextraother" Type="int" />
+          <Property Name="totalprice" Type="int" />
+        </EntityType>
+        <EntityType Name="hotel_choupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" />
+          <Property Name="hotelname" Type="nvarchar" MaxLength="150" />
+          <Property Name="provin" Type="nvarchar" MaxLength="150" />
+          <Property Name="idroom" Type="int" Nullable="false" />
+          <Property Name="roomname" Type="nvarchar" MaxLength="50" />
+          <Property Name="chouponprice" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="facility1" Type="nvarchar" MaxLength="150" />
+          <Property Name="facility2" Type="nvarchar" MaxLength="150" />
+          <Property Name="facility3" Type="nvarchar" MaxLength="150" />
+          <Property Name="facility4" Type="nvarchar" MaxLength="150" />
+          <Property Name="facility5" Type="nvarchar" MaxLength="150" />
+          <Property Name="facility6" Type="nvarchar" MaxLength="150" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="hotel_facility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="facility" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="hotel_image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="caption" Type="nvarchar" MaxLength="450" />
+        </EntityType>
+        <EntityType Name="hotel_payment_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="info" Type="ntext" />
+          <Property Name="amount" Type="int" />
+          <Property Name="transactionNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="datetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="hotel_promotion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="hotelname" Type="nvarchar" MaxLength="150" />
+          <Property Name="discount" Type="int" />
+          <Property Name="fdate" Type="int" />
+          <Property Name="tdate" Type="int" />
+          <Property Name="details" Type="ntext" />
+        </EntityType>
+        <EntityType Name="hotel_room">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="hotelname" Type="nvarchar" MaxLength="150" />
+          <Property Name="roomname" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="square" Type="int" />
+          <Property Name="price" Type="int" />
+          <Property Name="breakfast" Type="nvarchar" MaxLength="150" />
+          <Property Name="extrabed" Type="tinyint" />
+          <Property Name="maxofadult" Type="int" />
+          <Property Name="nonsmoking" Type="tinyint" />
+          <Property Name="noofroom" Type="int" />
+          <Property Name="deleted" Type="tinyint" />
+          <Property Name="extrabedfee" Type="int" />
+          <Property Name="extraotherfee" Type="int" />
+          <Property Name="notefee" Type="nvarchar" MaxLength="150" />
+          <Property Name="showprice" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="hotel_room_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="hotelname" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="idroom" Type="int" Nullable="false" />
+          <Property Name="roomname" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="month" Type="nvarchar" MaxLength="50" />
+          <Property Name="show" Type="tinyint" />
+          <Property Name="deleted" Type="int" />
+        </EntityType>
+        <EntityType Name="hotel_rule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="rulehotel" Type="ntext" />
+        </EntityType>
+        <EntityType Name="hotel_service">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="service" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="hotline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="email" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="list_address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="dis" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="provin" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="list_facilities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="list_provin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="provin" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="list_services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="nvarchar" MaxLength="150" />
+          <Property Name="url" Type="nvarchar" MaxLength="150" />
+          <Property Name="image" Type="nvarchar" MaxLength="150" />
+          <Property Name="des" Type="nvarchar" MaxLength="500" />
+          <Property Name="fullcontent" Type="ntext" />
+          <Property Name="catid" Type="int" />
+          <Property Name="catname" Type="nvarchar" MaxLength="50" />
+          <Property Name="datetime" Type="datetime" />
+          <Property Name="isHot" Type="tinyint" />
+          <Property Name="keyword" Type="nvarchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="slide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="image" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="caption" Type="nvarchar" MaxLength="50" />
+          <Property Name="imagelink" Type="nvarchar" MaxLength="150" />
+          <Property Name="slogan" Type="nvarchar" MaxLength="80" />
+          <Property Name="link" Type="nvarchar" MaxLength="150" />
+          <Property Name="linktext" Type="nvarchar" MaxLength="250" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="pass" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hotelbookingModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="catnews" EntityType="hotelbookingModel.catnew" />
+          <EntitySet Name="company_address" EntityType="hotelbookingModel.company_address" />
+          <EntitySet Name="company_banking" EntityType="hotelbookingModel.company_banking" />
+          <EntitySet Name="company_introduction" EntityType="hotelbookingModel.company_introduction" />
+          <EntitySet Name="customer_feedback" EntityType="hotelbookingModel.customer_feedback" />
+          <EntitySet Name="customer_hotel_price" EntityType="hotelbookingModel.customer_hotel_price" />
+          <EntitySet Name="customer_list_email" EntityType="hotelbookingModel.customer_list_email" />
+          <EntitySet Name="golves" EntityType="hotelbookingModel.golf" />
+          <EntitySet Name="golf_booking" EntityType="hotelbookingModel.golf_booking" />
+          <EntitySet Name="golf_booking_invoice" EntityType="hotelbookingModel.golf_booking_invoice" />
+          <EntitySet Name="golf_choupon" EntityType="hotelbookingModel.golf_choupon" />
+          <EntitySet Name="golf_payment_info" EntityType="hotelbookingModel.golf_payment_info" />
+          <EntitySet Name="golf_price" EntityType="hotelbookingModel.golf_price" />
+          <EntitySet Name="golf_promotion" EntityType="hotelbookingModel.golf_promotion" />
+          <EntitySet Name="golf_rule" EntityType="hotelbookingModel.golf_rule" />
+          <EntitySet Name="hotels" EntityType="hotelbookingModel.hotel" />
+          <EntitySet Name="hotel_booking" EntityType="hotelbookingModel.hotel_booking" />
+          <EntitySet Name="hotel_booking_invoice" EntityType="hotelbookingModel.hotel_booking_invoice" />
+          <EntitySet Name="hotel_choupon" EntityType="hotelbookingModel.hotel_choupon" />
+          <EntitySet Name="hotel_facility" EntityType="hotelbookingModel.hotel_facility" />
+          <EntitySet Name="hotel_image" EntityType="hotelbookingModel.hotel_image" />
+          <EntitySet Name="hotel_payment_info" EntityType="hotelbookingModel.hotel_payment_info" />
+          <EntitySet Name="hotel_room_price" EntityType="hotelbookingModel.hotel_room_price" />
+          <EntitySet Name="hotel_rule" EntityType="hotelbookingModel.hotel_rule" />
+          <EntitySet Name="hotel_service" EntityType="hotelbookingModel.hotel_service" />
+          <EntitySet Name="hotlines" EntityType="hotelbookingModel.hotline" />
+          <EntitySet Name="list_address" EntityType="hotelbookingModel.list_address" />
+          <EntitySet Name="list_facilities" EntityType="hotelbookingModel.list_facilities" />
+          <EntitySet Name="list_provin" EntityType="hotelbookingModel.list_provin" />
+          <EntitySet Name="list_services" EntityType="hotelbookingModel.list_services" />
+          <EntitySet Name="news" EntityType="hotelbookingModel.news" />
+          <EntitySet Name="slides" EntityType="hotelbookingModel.slide" />
+          <EntitySet Name="users" EntityType="hotelbookingModel.user" />
+          <EntitySet Name="hotel_room" EntityType="hotelbookingModel.hotel_room" />
+          <EntitySet Name="hotel_promotion" EntityType="hotelbookingModel.hotel_promotion" />
+        </EntityContainer>
+        <EntityType Name="catnew">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="catname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="company_address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="company_banking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="company_introduction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="fullcontent" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="customer_feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="cname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cemail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="caddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="topic" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="fullcontent" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="hotelname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="golfname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="status" Type="Byte" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="customer_hotel_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="requirement" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="customer_list_email">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="cemail" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="golf">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="address" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="dis" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="des" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="contact" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+          <Property Name="minprice" Type="Int32" />
+          <Property Name="haspromotion" Type="Byte" />
+          <Property Name="note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="golf_booking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idsession" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="idgolf" Type="Int32" Nullable="false" />
+          <Property Name="golfname" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cemail" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="cphone" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="caddress" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="holes" Type="Int32" />
+          <Property Name="buggies" Type="Int32" />
+          <Property Name="numofbuggies" Type="Int32" />
+          <Property Name="numofguest" Type="Int32" />
+          <Property Name="checkin" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="teetime" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="dateplay" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="paymenttype" Type="String" MaxLength="70" Unicode="true" FixedLength="false" />
+          <Property Name="status" Type="String" MaxLength="450" Unicode="true" FixedLength="false" />
+          <Property Name="statusadmin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="countmail" Type="Int32" />
+          <Property Name="datebook" Type="DateTime" Precision="3" />
+          <Property Name="totalprice" Type="Int32" />
+          <Property Name="typebook" Type="Int32" />
+        </EntityType>
+        <EntityType Name="golf_booking_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idbooking" Type="Int32" Nullable="false" />
+          <Property Name="playdate" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="pricebuggies" Type="Int32" />
+          <Property Name="priceextralhole" Type="Int32" />
+          <Property Name="priceextralbuggies" Type="Int32" />
+          <Property Name="numofguest" Type="Int32" />
+          <Property Name="numofbuggies" Type="Int32" />
+          <Property Name="totalprice" Type="Int32" />
+          <Property Name="noteextrafee" Type="String" MaxLength="700" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="golf_choupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="Int32" Nullable="false" />
+          <Property Name="golfname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="chouponprice" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="facility1" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="facility2" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="facility3" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="facility4" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="facility5" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="facility6" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="golf_payment_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="info" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="amount" Type="Int32" />
+          <Property Name="transactionNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="golf_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="Int32" Nullable="false" />
+          <Property Name="golfname" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="priceweekend" Type="Int32" />
+          <Property Name="pricebuggy" Type="Int32" />
+          <Property Name="month" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Int32" />
+        </EntityType>
+        <EntityType Name="golf_promotion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idgolf" Type="Int32" Nullable="false" />
+          <Property Name="golfname" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="discount" Type="Int32" />
+          <Property Name="fdate" Type="Int32" />
+          <Property Name="tdate" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="golf_rule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="rulegolf" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="des" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="address" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="hcheckin" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="hcheckout" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="include" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="dis" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="rate" Type="Int32" />
+          <Property Name="ruleroom" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ruleextra" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="lon" Type="Double" />
+          <Property Name="lat" Type="Double" />
+          <Property Name="geocode" Type="Geography" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="dateid" Type="Int32" />
+          <Property Name="minprice" Type="Int32" />
+          <Property Name="haspromotion" Type="Byte" />
+          <Property Name="deleted" Type="Byte" />
+          <Property Name="totalviews" Type="Int32" />
+          <Property Name="invisibleprice" Type="Byte" />
+        </EntityType>
+        <EntityType Name="hotel_booking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idsession" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="hotelname" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="idroom" Type="Int32" />
+          <Property Name="roomname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="numofroom" Type="Int32" />
+          <Property Name="numofguest" Type="Int32" />
+          <Property Name="fromdate" Type="Int32" />
+          <Property Name="todate" Type="Int32" />
+          <Property Name="datebook" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cphone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cemail" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="caddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="cnote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="cip" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="status" Type="String" MaxLength="450" Unicode="true" FixedLength="false" />
+          <Property Name="typebook" Type="Int32" />
+          <Property Name="paymenttype" Type="String" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="statusadmin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="countmail" Type="Int32" />
+          <Property Name="extrabedfee" Type="Byte" />
+          <Property Name="extraotherfee" Type="Byte" />
+          <Property Name="totalprice" Type="Int32" />
+        </EntityType>
+        <EntityType Name="hotel_booking_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idbooking" Type="Int32" Nullable="false" />
+          <Property Name="fromdate" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="todate" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="numofroom" Type="Int32" />
+          <Property Name="totalday" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="totalextrabed" Type="Int32" />
+          <Property Name="totalextraother" Type="Int32" />
+          <Property Name="totalprice" Type="Int32" />
+        </EntityType>
+        <EntityType Name="hotel_choupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="Int32" />
+          <Property Name="hotelname" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="idroom" Type="Int32" Nullable="false" />
+          <Property Name="roomname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="chouponprice" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="facility1" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="facility2" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="facility3" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="facility4" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="facility5" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="facility6" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="hotel_facility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="facility" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotel_image">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="caption" Type="String" MaxLength="450" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotel_payment_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="info" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="amount" Type="Int32" />
+          <Property Name="transactionNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="hotel_room_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="hotelname" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="idroom" Type="Int32" Nullable="false" />
+          <Property Name="roomname" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="month" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="show" Type="Byte" />
+          <Property Name="deleted" Type="Int32" />
+        </EntityType>
+        <EntityType Name="hotel_rule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="rulehotel" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotel_service">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="service" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="phone" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="list_address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="dis" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="provin" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="list_facilities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="list_provin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="provin" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="list_services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="url" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="des" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="fullcontent" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="catid" Type="Int32" />
+          <Property Name="catname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <Property Name="isHot" Type="Byte" />
+          <Property Name="keyword" Type="String" MaxLength="120" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="slide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="caption" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="imagelink" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="slogan" Type="String" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="link" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="linktext" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="type" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deleted" Type="Byte" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="pass" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="hotel_room">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="idhotel" Nullable="false" />
+          <Property Type="String" Name="hotelname" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="roomname" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="square" />
+          <Property Type="Int32" Name="price" />
+          <Property Type="String" Name="breakfast" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Byte" Name="extrabed" />
+          <Property Type="Int32" Name="maxofadult" />
+          <Property Type="Byte" Name="nonsmoking" />
+          <Property Type="Int32" Name="noofroom" />
+          <Property Type="Byte" Name="deleted" />
+          <Property Type="Int32" Name="extrabedfee" />
+          <Property Type="Int32" Name="extraotherfee" />
+          <Property Type="String" Name="notefee" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Byte" Name="showprice" />
+        </EntityType>
+        <EntityType Name="hotel_promotion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="idhotel" Nullable="false" />
+          <Property Type="String" Name="hotelname" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="discount" />
+          <Property Type="Int32" Name="fdate" />
+          <Property Type="Int32" Name="tdate" />
+          <Property Type="String" Name="details" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hotelbookingModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="catnews">
+            <EntityTypeMapping TypeName="hotelbookingModel.catnew">
+              <MappingFragment StoreEntitySet="catnews">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="catname" ColumnName="catname" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="company_address">
+            <EntityTypeMapping TypeName="hotelbookingModel.company_address">
+              <MappingFragment StoreEntitySet="company_address">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullcontent" ColumnName="fullcontent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="company_banking">
+            <EntityTypeMapping TypeName="hotelbookingModel.company_banking">
+              <MappingFragment StoreEntitySet="company_banking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullcontent" ColumnName="fullcontent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="company_introduction">
+            <EntityTypeMapping TypeName="hotelbookingModel.company_introduction">
+              <MappingFragment StoreEntitySet="company_introduction">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullcontent" ColumnName="fullcontent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_feedback">
+            <EntityTypeMapping TypeName="hotelbookingModel.customer_feedback">
+              <MappingFragment StoreEntitySet="customer_feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="cemail" ColumnName="cemail" />
+                <ScalarProperty Name="caddress" ColumnName="caddress" />
+                <ScalarProperty Name="topic" ColumnName="topic" />
+                <ScalarProperty Name="fullcontent" ColumnName="fullcontent" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="golfname" ColumnName="golfname" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_hotel_price">
+            <EntityTypeMapping TypeName="hotelbookingModel.customer_hotel_price">
+              <MappingFragment StoreEntitySet="customer_hotel_price">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="requirement" ColumnName="requirement" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_list_email">
+            <EntityTypeMapping TypeName="hotelbookingModel.customer_list_email">
+              <MappingFragment StoreEntitySet="customer_list_email">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cemail" ColumnName="cemail" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golves">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf">
+              <MappingFragment StoreEntitySet="golf">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="dis" ColumnName="dis" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="des" ColumnName="des" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="minprice" ColumnName="minprice" />
+                <ScalarProperty Name="haspromotion" ColumnName="haspromotion" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_booking">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_booking">
+              <MappingFragment StoreEntitySet="golf_booking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idsession" ColumnName="idsession" />
+                <ScalarProperty Name="idgolf" ColumnName="idgolf" />
+                <ScalarProperty Name="golfname" ColumnName="golfname" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="cemail" ColumnName="cemail" />
+                <ScalarProperty Name="cphone" ColumnName="cphone" />
+                <ScalarProperty Name="caddress" ColumnName="caddress" />
+                <ScalarProperty Name="holes" ColumnName="holes" />
+                <ScalarProperty Name="buggies" ColumnName="buggies" />
+                <ScalarProperty Name="numofbuggies" ColumnName="numofbuggies" />
+                <ScalarProperty Name="numofguest" ColumnName="numofguest" />
+                <ScalarProperty Name="checkin" ColumnName="checkin" />
+                <ScalarProperty Name="teetime" ColumnName="teetime" />
+                <ScalarProperty Name="dateplay" ColumnName="dateplay" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="statusadmin" ColumnName="statusadmin" />
+                <ScalarProperty Name="countmail" ColumnName="countmail" />
+                <ScalarProperty Name="datebook" ColumnName="datebook" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="typebook" ColumnName="typebook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_booking_invoice">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_booking_invoice">
+              <MappingFragment StoreEntitySet="golf_booking_invoice">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idbooking" ColumnName="idbooking" />
+                <ScalarProperty Name="playdate" ColumnName="playdate" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="pricebuggies" ColumnName="pricebuggies" />
+                <ScalarProperty Name="priceextralhole" ColumnName="priceextralhole" />
+                <ScalarProperty Name="priceextralbuggies" ColumnName="priceextralbuggies" />
+                <ScalarProperty Name="numofguest" ColumnName="numofguest" />
+                <ScalarProperty Name="numofbuggies" ColumnName="numofbuggies" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="noteextrafee" ColumnName="noteextrafee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_choupon">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_choupon">
+              <MappingFragment StoreEntitySet="golf_choupon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idgolf" ColumnName="idgolf" />
+                <ScalarProperty Name="golfname" ColumnName="golfname" />
+                <ScalarProperty Name="chouponprice" ColumnName="chouponprice" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="facility1" ColumnName="facility1" />
+                <ScalarProperty Name="facility2" ColumnName="facility2" />
+                <ScalarProperty Name="facility3" ColumnName="facility3" />
+                <ScalarProperty Name="facility4" ColumnName="facility4" />
+                <ScalarProperty Name="facility5" ColumnName="facility5" />
+                <ScalarProperty Name="facility6" ColumnName="facility6" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_payment_info">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_payment_info">
+              <MappingFragment StoreEntitySet="golf_payment_info">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="transactionNo" ColumnName="transactionNo" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_price">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_price">
+              <MappingFragment StoreEntitySet="golf_price">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idgolf" ColumnName="idgolf" />
+                <ScalarProperty Name="golfname" ColumnName="golfname" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="priceweekend" ColumnName="priceweekend" />
+                <ScalarProperty Name="pricebuggy" ColumnName="pricebuggy" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_promotion">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_promotion">
+              <MappingFragment StoreEntitySet="golf_promotion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idgolf" ColumnName="idgolf" />
+                <ScalarProperty Name="golfname" ColumnName="golfname" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="fdate" ColumnName="fdate" />
+                <ScalarProperty Name="tdate" ColumnName="tdate" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="golf_rule">
+            <EntityTypeMapping TypeName="hotelbookingModel.golf_rule">
+              <MappingFragment StoreEntitySet="golf_rule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rulegolf" ColumnName="rulegolf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotels">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel">
+              <MappingFragment StoreEntitySet="hotel">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="des" ColumnName="des" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="hcheckin" ColumnName="hcheckin" />
+                <ScalarProperty Name="hcheckout" ColumnName="hcheckout" />
+                <ScalarProperty Name="include" ColumnName="include" />
+                <ScalarProperty Name="dis" ColumnName="dis" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="ruleroom" ColumnName="ruleroom" />
+                <ScalarProperty Name="ruleextra" ColumnName="ruleextra" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="geocode" ColumnName="geocode" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dateid" ColumnName="dateid" />
+                <ScalarProperty Name="minprice" ColumnName="minprice" />
+                <ScalarProperty Name="haspromotion" ColumnName="haspromotion" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="totalviews" ColumnName="totalviews" />
+                <ScalarProperty Name="invisibleprice" ColumnName="invisibleprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_booking">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_booking">
+              <MappingFragment StoreEntitySet="hotel_booking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idsession" ColumnName="idsession" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="idroom" ColumnName="idroom" />
+                <ScalarProperty Name="roomname" ColumnName="roomname" />
+                <ScalarProperty Name="numofroom" ColumnName="numofroom" />
+                <ScalarProperty Name="numofguest" ColumnName="numofguest" />
+                <ScalarProperty Name="fromdate" ColumnName="fromdate" />
+                <ScalarProperty Name="todate" ColumnName="todate" />
+                <ScalarProperty Name="datebook" ColumnName="datebook" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="cphone" ColumnName="cphone" />
+                <ScalarProperty Name="cemail" ColumnName="cemail" />
+                <ScalarProperty Name="caddress" ColumnName="caddress" />
+                <ScalarProperty Name="cnote" ColumnName="cnote" />
+                <ScalarProperty Name="cip" ColumnName="cip" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="typebook" ColumnName="typebook" />
+                <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
+                <ScalarProperty Name="statusadmin" ColumnName="statusadmin" />
+                <ScalarProperty Name="countmail" ColumnName="countmail" />
+                <ScalarProperty Name="extrabedfee" ColumnName="extrabedfee" />
+                <ScalarProperty Name="extraotherfee" ColumnName="extraotherfee" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_booking_invoice">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_booking_invoice">
+              <MappingFragment StoreEntitySet="hotel_booking_invoice">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idbooking" ColumnName="idbooking" />
+                <ScalarProperty Name="fromdate" ColumnName="fromdate" />
+                <ScalarProperty Name="todate" ColumnName="todate" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="numofroom" ColumnName="numofroom" />
+                <ScalarProperty Name="totalday" ColumnName="totalday" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="totalextrabed" ColumnName="totalextrabed" />
+                <ScalarProperty Name="totalextraother" ColumnName="totalextraother" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_choupon">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_choupon">
+              <MappingFragment StoreEntitySet="hotel_choupon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="idroom" ColumnName="idroom" />
+                <ScalarProperty Name="roomname" ColumnName="roomname" />
+                <ScalarProperty Name="chouponprice" ColumnName="chouponprice" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="facility1" ColumnName="facility1" />
+                <ScalarProperty Name="facility2" ColumnName="facility2" />
+                <ScalarProperty Name="facility3" ColumnName="facility3" />
+                <ScalarProperty Name="facility4" ColumnName="facility4" />
+                <ScalarProperty Name="facility5" ColumnName="facility5" />
+                <ScalarProperty Name="facility6" ColumnName="facility6" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_facility">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_facility">
+              <MappingFragment StoreEntitySet="hotel_facility">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="facility" ColumnName="facility" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_image">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_image">
+              <MappingFragment StoreEntitySet="hotel_image">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="caption" ColumnName="caption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_payment_info">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_payment_info">
+              <MappingFragment StoreEntitySet="hotel_payment_info">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="transactionNo" ColumnName="transactionNo" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_room_price">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_room_price">
+              <MappingFragment StoreEntitySet="hotel_room_price">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="idroom" ColumnName="idroom" />
+                <ScalarProperty Name="roomname" ColumnName="roomname" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="show" ColumnName="show" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_rule">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_rule">
+              <MappingFragment StoreEntitySet="hotel_rule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rulehotel" ColumnName="rulehotel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_service">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_service">
+              <MappingFragment StoreEntitySet="hotel_service">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="service" ColumnName="service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotlines">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotline">
+              <MappingFragment StoreEntitySet="hotline">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="list_address">
+            <EntityTypeMapping TypeName="hotelbookingModel.list_address">
+              <MappingFragment StoreEntitySet="list_address">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dis" ColumnName="dis" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="list_facilities">
+            <EntityTypeMapping TypeName="hotelbookingModel.list_facilities">
+              <MappingFragment StoreEntitySet="list_facilities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="list_provin">
+            <EntityTypeMapping TypeName="hotelbookingModel.list_provin">
+              <MappingFragment StoreEntitySet="list_provin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="provin" ColumnName="provin" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="list_services">
+            <EntityTypeMapping TypeName="hotelbookingModel.list_services">
+              <MappingFragment StoreEntitySet="list_services">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="hotelbookingModel.news">
+              <MappingFragment StoreEntitySet="news">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="des" ColumnName="des" />
+                <ScalarProperty Name="fullcontent" ColumnName="fullcontent" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="catname" ColumnName="catname" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="isHot" ColumnName="isHot" />
+                <ScalarProperty Name="keyword" ColumnName="keyword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slides">
+            <EntityTypeMapping TypeName="hotelbookingModel.slide">
+              <MappingFragment StoreEntitySet="slide">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="caption" ColumnName="caption" />
+                <ScalarProperty Name="imagelink" ColumnName="imagelink" />
+                <ScalarProperty Name="slogan" ColumnName="slogan" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="linktext" ColumnName="linktext" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="hotelbookingModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_room">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_room">
+              <MappingFragment StoreEntitySet="hotel_room">
+                <ScalarProperty Name="showprice" ColumnName="showprice" />
+                <ScalarProperty Name="notefee" ColumnName="notefee" />
+                <ScalarProperty Name="extraotherfee" ColumnName="extraotherfee" />
+                <ScalarProperty Name="extrabedfee" ColumnName="extrabedfee" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="noofroom" ColumnName="noofroom" />
+                <ScalarProperty Name="nonsmoking" ColumnName="nonsmoking" />
+                <ScalarProperty Name="maxofadult" ColumnName="maxofadult" />
+                <ScalarProperty Name="extrabed" ColumnName="extrabed" />
+                <ScalarProperty Name="breakfast" ColumnName="breakfast" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="square" ColumnName="square" />
+                <ScalarProperty Name="roomname" ColumnName="roomname" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hotel_promotion">
+            <EntityTypeMapping TypeName="hotelbookingModel.hotel_promotion">
+              <MappingFragment StoreEntitySet="hotel_promotion">
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="tdate" ColumnName="tdate" />
+                <ScalarProperty Name="fdate" ColumnName="fdate" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="hotelname" ColumnName="hotelname" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

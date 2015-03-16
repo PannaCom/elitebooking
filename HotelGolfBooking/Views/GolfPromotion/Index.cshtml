@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.golf_promotion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idgolf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.golfname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tdate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idgolf)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.golfname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tdate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

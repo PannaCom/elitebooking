@@ -1,0 +1,116 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.hotel_image>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int maxID = 1;
+}
+<div class="col-md-10" >
+<h2>Cập nhật album ảnh khách sạn @Session["hotelname"] (kích cỡ 750 x 481)</h2>
+<i>Xóa những ảnh mà khách sạn không có</i>
+</div>
+<div class="col-md-10" id="listFacilities">
+@foreach (var item in Model) {
+    <div class="alert alert-info alert-dismissable" id="item_@item.id" style="width:auto;height:auto;position:relative;display:block;float:left;">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="removeImage(@item.id);">×</button>          
+          <img src="@item.name" width="145px" height="145px">
+          <p>
+              <input name="itemCaption_@item.id" type="text" value="@item.caption" id="itemCaption_@item.id" class="form-control" placeholder="gõ chú thích" /> 
+              <button type="button"  onclick="saveCaption(@item.id);">save </button>
+          </p>  
+    </div>
+    if (item.id > maxID) { maxID = item.id; }
+}
+</div>
+<div class="col-md-10" style="width:100%;position:relative;display:block;float:left;">
+    <div class="col-md-10">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh(có thể chọn nhiều ảnh một lúc)</label>                
+                <input name="imageFile" type="file" id="imageFile" multiple="multiple" class="form-control" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>
+              </div>
+              <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>     
+        </div>
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    function saveCaption(id) {
+        if ($("#itemCaption_"+id).val().trim()=="") return;
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        formdata.append("caption", $("#itemCaption_"+id).val());
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelImages/saveCaption');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Cập nhật thành công");
+            }
+        }
+    }
+    function removeImage(id) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelImages/removeImage');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Đã xóa");
+                $("#item_" + id).hide();
+            }
+        }
+    }
+    
+    //Image upload
+    function uploadProcess() {
+        var name = unicodeToNoMark("@Html.Raw(@Session["hotelname"])");
+        var dis = unicodeToNoMark("@Html.Raw(@Session["dis"])");
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        if (fileInput.files.length<=0) return;
+        name=name+"-"+dis;
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+           
+        }
+        formdata.append("filename", name);
+        formdata.append("maxID", @maxID);
+        showLoadingImage();
+        //alert(name);
+        //formdata.append("countTotalFile", document.getElementById("countTotalFile").value);
+        //Creating an XMLHttpRequest and sending
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        //alert("ok3");
+        xhr.open('POST', '/HotelImages/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                location.reload();
+            }
+        }
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+</script>

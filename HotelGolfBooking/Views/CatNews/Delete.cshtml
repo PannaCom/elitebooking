@@ -1,0 +1,20 @@
+﻿@model HotelGolfBooking.Models.catnew
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn xóa?</h3>
+<fieldset>
+    
+    <div class="display-field">
+        <label for="room">Tên chuyên mục:</label><h4>@Html.DisplayFor(model => model.catname)</h4>
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Xóa" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

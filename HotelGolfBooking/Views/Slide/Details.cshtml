@@ -1,0 +1,64 @@
+﻿@model HotelGolfBooking.Models.slide
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>slide</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.image)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.image)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.caption)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.caption)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.imagelink)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.imagelink)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.slogan)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.slogan)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.link)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.link)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.type)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.type)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

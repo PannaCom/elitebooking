@@ -1,0 +1,92 @@
+﻿@model HotelGolfBooking.Models.golf_choupon
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>golf_choupon</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idgolf)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idgolf)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.golfname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.golfname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.chouponprice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.chouponprice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.total)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.total)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility2)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility2)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility3)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility3)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility4)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility4)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility5)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility5)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility6)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility6)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

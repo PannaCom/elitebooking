@@ -1,0 +1,99 @@
+﻿@model HotelGolfBooking.Models.customer_feedback
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Sửa thông tin phản hồi</h2>
+@using (Html.BeginForm("Edit", "Feedback", FormMethod.Post, new { id = "EditForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+          <fieldset>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" class="wauto"><span class="required">*</span> Họ tên</label>
+                <input name="cname" type="text" id="cname" class="form-control" value="@Model.cname"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E" class="wauto"><span class="required">*</span> E-mail</label>
+                <input name="cemail" type="text" id="cemail" value="@Model.cemail" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+				<label for="subject" accesskey="S" class="wauto">Chủ đề</label>
+				<select name="topic" id="topic" class="form-control" onchange="selectCatFeedback();">
+				  <option value="other" selected disabled value="">Chọn dịch vụ phản hồi</option>
+				  <option value="Dịch vụ đặt phòng khách sạn">Dịch vụ đặt phòng khách sạn</option>
+				  <option value="Dịch vụ đặt sân golf">Dịch vụ đặt sân golf</option>				  
+				</select>
+			  </div>
+            </div>
+            <div class="col-md-6" id="divHotelName" style="display:block;">
+              <div class="form-group">
+				<label for="name" accesskey="U" class="wauto"><span class="required">*</span> Tên khách sạn bạn đã đặt phòng:</label>
+                <input name="hotelname" type="text" id="hotelname" class="form-control" value="@Model.hotelname"/ onkeyup="searchHotel();">
+                <input id="status" name="status" type="hidden" value="@Model.status">
+                <input id="date" name="date" type="hidden" value="@Model.date">
+			  </div>
+            </div>
+            <div class="col-md-6" id="divGolfName" style="display:none;">
+              <div class="form-group">
+				<label for="name" accesskey="U" class="wauto"><span class="required">*</span> Tên sân golf bạn đã đặt phòng:</label>
+                <input name="golfname" type="text" id="golfname" class="form-control" value="@Model.golfname" onkeyup="searchGolf();"/>
+                
+			  </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+				<label for="email" accesskey="E"><span class="required">*</span>Địa chỉ</label>
+                <input name="caddress" type="text" id="caddress" value="@Model.caddress" class="form-control"/>
+			  </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="comments" accesskey="C"><span class="required">*</span> Nội dung</label>
+            <textarea name="fullcontent" rows="9" id="fullcontent" class="form-control" maxlength="400">@Model.fullcontent</textarea>
+          </div>          
+          <button type="button" class="btn btn-info" onclick="checkField();">Gửi</button>
+        </fieldset>
+        }
+<script>
+    document.getElementById("topic").value = "@Html.Raw(@Model.topic)";
+    function checkField() {
+        if (document.getElementById("cname").value == "") {
+            alert("Nhập tên khách hàng!");
+            document.getElementById("cname").focus();
+            return false;
+        }
+        if (document.getElementById("cemail").value == "") {
+            alert("Nhập địa chỉ cemail!");
+            document.getElementById("cemail").focus();
+            return false;
+        }
+        if (document.getElementById("caddress").value == "") {
+            alert("Nhập địa chỉ !");
+            document.getElementById("caddress").focus();
+            return false;
+        }
+        if (document.getElementById("topic").value == "") {
+            alert("Nhập chủ đề phản hồi!");
+            document.getElementById("topic").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+    function selectCatFeedback() {
+        if ($("#topic").val() == "Dịch vụ đặt phòng khách sạn") {
+            $("#divHotelName").show();
+            $("#divGolfName").hide();
+        } else {
+            $("#divGolfName").show();
+            $("#divHotelName").hide();
+        }
+    }
+</script>

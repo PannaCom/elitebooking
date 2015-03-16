@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+       <div style="width:100%;display:block;float:left;position:relative;">
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh logo(kích cỡ: 1632 x 315)</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+        </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh logo</label>
+                <input name="image" type="hidden" id="image" value="" class="form-control"/>                  
+                  <div id="imageShow" style="width:342px;height:66px;"><img src="/Images/logo.jpg" style="width:342px;height:66px;"></div>
+              </div>
+         </div>
+        </div>
+        <div style="width:100%;display:block;float:left;position:relative;">
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh logo phiên bản mobile(kích cỡ: 3126x511 hoặc 1926x315)</label>
+                <input name="imageFile2" type="file" id="imageFile2" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess2();"/>                                
+                <div id="progressbar2 class="progressbar">
+                    <div id="progresslabel2" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+        </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh logo mobile</label>
+                <input name="image" type="hidden" id="image" value="" class="form-control"/>                  
+                  <div id="imageShow" style="width:201px;height:47px;"><img src="/Images/logomobile.jpg" style="width:201px;height:47px;"></div>
+              </div>
+         </div>
+         </div>       
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+   
+    //Image upload
+    function uploadProcess() {       
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", "logo");
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        xhr.open('POST', '/Logo/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //alert("Đang test " + xhr.responseText);
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=228 height=44>");
+                $('#image').val(xhr.responseText);
+                hideLoadingImage();
+                window.location.reload();
+            }
+        }
+        return false;
+    }
+    //Image upload
+    function uploadProcess2() {
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile2');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", "logomobile");
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        xhr.open('POST', '/Logo/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //alert("Đang test " + xhr.responseText);
+                $('#imageShow2').html("<img src=\"" + xhr.responseText + "\" width=228 height=44>");
+                $('#image2').val(xhr.responseText);
+                hideLoadingImage();
+                window.location.reload();
+            }
+        }
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("Upload thành công!");
+        }
+    });
+    $("#progressbar2").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel2").text($("#progressbar2").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel2").text("Upload thành công!");
+        }
+    });
+    evt.preventDefault();
+    
+
+</script>

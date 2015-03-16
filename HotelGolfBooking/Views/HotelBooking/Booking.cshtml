@@ -1,0 +1,407 @@
+﻿@model HotelGolfBooking.Models.hotel
+@{
+    
+    Layout = "~/Views/Shared/_LayoutHotelDetail.cshtml";
+    var strDiscount = "";
+    if (ViewBag.discount != 0)
+    {
+        strDiscount = "Đang khuyến mại " + ViewBag.discount + "% tại thời điểm này, giá phòng bên dưới đã tính khuyến mại.";
+    }
+}
+<script>
+    var totalRoom=0;
+    var discount=@ViewBag.discount;
+    
+</script>
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function () { $('#parallax-pagetitle').parallax("50%", -0.55); });</script>
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url(./images/parallax/1900x911.gif);">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb" style="height:18px;">
+              <li class="active"><h3 style="margin-top:2px;">@Model.name</h3></li>
+              <li >@Html.Raw(@HotelGolfBooking.Config.displayHotelRate((int)@Model.rate))</li>
+            </ol>
+            <p style="margin-top:2px;">@Model.address</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container mt50" style="margin-top:5px;">
+  <div class="row"> 
+    <!-- Slider -->
+    <section class="standard-slider room-slider">
+      <div class="col-sm-12 col-md-8">
+        <div id="owl-standard" class="owl-carousel" id="HotelSlider">
+          @Html.Raw(ViewBag.ImageList)
+        </div>
+      </div>
+    </section>
+    
+    <!-- Reservation form -->
+    <section id="reservation-form" class="mt50 clearfix">
+      <div class="col-sm-12 col-md-4">
+        <form class="reservation-vertical clearfix" role="form" method="post"  name="reservationform" id="reservationform">
+          <h2 class="lined-heading"><span>Đặt phòng</span></h2>
+          <p>Giá phòng đã tính thuế và phí dịch vụ. @Html.Raw(@strDiscount)</p>  
+          <div class="price">
+            <h4 style="color:#ffffff;">Chọn số lượng</h4>
+            <h5><a onclick="changeOtherRoomBooking();" style="text-decoration:underline;cursor:pointer;color:#ffffff;">Đổi phòng khác</a></h5>
+          </div>
+          <div id="message"></div>
+          <!-- Error message display -->
+          <div id="HotelListRoom"> 
+            <script>getHotelListRoomBooking(@ViewBag.idhotel,@ViewBag.fdate,@ViewBag.invisibleprice,@ViewBag.idroom);</script>
+          </div>  
+          <div class="form-group">
+                <label style="width:auto;display:block;">Số khách</label>
+                <input name="numofguest" type="text" id="numofguest" value="1" class="form-control" placeholder="Số khách"/>                                            
+          </div>
+          <div class="form-group">
+                <label style="width:auto;display:block;">Ngày nhận phòng</label>
+                <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.fdate.ToString())" class="form-control" placeholder="từ ngày"/>                                            
+          </div>
+          <div class="form-group">
+                <label style="width:auto;display:block;">Ngày trả phòng</label>
+                <input name="checkout" type="text" id="checkout" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.tdate.ToString())" class="form-control" placeholder="đến ngày"/>                                                 
+          </div>
+          <button type="button" class="btn btn-info" onclick="addBooking();">Đặt Phòng</button>
+          @if (ViewBag.invisibleprice == 0 && ViewBag.ismobile == 0)
+          {
+            <button type="button" class="btn btn-info" onclick="viewInvoice();">Chi tiết hóa đơn</button>  
+          }
+        </form>
+      </div>
+    </section>
+    
+    <!-- Room Content -->
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7 mt50">
+            <h2 class="lined-heading"><span>Thông tin khách sạn</span></h2>
+            <p><span>@Html.Raw(@Model.des)</span></p>
+            <h3 class="mt50" style="margin-top:2px;">Khách sạn cung cấp các tiện ích sau</h3>
+            <p>
+	         <table class="table table-striped mt30" id="facilityList_@ViewBag.idhotel">
+			  <tbody>
+			     <tr >
+			        <td><img src="/Images/loading.gif"></td>
+			     </tr>                
+			  </tbody>
+			 </table>
+             <script>getHotelListFacilityBooking(@ViewBag.idhotel,0);</script>
+             <h3 class="mt50" style="margin-top:2px;">Tiện nghi phòng</h3>
+             <table class="table table-striped mt30" id="serviceList_@ViewBag.idhotel">
+			      <tbody>
+			         <tr>
+			            <td><img src="/Images/loading.gif"></td>
+			         </tr>                
+			      </tbody>
+			  </table>
+              <script>getHotelListService(@ViewBag.idhotel,0);</script>        
+		    </p>
+          </div>
+          <div class="col-sm-5 mt50">
+            <h2 class="lined-heading"><span>Quy định hủy và đặt phòng</span></h2>
+                <p>
+                 <table class="table table-striped mt30">
+                     <tbody><tr><td>@Html.Raw(@ViewBag.rule)</td></tr></tbody>
+                 </table>
+	                         
+		        </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div id="listInvoice" name="listInvoice" style="z-index:1001;position:fixed;left:2%;top:30%;width:90%;height:200px;display:none;background-color:#b6ff00;border:1px solid #b6ff00;">
+   <table class="tbl_price_room" id="tblListInvoice">
+       <tr><th width="73">Từ ngày</th><th width="73">Đến ngày</th><th width="73">Giá</th><th width="73">Số phòng</th><th width="73">Số ngày</th><th width="73">Thành tiền</th><th width="73">Giường phụ</th><th width="73">Phí khác</th><th width="73">Tổng tiền</th><th></th></tr>
+       <tr id="tr1">
+           <td width="73"><input type="text" id="fromdate1" name="fromdate1" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate1" name="todate1" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price1" name="price1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom1" name="numofroom1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday1" name="totalday1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total1" name="total1" value="0" style="width:82px;" ></td>
+           <td width="73"><input type="text" id="totalextrabed1" name="totalextrabed1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother1" name="totalextraother1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice1" name="totalprice1" value="0" style="width:82px;" ></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(1);">|<input type="button" value="-Xóa" onclick="    removeItem(1);"></td>
+       </tr>
+       <tr id="tr2">
+           <td width="73"><input type="text" id="fromdate2" name="fromdate2" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate2" name="todate2" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price2" name="price2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom2" name="numofroom2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday2" name="totalday2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total2" name="total2" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed2" name="totalextrabed2" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother2" name="totalextraother2" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice2" name="totalprice2" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(2);">|<input type="button" value="-Xóa" onclick="    removeItem(2);"></td>
+       </tr>  
+       <tr id="tr3">
+           <td width="73"><input type="text" id="fromdate3" name="fromdate3" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate3" name="todate3" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price3" name="price3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom3" name="numofroom3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday3" name="totalday3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total3" name="total3" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed3" name="totalextrabed3" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother3" name="totalextraother3" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice3" name="totalprice3" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(3);">|<input type="button" value="-Xóa" onclick="    removeItem(3);"></td>     
+       </tr>
+       <tr id="tr4">
+           <td width="73"><input type="text" id="fromdate4" name="fromdate4" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate4" name="todate4" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price4" name="price4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom4" name="numofroom4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday4" name="totalday4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total4" name="total4" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed4" name="totalextrabed4" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother4" name="totalextraother4" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice4" name="totalprice4" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(4);">|<input type="button" value="-Xóa" onclick="    removeItem(4);"></td>     
+       </tr>
+       <tr>
+           <td colspan="5"></td>
+           <td id="sumtotal"></td>
+           <td id="sumtotalextrabed"></td>
+           <td id="sumtotalextraother"></td>
+           <td id="sumtotalprice"></td>
+           <td></td>
+       </tr>  
+       <tr><td colspan="10"><a onclick="$('#listInvoice').hide();" class="btn btn-info">Đóng lại</a><a onclick="clearInvoice();" class="btn btn-info">Xóa hóa đơn</a></td></tr> 
+   </table>   
+</div>
+<script>
+    function addBooking() {
+        //check field
+        var found=0;
+        var idroom="";
+        var roomname="";
+        var numofroom="";
+        
+        for(var i=0;i<totalRoom;i++){
+            if ($("#noOfRoom_" + i).val()>0){
+                idroom=$("#noOfRoom_" + i).attr("idroom");
+                roomname=$("#noOfRoom_" + i).attr("roomname");
+                numofroom=$("#noOfRoom_" + i).val();
+                found=1;
+                break;
+            }
+        }
+        if (found==0){
+            alert("bạn phải chọn ít nhất một loại phòng");
+            return;
+        }
+        if($("#checkin").val()==""){
+            alert("Nhập ngày nhận phòng");
+            $("#checkin").focus();
+            return;
+        }
+        if($("#checkout").val()==""){
+            alert("Nhập ngày trả phòng");
+            $("#checkout").focus();
+            return;
+        }
+        var fdate = getDateId($("#checkin").val());
+        var tdate = getDateId($("#checkout").val());
+        var numofguest = $("#numofguest").val();
+        //alert(fdate+tdate+idroom+roomname+numofroom);
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", @ViewBag.idhotel);
+        formdata.append("hotelname", "@Html.Raw(@ViewBag.title)");
+        formdata.append("provin", "@Html.Raw(@ViewBag.provin)");
+        formdata.append("idroom", idroom);
+        formdata.append("roomname", roomname);
+        formdata.append("numofroom", numofroom);
+        formdata.append("numofguest", numofguest);
+        formdata.append("fromdate", fdate);
+        formdata.append("todate", tdate);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/addNew');
+        xhr.send(formdata);        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                if(xhr.responseText!="0"){
+                    //alert("Gửi thông tin thành công, mời bạn tiếp tục xác nhận thông tin cá nhân!");
+                    window.location.href="/HotelBooking/Confirm?idhotel=@ViewBag.idhotel&code="+xhr.responseText;
+                }else{
+                    alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                }
+            }
+        }
+    }
+    updateTotalViews(@ViewBag.idhotel);
+    var totalprice=0;
+    var totalitem=4;
+
+    function viewInvoice(){
+        var idroom, numofroom;
+        for(var i=0;i<totalRoom;i++){
+            if ($("#noOfRoom_" + i).val()>0){
+                idroom=$("#noOfRoom_" + i).attr("idroom");
+                numofroom=$("#noOfRoom_" + i).val();
+                break;
+            }
+        }
+        if (idroom==null) {
+            alert("Bạn phải chọn ít nhất một loại phòng!");
+            return;
+        }
+        var idbooking=-1;
+        var idhotel=@ViewBag.idhotel;
+        var fromdate=getDateId($("#checkin").val());
+        var todate=getDateId($("#checkout").val());
+        var id=-1;
+        var typebook=0;
+        showLoadingImage(); 
+        clearInvoice();
+        $("#listInvoice").show();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", idbooking);
+        formdata.append("idhotel", idhotel);
+        formdata.append("idroom", idroom);
+        formdata.append("numofroom", numofroom);
+        formdata.append("fromdate", fromdate);
+        formdata.append("todate", todate);
+        formdata.append("typebook", typebook);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/viewInvoice');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                var sumtotal=0;
+                var sumtotalextrabed=0;
+                var sumtotalextraother=0;
+                var sumtotalprice=0;   
+                var from=totalitem;
+                //alert(totalitem+"-"+json_parsed.news.length);
+                for(var j=from;j<json_parsed.news.length;j++){
+                    if (json_parsed.news[j] && json_parsed.news[j].price!=null && json_parsed.news[j].price!=0){addItem(j);}
+                }
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n=json_parsed.news[i];
+                        var index=i+1;
+                        if (n.price!=null && n.price!=0){
+                            totalitem++;
+                            $("#fromdate"+index).val(convertFromDateIdToDateString(n.fromdate+""));
+                            $("#todate"+index).val(convertFromDateIdToDateString(n.todate+""));
+                            $("#price"+index).val(formatCurrency(n.price));
+                            $("#totalday"+index).val(n.totalday);
+                            $("#numofroom"+index).val(n.numofroom);
+                            $("#total"+index).val(formatCurrency(n.total));
+                            $("#totalextrabed"+index).val(formatCurrency(n.totalextrabed));
+                            $("#totalextraother"+index).val(formatCurrency(n.totalextraother));
+                            $("#totalprice"+index).val(formatCurrency(n.totalprice));
+                            sumtotal+=n.total;
+                            sumtotalextrabed+=n.totalextrabed;
+                            sumtotalextraother+=n.totalextraother;
+                            sumtotalprice+=n.totalprice;
+                        }
+                    }
+                }
+                totalprice=sumtotalprice;
+                $("#sumtotal").html("<b>"+formatCurrency(sumtotal)+"</b>");
+                $("#sumtotalextrabed").html("<b>"+formatCurrency(sumtotalextrabed)+"</b>");
+                $("#sumtotalextraother").html("<b>"+formatCurrency(sumtotalextraother)+"</b>");
+                $("#sumtotalprice").html("<font style='color:red;'><b>"+formatCurrency(sumtotalprice)+"</b></font>");
+            }
+        }
+    }
+    function clearInvoice(){
+       
+        for(var index=1;index<=4;index++){
+            $("#fromdate"+index).val("");
+            $("#todate"+index).val("");
+            $("#price"+index).val("");
+            $("#totalday"+index).val("");
+            $("#numofroom"+index).val("");
+            $("#total"+index).val("0");
+            $("#totalextrabed"+index).val("0");
+            $("#totalextraother"+index).val("0");
+            $("#totalprice"+index).val("0");
+        }
+        
+        $("#sumtotal").html("");
+        $("#sumtotalextrabed").html("");
+        $("#sumtotalextraother").html("");
+        $("#sumtotalprice").html("");
+        //removeItem(4);
+        removeItem(5);
+        totalitem=4;
+    }
+    function addItem(index) {
+        totalitem++;
+        var content='<tr id=tr'+totalitem+'><td width="73"><input type="text" id="fromdate'+totalitem+'" name=id="fromdate'+totalitem+'" value="" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="todate'+totalitem+'" name="todate'+totalitem+'" value="" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="price'+totalitem+'" name="price'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="numofroom'+totalitem+'" name="numofroom'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalday'+totalitem+'" name="totalday'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="total'+totalitem+'" name="total'+totalitem+'" value="0" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="totalextrabed'+totalitem+'" name="totalextrabed'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalextraother'+totalitem+'" name="totalextraother'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalprice'+totalitem+'" name="totalprice'+totalitem+'" value="0" style="width:82px;"></td>';
+        content+='<td width="73"><input type="button" value="+Thêm" onclick="addItem('+totalitem+');">|<input type="button" value="-Xóa" onclick="removeItem('+totalitem+');"></td></tr>'; 
+        $("#tblListInvoice").append(content);
+        autocal();
+    }
+    function removeItem(index) {
+        if (!document.getElementById("tr"+index)) return;
+        $("#tr" + index).remove();
+        totalitem--;
+        autocal();
+    }
+    function autocal(){
+        var sumtotal=0;
+        var sumtotalextrabed=0;
+        var sumtotalextraother=0;
+        var sumtotalprice=0;    
+        for(var index=1;index<=totalitem;index++){
+            if (!document.getElementById("totalprice" + index)||!document.getElementById("total" + index)) continue;
+            if (isNum($("#price"+index).val()) && isNum($("#numofroom"+index).val()) && isNum($("#totalday"+index).val())){
+                var total=valNum($("#price"+index).val())*valNum($("#numofroom"+index).val())*valNum($("#totalday"+index).val());
+                $("#total"+index).val(formatCurrency(total));
+            }
+            if (isNum($("#total"+index).val()) && isNum($("#totalextrabed"+index).val()) && isNum($("#totalextraother"+index).val())){
+                var totalprice=valNum($("#total"+index).val())+valNum($("#totalextrabed"+index).val())+valNum($("#totalextraother"+index).val());
+                $("#totalprice"+index).val(formatCurrency(totalprice));
+            }
+            //alert($("#total"+index).val());
+            sumtotal+=valNum($("#total"+index).val());
+            sumtotalextrabed+=valNum($("#totalextrabed"+index).val());
+            sumtotalextraother+=valNum($("#totalextraother"+index).val());
+            sumtotalprice+=valNum($("#totalprice"+index).val());            
+        }
+        //alert(sumtotal);
+        $("#sumtotal").html("<b>"+formatCurrency(sumtotal)+"</b>");
+        $("#sumtotalextrabed").html("<b>"+formatCurrency(sumtotalextrabed)+"</b>");
+        $("#sumtotalextraother").html("<b>"+formatCurrency(sumtotalextraother)+"</b>");
+        $("#sumtotalprice").html("<font style='color:red;'><b>"+formatCurrency(sumtotalprice)+"</b></font>");
+    }
+    function valNum(v){
+        v=removeSpecialCharater(v);
+        return parseInt(v);
+    }
+    function isNum(v){
+        if (v=="" || v==null) return false;
+        v=removeSpecialCharater(v);
+        return !isNaN(v);
+    }
+</script>

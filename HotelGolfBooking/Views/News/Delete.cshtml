@@ -1,0 +1,16 @@
+﻿@model HotelGolfBooking.Models.news
+@{
+    ViewBag.Title = "Xóa tin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn xóa tin này?</h3>
+<fieldset>
+    <label for="room" style="width:auto;display:block;">Khách sạn @Model.title</label>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

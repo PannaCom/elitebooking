@@ -1,0 +1,17 @@
+﻿@model HotelGolfBooking.Models.hotel_promotion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn muốn xóa khuyến mại này</h3>
+<fieldset>
+    <label style="width:auto;display:block;">@Model.discount %, từ ngày @HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.fdate.ToString()) đến ngày @HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.tdate.ToString())</label>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Xóa" /> |
+        @Html.ActionLink("Back to List", "Create")
+    </p>
+}

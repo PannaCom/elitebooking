@@ -1,0 +1,26 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.hotel>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Album ảnh khách sạn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Gallery -->
+<section id="gallery" class="mt50">
+  <div class="container">
+    <div class="row gallery"> 
+    @foreach (var item in Model)
+    { 
+        <div class="col-sm-3 restaurant fadeIn appear"> <a href="@HotelGolfBooking.Config.domain/@item.image" data-rel="prettyPhoto[gallery1]"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="@item.name - @item.dis - @item.provin" class="img-responsive zoom-img" /><i class="fa fa-search"></i></a> </div>
+    }
+ </div>
+      <div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+                            <text><li><a href="/Hotels/Gallery?page=@i">@i</a></li></text>
+        }
+</ul>
+</div>
+  </div>
+</section>

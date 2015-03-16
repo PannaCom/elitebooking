@@ -1,0 +1,69 @@
+﻿@model HotelGolfBooking.Models.customer_hotel_price
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<div class="container">
+  <div class="row"> 
+    <!-- Contact form -->
+    <section id="contact-form" class="mt50" style="margin-top:9px;">
+      <div class="col-md-8" >
+          <h2 class="lined-heading"><span>Sửa yêu cầu đặt phòng khách sạn</span></h2>
+       @using (Html.BeginForm("Edit", "CustomerRequest", FormMethod.Post, new { id = "EditForm" }))
+       {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <fieldset>
+                  <div class="form-group">
+                    <label for="room">Email</label>
+                    <input name="email" type="text" id="email" value="@Model.email" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                     <label for="room">Điện thoại</label>
+                    <input name="phone" type="text" id="phone" value="@Model.phone" class="form-control" />                                          
+                  </div>
+                  <div class="form-group">
+                     <label for="room" style="width:auto;display:block;">Nội dung yêu cầu</label>                
+                     <textarea name="requirement" id="requirement" rows="20" cols="80">
+                            @Model.requirement
+                     </textarea>
+                    <script>
+                        CKEDITOR.replace('requirement');
+                    </script>                                           
+                  </div>
+                 <p>
+                   <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+                </p>      
+        </fieldset> 
+    
+}
+           </div>
+</section>
+
+  </div>
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("email").value == "") {
+            alert("Nhập email!");
+            document.getElementById("email").focus();
+            return false;
+        }
+        if (document.getElementById("phone").value == "") {
+            alert("Nhập điện thoại!");
+            document.getElementById("phone").focus();
+            return false;
+        }
+        if (document.getElementById("requirement").value == "") {
+            alert("Nhập nội dung!");
+            document.getElementById("requirement").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+
+
+</script>

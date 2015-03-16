@@ -1,0 +1,51 @@
+﻿@model HotelGolfBooking.Models.golf_price
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>golf_price</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idgolf)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idgolf)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.golfname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.golfname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.month)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.month)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

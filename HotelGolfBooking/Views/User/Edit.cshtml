@@ -1,0 +1,45 @@
+﻿@model HotelGolfBooking.Models.user
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Đổi pass User</h2>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">user</label>                
+                 <input name="name" type="text" id="name" value="@Model.name" class="form-control"/>                     
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">pass</label>                
+                 <input name="pass" type="password" id="pass" value="" class="form-control"/>                     
+              </div>
+        </div>
+        <p>
+                <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+             </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("name").value == "") {
+            alert("Nhập username!");
+            document.getElementById("name").focus();
+            return false;
+        }
+        if (document.getElementById("pass").value == "") {
+            alert("Nhập pass!");
+            document.getElementById("pass").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

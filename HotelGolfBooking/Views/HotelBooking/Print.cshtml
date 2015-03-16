@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+    int totalnight = 0;
+    if (ViewBag.tdate.ToString() != "" && ViewBag.fdate.ToString() != "") { totalnight = HotelGolfBooking.Config.getDateDiff(ViewBag.fdate.ToString(), ViewBag.tdate.ToString()); ; }
+}
+<div style="font-size:10pt;font-family:Arial,Helvetica,sans-serif">
+<center>
+    <table cellspacing="0" cellpadding="2" style="font-size:10pt;font-family:Arial,Helvetica,sans-serif;min-width:700px;border: 1px solid #70C053;">
+        <tbody>
+            <tr>
+                <td>
+                    <div style="font-weight:bold;font-size:18pt;color:#70c053;text-align:center">
+                        <p></p><img id="default-logo" src="/Content/images/logo.png" alt="Starhotel" style="height:44px;"></p>
+                        <p>Phiếu xác nhận đặt dịch vụ - Hotel Voucher</p>
+                    </div>
+                </td>    
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Mã dịch vụ:@ViewBag.code</b>
+                                </td>    
+                                <td>
+                                    <b>Ngày đặt:@ViewBag.datebook</b>
+                                </td>  
+                            <tr>
+                        </tbody>
+                    </table>  
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="font-weight:bold;font-size:18pt;color:#70c053;text-align:center">Thông tin dịch vụ</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" style="border: 1px solid #808080;border-spacing: 0;border-collapse: collapse;">
+                        <tbody>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Tên khách hàng
+                                </td>
+                                <td valign="top">
+                                    <b>@ViewBag.cname</b>
+                                </td>
+                            </tr>        
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Đặt phòng tại
+                                </td>
+                                <td valign="top">
+                                    <b>@ViewBag.hotelname</b>
+                                    <p>Địa chỉ:@ViewBag.address</p>
+                                    <p>Số điện thoại:@ViewBag.phone</p>
+                                </td> 
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Ngày nhận phòng
+                                </td>
+                                <td valign="top">
+                                    <b>@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.fdate.ToString()) @ViewBag.hcheckin</b>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Ngày trả phòng
+                                </td>
+                                <td valign="top">
+                                    <b>@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.tdate.ToString()) @ViewBag.hcheckout</b>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Số đêm
+                                </td>
+                                <td valign="top">
+                                    @totalnight
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Số phòng
+                                </td>
+                                <td valign="top">
+                                    @ViewBag.numofroom
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Loại phòng
+                                </td>
+                                <td valign="top">
+                                    <b>@ViewBag.roomname</b>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Bao gồm
+                                </td>
+                                <td valign="top">
+                                    @ViewBag.include
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Số khách
+                                </td>
+                                <td valign="top">
+                                    @ViewBag.numofguest
+                                </td>
+                            </tr>                            
+                            <tr style="border-bottom:solid 1px #70C053;">
+                                <td valign="top">
+                                    Tổng cộng
+                                </td>
+                                <td valign="top">
+                                    <b style="font-size:22px;">@ViewBag.totalprice VND</b>
+                                </td>
+                            </tr>                                       
+                        </tbody>
+                    </table>  
+                </td>
+            </tr>
+            <tr>
+                <td >@Html.Raw(@ViewBag.invoice)</td>
+            </tr> 
+            <tr>
+                <td>
+                    <div style="font-weight:bold;font-size:18pt;color:#70c053;text-align:center">Lưu ý chính sách</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>@Html.Raw(@ViewBag.ruleroom)</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>@Html.Raw(@ViewBag.ruleextra)</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</center>
+<div>
+

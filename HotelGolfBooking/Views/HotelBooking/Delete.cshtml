@@ -1,0 +1,132 @@
+﻿@model HotelGolfBooking.Models.hotel_booking
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>hotel_booking</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.hotelname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.hotelname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idroom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idroom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.roomname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.roomname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.numofroom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.numofroom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.fromdate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.fromdate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.todate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.todate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.datebook)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.datebook)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cphone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cphone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cemail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cemail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.caddress)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.caddress)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cnote)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cnote)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cip)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cip)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.status)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.typebook)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.typebook)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

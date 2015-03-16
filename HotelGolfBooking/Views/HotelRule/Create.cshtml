@@ -1,0 +1,47 @@
+﻿@model HotelGolfBooking.Models.hotel_rule
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm mới </h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Create", "HotelRule", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Nội dung</label>                
+                 <textarea name="rulehotel" id="rulehotel" rows="20" cols="80">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('rulehotel');
+                </script>                       
+              </div>
+              <p>
+                 <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+              </p>
+        </div>
+       
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("rulehotel").value == "") {
+            alert("Nhập nội dung!");
+            document.getElementById("rulehotel").focus();
+            return false;
+        }
+
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

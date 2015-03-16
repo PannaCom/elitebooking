@@ -1,0 +1,187 @@
+﻿@model HotelGolfBooking.Models.hotel_choupon
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-8" id="listChoupon" style="display:none;">
+        
+</div>
+<div class="col-md-8">
+<h2>Nhập Choupon cho khách sạn @Session["hotelName"]</h2>
+@using (Html.BeginForm("Create", "HotelChoupon", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Tên phòng</label>
+                <select class="form-control" name="roomname" id="roomname" onchange="setIdRoom();">                    
+                </select>                   
+                <input name="idroom" type="hidden" id="idroom" value="" class="form-control" />                
+                <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
+                <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Giá choupon</label>
+                <input name="chouponprice" type="text" id="chouponprice" value="" class="form-control" placeholder="Nhập giá choupon" onblur="checkPrice();"/>                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số lượng</label>
+                <input name="total" type="text" id="total" value="" class="form-control" placeholder="gõ số lượng" onblur="checkTotal();"/>                                
+              </div>
+         </div>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 1</label>
+                <input name="facility1" type="text" id="facility1" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 2</label>
+                <input name="facility2" type="text" id="facility2" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 3</label>
+                <input name="facility3" type="text" id="facility3" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 4</label>
+                <input name="facility4" type="text" id="facility4" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 5</label>
+                <input name="facility5" type="text" id="facility5" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi 6</label>
+                <input name="facility6" type="text" id="facility6" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+        </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    function setIdRoom() {
+        var idroom = $("#roomname").find(':selected').attr("idroom");
+        //alert(idroom);
+        $("#idroom").val(idroom);
+    }
+    function getHotelChouponList(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelChoupon/getHotelChouponList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách choupon đang có</h4><table class=tbl_price_room><tr><th>Tên phòng</th><th>Giá choupon</th><th>Số lượng</th><th></th><tr>";
+                $("#listChoupon").show();
+                $("#listChoupon").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        var facility = "";
+                        var facility1 = "";
+                        var facility2 = "";
+                        var facility3 = "";
+                        var facility4 = "";
+                        var facility5 = "";
+                        var facility6 = "";
+                        //alert(name);
+                        if (n.facility1 != null) { facility+=n.facility1+","; }
+                        if (n.facility2 != null) { facility+= n.facility2 + ","; }
+                        if (n.facility3 != null) { facility += n.facility3 + ","; }
+                        if (n.facility4 != null) { facility += n.facility4 + ","; }
+                        if (n.facility5 != null) { facility += n.facility5 + ","; }
+                        if (n.facility6 != null) { facility += n.facility6 + ","; }
+                        content += "<tr><td>" + n.roomname + "<i><br>" + facility + "</i></td><td>" + n.chouponprice + "</td><td>" + n.total + "</td><td><a href=\"/HotelChoupon/Edit/" + n.id + "\">Sửa</a><a href=\"/HotelChoupon/Delete/" + n.id + "\"> Xóa</a></td><tr>";
+                    }
+                }
+                content += "</table>";
+                //alert(content);
+                $("#listChoupon").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getHotelChouponList(@Session["idhotel"]);
+    getHotelRoomList(@Session["idhotel"]);
+    function getHotelRoomList(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelRoom/getHotelRoom');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                content = "";               
+                $("#roomname").html("<option selected=\"selected\" disabled=\"disabled\" value=\"\">Chọn phòng</option>");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i]; 
+                        content += "<option value=\"" + n.roomname + "\" idroom="+n.id+">" + n.roomname+"</option>";
+                    }
+                }
+                //alert(content);
+                $("#roomname").append(content);
+                //alert(news);
+            }
+        }
+    }
+    function checkTotal() {
+        document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
+    }
+    function checkPrice() {
+        document.getElementById("chouponprice").value = parseInt(removeSpecialCharater(document.getElementById("chouponprice").value));
+    }
+    function checkField() {
+        if (document.getElementById("roomname").value == "") {
+            alert("Nhập tên phòng!");
+            document.getElementById("roomname").focus();
+            return false;
+        }
+        if (document.getElementById("chouponprice").value == "") {
+            alert("Nhập giá phòng shoupon!");
+            document.getElementById("chouponprice").focus();
+            return false;
+        }
+        if (document.getElementById("total").value == "") {
+            alert("Nhập số lượng shoupon!");
+            document.getElementById("total").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

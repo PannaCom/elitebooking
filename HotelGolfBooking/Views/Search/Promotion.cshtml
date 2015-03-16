@@ -1,0 +1,198 @@
+﻿@model HotelGolfBooking.Views.ModelClassViewHotelSearchManager
+@{
+   
+    //ViewBag.Url = "/Home/SearchNews?keyword="+ViewBag.title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string linkPage = "/Search/Promotion?page=";
+    int prePage = int.Parse(ViewBag.page.ToString()) - 1;
+    int nextPage = prePage + 2;
+    int curPage = prePage + 1;
+    int totalitem = 0;
+    string linkitem = "";
+}
+<!-- Reservation form -->
+<section id="reservation-form">
+  <div class="container mt70">
+    <div class="row">
+      <div class="col-md-12">           
+        <form class="form-inline reservation-horizontal clearfix" role="form"   name="reservationform" id="reservationform">
+        <div id="message"></div><!-- Error message display -->
+          <div class="row">
+            <div class="col-sm-2" >
+              <div class="form-group">
+                <label for="email" accesskey="E">Thành Phố</label>
+				<select class="form-control" name="dis" id="dis" style="width:20px;">
+                  <option selected="selected" disabled="disabled">Chọn</option>
+                  
+                </select>                
+              </div>
+            </div>
+			<div class="col-sm-2" >
+              <div class="form-group">
+                <label for="room">Tiêu chuẩn</label>
+                <select class="form-control" name="rate" id="rate" style="width:20px;">
+                  <option selected="selected" disabled="disabled">Chọn tiêu chuẩn</option>
+				  <option value="6">Cao cấp và Resort</option>                  
+				  <option value="5">5 sao</option>
+				  <option value="4">4 sao</option>
+                  <option value="3">3 sao</option>
+                </select> 
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Khách sạn</label>
+                <input name="hotelname" type="text" id="hotelname" value="" class="form-control" placeholder="Gõ tên " style="width:170px;" onkeyup="searchHotel();"/>
+              </div>
+            </div>
+            <div class="col-sm-2" >
+              <div class="form-group">
+                <label for="checkin" style="width:auto;display:block;">Ngày nhận phòng</label>                
+                <i class="fa fa-calendar infield" onclick='$("#checkin").datepicker("show");'></i>
+                <input name="checkin" type="text" id="checkin" value="" class="form-control" placeholder="Check-in" style="width:100px;"/>                
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="checkout" style="width:auto;display:block;">Ngày trả phòng</label>                
+                <i class="fa fa-calendar infield" onclick='$("#checkout").datepicker("show");'></i>
+                <input name="checkout" type="text" id="checkout" value="" class="form-control" placeholder="Check-out" style="width:100px;"/>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" class="btn btn-info" onclick="searchHotelPromotionSubmit();">Tìm Khách Sạn</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="row"> 
+    <!-- Testimonials -->
+    <section class="testimonials mt30">
+      <div class="col-sm-pull-11">
+          <h2 class="lined-heading bounceInLeft appear" data-start="0"><span>Các chương trình khuyến mại</span></h2>        
+          <div class="item MainSeachDiv" id="MainSeachDiv" style="float:left;display:block;position:relative;">
+            @foreach (HotelGolfBooking.Views.viewHotelSearchManager item in Model.ieViewNews){
+                totalitem++;
+                linkitem = "/hotel/" + HotelGolfBooking.Config.unicodeToNoMark(item.name) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + item.id + "-0";
+                int tempPage = (totalitem - 1) / HotelGolfBooking.Config.PageSize + 1;
+                if (tempPage < curPage || tempPage > curPage) { continue; }
+                <div class="row" style="border-radius:5px;border: 1px solid #d0cfd0;margin:10 auto;" id="item_@item.id">
+                  <div class="col-lg-4 col-md-4 col-sm-2 col-xs-12">
+                      <a href="@linkitem"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="Review 1" width="95%" height="95%" style="margin-top:5px;"/></a>
+                      <p id="facilityList_@item.id">						    
+                            <script>getHotelListFacility(@item.id,1);</script>
+					   </p>
+                  </div>
+                  <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+                    <div class="text-balloon">
+					    <a href="@linkitem"><h2>@item.name</h2></a>
+					    <p>@Html.Raw(@HotelGolfBooking.Config.displayHotelRate(@item.rate)) &nbsp; <img src="/Images/map.png" width="24" height="24"><a target="_blank" href="/Map/Index?idhotel=@item.id">Bản đồ</a></p>
+					    <p>@item.address</p>					    
+					    <p>
+                            <div id="promotionList_@item.id" style="background-color:#E6E534;width:103px;text-align:center;"><a href="/HotelPromotion/Details?idhotel=@item.id&fdate=@ViewBag.fdate&tdate=@ViewBag.tdate" target="_blank">Khuyến Mãi</a></div>
+						    <table class="tbl_price_room" id="roomList_@item.id">                                    						
+						            <tr><td><img src="/Images/loading.gif"></td></tr>
+						    </table>
+                            <script>
+                                //getHotelListPromotion(@ViewBag.fdate,@ViewBag.tdate,@item.id,@item.id);
+                                getHotelListRoomDetail(@item.id,@ViewBag.fdate,@ViewBag.tdate,@item.invisibleprice);
+                                //hidePromotionOutOfThisDate(@ViewBag.fdate,@ViewBag.tdate,@item.id);
+                            </script>
+                             @if (item.invisibleprice != 0) { 
+                                    <text>
+                                        <input type="button" class="btn btn-info" value="Click Để Lấy Giá" onclick="getPrice(@item.id);">
+                                        
+                                    </text>                                    
+                            }
+					    </p>	
+                         <div id=dvgetRoomDetail_@item.id style="position:relative;width:auto;height:auto;display:none;border:1px solid #0283df;margin: 2 2 2 2;">
+    
+                        </div>	
+                        <div><b>Giá đã bao gồm thuế và phí dịch vụ</b></div>
+				    </div>
+                  </div>                 
+                </div> 
+            }
+            <div class="col-md-12">
+            <ul class="pagination clearfix">
+                    <li class="disabled"><a href="#">«</a></li>
+                    @for (int i = 1; i <= totalitem/HotelGolfBooking.Config.PageSize; i++)
+                    { 
+                         <text><li><a href="@linkPage@i">@i</a></li></text>
+                    }
+            </ul>
+            </div>
+          </div>  
+          <div class="item TopDealViewsDiv" id="TopDealViewsDiv" style="display:block;float:right;position:relative;">
+                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:1px;"><span>Khách sạn quan tâm nhất</span></h4>
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="margin-top:1px;">
+                      <div class="tab-pane fade in active" id="hotel">
+				            <table class="tbl_price_room" id="TopDealProvinView">
+					
+				            </table>
+               	            <script>getTopDealViews(@ViewBag.fdate,@ViewBag.tdate);</script>	
+                      </div>          
+                    </div>
+          </div> 
+      </div>
+    </section>
+  </div>
+</div>
+<div id=dvgetHotelPrice style="z-index:1001;position:fixed;left:20%;top:40%;width:280px;height:120px;display:none;color:#ffffff;background-color:#1F497D;border:1px solid #b6ff00;margin: 2 2 2 2;">
+    <table style="margin-left:17px;">
+        <tr><td>Email:</td><td><input type="text" id="email" name="email" class="form-control"></td></tr>
+        <tr><td>Điện thoại:</td><td><input type="text" id="phone" name="phone" class="form-control"></td></tr>
+        <tr><td colspan="2" align="center"><input type="button" id="btnsendemail" class="btn btn-info" value="Gửi báo giá" onclick="getHotelPrice();"><input type="button" class="btn btn-info" value="Đóng lại" onclick="    $('#dvgetHotelPrice').hide();"></td></tr>
+        
+    </table>
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:20%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    var hasPromotion="";
+    var idhotel=-1;
+    getAddressList("");
+    $("#checkin").val(convertFromDateIdToDateString("@ViewBag.fdate.ToString()"));
+    $("#checkout").val(convertFromDateIdToDateString("@ViewBag.tdate.ToString()"));
+    function getPrice(id){
+        idhotel=id;
+        $("#dvgetHotelPrice").show();
+        
+    }
+    function getHotelPrice(){
+        if (!isEmail(document.getElementById("email").value)){
+            alert("Bạn nhập chưa đúng định dạng email");
+            document.getElementById("email").focus();
+            return;
+        }
+        document.getElementById("btnsendemail").value="Đang gửi email..";
+        document.getElementById("btnsendemail").disabled=true;
+        showLoadingImage();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", idhotel);
+        formdata.append("email", document.getElementById("email").value);
+        formdata.append("phone", document.getElementById("phone").value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Search/getHotelPriceByEmail');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText!="-1"){
+                    $('#dvgetHotelPrice').hide();
+                    alert("Gửi email báo giá thành công!");
+                }else{
+                    alert("Khách sạn chưa thể gửi báo giá cho bạn tại thời điểm này!");
+                }
+                document.getElementById("btnsendemail").value="Gửi báo giá";
+                document.getElementById("btnsendemail").disabled=false;
+                hideLoadingImage();
+            }
+        }
+    }
+</script>

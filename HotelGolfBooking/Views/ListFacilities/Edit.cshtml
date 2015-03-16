@@ -1,0 +1,40 @@
+﻿@model HotelGolfBooking.Models.list_facilities
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa</h2>
+
+@using (Html.BeginForm("Edit", "ListFacilities", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="form-group">
+                <label for="room" style="display:block;width:auto;">Tên tiện ích:</label>
+                <input name="name" type="text" id="name" value="@Model.name" class="form-control" style="width:60%;" placeholder="Gõ tên "/>
+                @Html.ValidationMessageFor(model => model.name)
+        </div>
+        <p>
+            <input type="button" class="btn btn-info" value="Sửa" onclick="checkField();"/>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    function checkField() {
+        if (document.getElementById("name").value == "") {
+            alert("Nhập tiện ích!");
+            document.getElementById("name").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

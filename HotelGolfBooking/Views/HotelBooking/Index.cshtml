@@ -1,0 +1,715 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.hotel_booking>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string icon = "<img src=\"/Images/new-icon.png\" height=20 width=20>";
+    string iconchoupon = "<img src=\"/Images/coupon-icon.png\" height=20 width=20>";
+    string extrabedfee = "";
+    string extraotherfee = "";
+    string frommonth = DateTime.Now.Month.ToString();
+    int totalprice = 0;
+}
+<div style="height:55px"></div>
+<!-- Reservation form -->
+<section id="reservation-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">           
+        <form class="form-inline reservation-horizontal clearfix" role="form"   name="reservationform" id="reservationform">
+        <div id="message"></div><!-- Error message display -->
+          <div class="row">
+              <div class="col-sm-2" >
+                <div class="form-group">
+                    <label for="room" style="width:auto;display:block;">Tên khách hàng</label>
+                    <input name="name" type="text" id="name" value="@ViewBag.name" class="form-control" style="width:auto;"/>    
+                </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">
+                    <label for="room" style="width:auto;display:block;">Tỉnh thành</label>
+                    <select  name="provin" id="provin" class="form-control">
+                    </select>
+                    <script>getProvinList("@Html.Raw(@ViewBag.provin)");</script>
+                </div>
+              </div>       
+              <div class="col-sm-2" >
+                <div class="form-group">                     
+                <label for="room" style="width:auto;display:block;">Trạng thái</label>
+                <select name="statusadmin" id="statusadmin" class="form-control">
+                    <option disabled value="">Chọn</option>
+                    <option value="@HotelGolfBooking.Config.admin_status_step1">@HotelGolfBooking.Config.admin_status_step1</option>
+                    <option value="@HotelGolfBooking.Config.admin_status_step2">@HotelGolfBooking.Config.admin_status_step2</option>
+                </select>
+              </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">                              
+                    <label for="room" style="width:auto;display:block;">Từ ngày</label>
+                    <input name="fromdate" type="date" id="fromdate" value="" style="width:auto;" class="form-control"/> 
+                </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">     
+                <label for="room" style="width:auto;display:block;">Từ ngày</label>
+                <input name="todate" type="date" id="todate" value="" style="width:auto;" class="form-control"/> 
+              </div>
+              </div>
+              <div class="col-sm-2">
+                    <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button>
+              </div>
+         </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<h2>Danh sách Đặt Phòng</h2>
+<div class="col-md-12">
+<table class="tbl_price_room" cellpadding="1" cellspacing="1">
+    <tr style="border-bottom:solid 1px #808080">
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Thông tin đặt phòng
+        </th>
+        <th>Phụ thu</th>
+        <th>Email xác nhận</th>
+        <th>Phương thức thanh toán</th>
+        <th>Thanh toán</th>
+    </tr>
+@foreach (var item in Model)
+{
+    if (item.statusadmin.Contains(@HotelGolfBooking.Config.admin_status_step1))
+    {
+        icon = "<img src=\"/Images/new-icon.png\" height=20 width=20>";
+    }
+    else
+    {
+        icon = "";
+    }
+    if (item.typebook == @HotelGolfBooking.Config.typebook2)
+    {
+        iconchoupon = "<img src=\"/Images/coupon-icon.png\" height=50 width=50>";
+    }
+    else
+    {
+        iconchoupon = "";
+    }
+    if (item.extrabedfee != 0)
+    {
+        extrabedfee = "checked";
+    }
+    else
+    {
+        extrabedfee = "";
+    }
+    if (item.extraotherfee != 0)
+    {
+        extraotherfee = "checked";
+    }
+    else
+    {
+        extraotherfee = "";
+    }
+    if (item.fromdate == null)
+    {
+        frommonth = DateTime.Now.Month.ToString();
+    }
+    else
+    {
+        frommonth = HotelGolfBooking.Config.getMonthFromDateId((int)item.fromdate);
+    }
+    totalprice = item.totalprice != null ? (int)item.totalprice : 0;
+    <tr style="border-bottom:solid 1px #808080;">
+        <td>
+            <h5 id="@item.idhotel">@item.cname @Html.Raw(@icon)</h5>
+            <p>Số điện thoại: @item.cphone, Email: @item.cemail, Địa chỉ:@item.caddress,</p> 
+            <p><a href="/HotelBooking/Edit/@item.id"><b>Sửa</b><img src="/Images/edit.png"></a></p>           
+        </td>
+        <td>
+            <p onclick="getHotelRoomListPrice(@item.idhotel,@frommonth,@item.typebook);" style="cursor:pointer;"><b>Đặt @item.numofroom phòng @item.roomname (@item.numofguest khách) tại khách sạn @item.hotelname</b></p>
+            <p>Từ ngày @HotelGolfBooking.Config.convertFromDateIdToDateString(@item.fromdate.ToString()) đến ngày @HotelGolfBooking.Config.convertFromDateIdToDateString(@item.todate.ToString())</p>
+            <p>Ghi chú:@Html.Raw(@item.cnote)</p>
+            <p id="totalprice_@item.id"><img src="/Images/loading.gif" height="32" width="32"></p>
+            <p><a style="cursor:pointer;color:#808080;font-weight:bold;" onclick="viewInvoice(@item.id,@item.idhotel,@item.idroom,@item.numofroom,@item.fromdate,@item.todate,@item.id,@item.typebook);">Xem chi tiết hóa đơn<img src="/Images/invoice.png"></a></p>
+            <div id="promotionList_@item.id"></div>
+            <script>
+                @if (item.fromdate != null)
+                {
+                <text>
+                    @if (item.typebook == 0)
+                    {
+                        <text>getHotelListPromotion(@item.fromdate,@item.todate,@item.idhotel, @item.id);</text>
+                    }
+                    getTotalPrice(@item.id,@item.idhotel,@item.idroom,@item.numofroom,@item.fromdate,@item.todate,@item.id,@item.typebook);
+                </text>  
+                }
+            </script>
+            @Html.Raw(@iconchoupon) 
+        </td>
+        <td nowrap="true" style="border-right:1px solid #00ff90;">
+            <p><input type="checkbox" @extrabedfee id="extrabedfee_@item.id" name="extrabedfee_@item.id">giường phụ</p>
+            <p><input type="checkbox" @extraotherfee id="extraotherfee_@item.id" name="extraotherfee_@item.id">khác</p>
+            <input type="button" value="cập nhật" id="extrafee_@item.id" title="cập nhật phụ phí" onclick="extrafee(@item.id);">
+        </td>        
+        <td style="border-right:1px solid #00ff90;">
+            <p><input type="button" value="email thông tin đặt phòng" id="emailbt_@item.id" title="email cho khách hàng xác nhận thông tin đặt phòng thành công" onclick="emailConfirm(@item.id,@item.idhotel,'@item.idsession',@totalprice);"></p>
+            @if (item.paymenttype != null && item.paymenttype.Contains(@HotelGolfBooking.Config.payment_method2))
+            {
+                <p><input type="button"  value="yêu cầu kh chuyển khoản" id="paymentbt_@item.id" title="với khách hàng thanh toán bằng chuyển khoản" onclick="emailConfirmPayment(@item.id,@item.idhotel,'@item.idsession',@totalprice);"></p>
+            }
+            <p><input type="button"  value="in phiếu xác nhận" id="printbt_@item.id" title="in phiếu xác nhận đặt phòng, đóng dấu và gửi cho khách hàng" onclick="printConfirm(@item.id,@item.idhotel,'@item.idsession',@totalprice);"></p>
+        </td>
+        <td style="border-right:1px solid #00ff90;">
+            @item.paymenttype
+        </td>
+        <td>
+            <select name="statusadmin_@item.id" id="statusadmin_@item.id">
+                <option value="@HotelGolfBooking.Config.admin_status_step1">@HotelGolfBooking.Config.admin_status_step1</option> 
+                <option value="@HotelGolfBooking.Config.admin_status_step2">@HotelGolfBooking.Config.admin_status_step2</option> 
+            </select>
+            <script>
+                $("#statusadmin_@item.id").val("@Html.Raw(@item.statusadmin)");
+            </script>
+            <input type="button"  onclick="updateadminstatus(@item.id,@item.typebook,@item.idhotel,@item.idroom);" value="Cập nhật">
+        </td>
+    </tr>
+}
+</table>
+</div>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+                            <text><li><a href="/HotelBooking/Index?name=@ViewBag.name&provin=@ViewBag.provin&statusadmin=@ViewBag.statusadmin&fromdate=@ViewBag.fromdate&todate=@ViewBag.todate&page=@i">@i</a></li></text>
+        }
+</ul>
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:20%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<div id="listRoom" name="listRoom" style="z-index:1001;position:fixed;left:10%;top:40%;width:80%;height:auto;display:none;background-color:#fff;border:1px solid #808080;">
+   
+</div>
+<div id="alertadmin" name="alertadmin" style="z-index:1002;position:fixed;right:0;bottom:0;width:400px;height:50px;display:none;background-color:#b6ff00;border:1px solid #b6ff00;">
+    
+</div>
+<div id="listInvoice" name="listInvoice" style="z-index:1001;position:fixed;left:2%;top:40%;width:90%;height:200px;display:none;background-color:#b6ff00;border:1px solid #b6ff00;">
+   <table class="tbl_price_room" id="tblListInvoice">
+       <tr><th width="73">Từ ngày</th><th width="73">Đến ngày</th><th width="73">Giá</th><th width="73">Số phòng</th><th width="73">Số ngày</th><th width="73">Thành tiền</th><th width="73">Giường phụ</th><th width="73">Phí khác</th><th width="73">Tổng tiền</th><th></th></tr>
+       <tr id="tr1">
+           <td width="73"><input type="text" id="fromdate1" name="fromdate1" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate1" name="todate1" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price1" name="price1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom1" name="numofroom1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday1" name="totalday1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total1" name="total1" value="0" style="width:82px;" ></td>
+           <td width="73"><input type="text" id="totalextrabed1" name="totalextrabed1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother1" name="totalextraother1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice1" name="totalprice1" value="0" style="width:82px;" ></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(1);">|<input type="button" value="-Xóa" onclick="removeItem(1);"></td>
+       </tr>
+       <tr id="tr2">
+           <td width="73"><input type="text" id="fromdate2" name="fromdate2" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate2" name="todate2" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price2" name="price2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom2" name="numofroom2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday2" name="totalday2" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total2" name="total2" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed2" name="totalextrabed2" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother2" name="totalextraother2" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice2" name="totalprice2" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(2);">|<input type="button" value="-Xóa" onclick="removeItem(2);"></td>
+       </tr>  
+       <tr id="tr3">
+           <td width="73"><input type="text" id="fromdate3" name="fromdate3" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate3" name="todate3" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price3" name="price3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom3" name="numofroom3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday3" name="totalday3" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total3" name="total3" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed3" name="totalextrabed3" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother3" name="totalextraother3" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice3" name="totalprice3" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(3);">|<input type="button" value="-Xóa" onclick="removeItem(3);"></td>     
+       </tr>
+       <tr id="tr4">
+           <td width="73"><input type="text" id="fromdate4" name="fromdate4" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="todate4" name="todate4" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price4" name="price4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofroom4" name="numofroom4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalday4" name="totalday4" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="total4" name="total4" value="0" style="width:82px;"></td>
+           <td width="73"><input type="text" id="totalextrabed4" name="totalextrabed4" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalextraother4" name="totalextraother4" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice4" name="totalprice4" value="0" style="width:82px;"></td>
+           <td width="73"><input type="button" value="+Thêm" onclick="addItem(4);">|<input type="button" value="-Xóa" onclick="removeItem(4);"></td>     
+       </tr>
+       <tr>
+           <td colspan="5"></td>
+           <td id="sumtotal"></td>
+           <td id="sumtotalextrabed"></td>
+           <td id="sumtotalextraother"></td>
+           <td id="sumtotalprice"></td>
+           <td></td>
+       </tr>  
+       <tr><td colspan="10"><a onclick="$('#listInvoice').hide();" class="btn btn-info">Đóng lại</a><a onclick="saveInvoice();" class="btn btn-info">Lưu hóa đơn</a><a onclick="deleteInvoice();" class="btn btn-info">Xóa hóa đơn</a></td></tr> 
+   </table>   
+</div>
+<script>
+    //alert(parseInt("75.760.000"));
+    //alert(isNum("9.470.000")+"-"+isNum("21212")+"-"+isNum("212a12"));
+    var totalprice=0;
+    var totalitem=4;
+    var currentIdbooking=-1;
+    document.getElementById("name").value="@Html.Raw(@ViewBag.name)";
+    $("#provin").val("@Html.Raw(@ViewBag.provin)");
+    document.getElementById("statusadmin").value="@Html.Raw(@ViewBag.statusadmin)";
+    document.getElementById("fromdate").value="@ViewBag.fromdate";
+    document.getElementById("todate").value="@ViewBag.todate";
+   
+    function clearInvoice(){
+       
+        for(var index=1;index<=4;index++){
+            $("#fromdate"+index).val("");
+            $("#todate"+index).val("");
+            $("#price"+index).val("");
+            $("#totalday"+index).val("");
+            $("#numofroom"+index).val("");
+            $("#total"+index).val("0");
+            $("#totalextrabed"+index).val("0");
+            $("#totalextraother"+index).val("0");
+            $("#totalprice"+index).val("0");
+        }
+        
+        $("#sumtotal").html("");
+        $("#sumtotalextrabed").html("");
+        $("#sumtotalextraother").html("");
+        $("#sumtotalprice").html("");
+        //removeItem(4);
+        removeItem(5);
+        totalitem=4;
+    }
+    function addItem(index) {
+        totalitem++;
+        var content='<tr id=tr'+totalitem+'><td width="73"><input type="text" id="fromdate'+totalitem+'" name=id="fromdate'+totalitem+'" value="" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="todate'+totalitem+'" name="todate'+totalitem+'" value="" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="price'+totalitem+'" name="price'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="numofroom'+totalitem+'" name="numofroom'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalday'+totalitem+'" name="totalday'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="total'+totalitem+'" name="total'+totalitem+'" value="0" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="totalextrabed'+totalitem+'" name="totalextrabed'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalextraother'+totalitem+'" name="totalextraother'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalprice'+totalitem+'" name="totalprice'+totalitem+'" value="0" style="width:82px;"></td>';
+        content+='<td width="73"><input type="button" value="+Thêm" onclick="addItem('+totalitem+');">|<input type="button" value="-Xóa" onclick="removeItem('+totalitem+');"></td></tr>'; 
+        $("#tblListInvoice").append(content);
+        autocal();
+    }
+    function removeItem(index) {
+        if (!document.getElementById("tr"+index)) return;
+        $("#tr" + index).remove();
+        totalitem--;
+        autocal();
+    }
+    function autocal(){
+        var sumtotal=0;
+        var sumtotalextrabed=0;
+        var sumtotalextraother=0;
+        var sumtotalprice=0;    
+        for(var index=1;index<=totalitem;index++){
+            if (!document.getElementById("totalprice" + index)||!document.getElementById("total" + index)) continue;
+            if (isNum($("#price"+index).val()) && isNum($("#numofroom"+index).val()) && isNum($("#totalday"+index).val())){
+                var total=valNum($("#price"+index).val())*valNum($("#numofroom"+index).val())*valNum($("#totalday"+index).val());
+                $("#total"+index).val(formatCurrency(total));
+            }
+            if (isNum($("#total"+index).val()) && isNum($("#totalextrabed"+index).val()) && isNum($("#totalextraother"+index).val())){
+                var totalprice=valNum($("#total"+index).val())+valNum($("#totalextrabed"+index).val())+valNum($("#totalextraother"+index).val());
+                $("#totalprice"+index).val(formatCurrency(totalprice));
+            }
+            //alert($("#total"+index).val());
+            sumtotal+=valNum($("#total"+index).val());
+            sumtotalextrabed+=valNum($("#totalextrabed"+index).val());
+            sumtotalextraother+=valNum($("#totalextraother"+index).val());
+            sumtotalprice+=valNum($("#totalprice"+index).val());            
+        }
+        //alert(sumtotal);
+        $("#sumtotal").html("<b>"+formatCurrency(sumtotal)+"</b>");
+        $("#sumtotalextrabed").html("<b>"+formatCurrency(sumtotalextrabed)+"</b>");
+        $("#sumtotalextraother").html("<b>"+formatCurrency(sumtotalextraother)+"</b>");
+        $("#sumtotalprice").html("<font style='color:red;'><b>"+formatCurrency(sumtotalprice)+"</b></font>");
+    }
+    function valNum(v){
+        v=removeSpecialCharater(v);
+        return parseInt(v);
+    }
+    function isNum(v){
+        if (v=="" || v==null) return false;
+        v=removeSpecialCharater(v);
+        return !isNaN(v);
+    }
+    function viewInvoice(idbooking,idhotel, idroom, numofroom, fromdate, todate, id,typebook){
+        currentIdbooking=idbooking;
+        showLoadingImage(); 
+        clearInvoice();
+        $("#listInvoice").show();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", idbooking);
+        formdata.append("idhotel", idhotel);
+        formdata.append("idroom", idroom);
+        formdata.append("numofroom", numofroom);
+        formdata.append("fromdate", fromdate);
+        formdata.append("todate", todate);
+        formdata.append("typebook", typebook);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/viewInvoice');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                var sumtotal=0;
+                var sumtotalextrabed=0;
+                var sumtotalextraother=0;
+                var sumtotalprice=0;   
+                var from=totalitem;
+                //alert(totalitem+"-"+json_parsed.news.length);
+                for(var j=from;j<json_parsed.news.length;j++){
+                    if (json_parsed.news[j] && json_parsed.news[j].price!=null && json_parsed.news[j].price!=0){addItem(j);}
+                }
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n=json_parsed.news[i];
+                        var index=i+1;
+                        if (n.price!=null && n.price!=0){
+                            totalitem++;
+                            $("#fromdate"+index).val(convertFromDateIdToDateString(n.fromdate+""));
+                            $("#todate"+index).val(convertFromDateIdToDateString(n.todate+""));
+                            $("#price"+index).val(formatCurrency(n.price));
+                            $("#totalday"+index).val(n.totalday);
+                            $("#numofroom"+index).val(n.numofroom);
+                            $("#total"+index).val(formatCurrency(n.total));
+                            $("#totalextrabed"+index).val(formatCurrency(n.totalextrabed));
+                            $("#totalextraother"+index).val(formatCurrency(n.totalextraother));
+                            $("#totalprice"+index).val(formatCurrency(n.totalprice));
+                            sumtotal+=n.total;
+                            sumtotalextrabed+=n.totalextrabed;
+                            sumtotalextraother+=n.totalextraother;
+                            sumtotalprice+=n.totalprice;
+                        }
+                    }
+                }
+                totalprice=sumtotalprice;
+                $("#sumtotal").html("<b>"+formatCurrency(sumtotal)+"</b>");
+                $("#sumtotalextrabed").html("<b>"+formatCurrency(sumtotalextrabed)+"</b>");
+                $("#sumtotalextraother").html("<b>"+formatCurrency(sumtotalextraother)+"</b>");
+                $("#sumtotalprice").html("<font style='color:red;'><b>"+formatCurrency(sumtotalprice)+"</b></font>");
+            }
+        }
+    }
+    function saveInvoice(){
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", currentIdbooking);
+        formdata.append("totalitem", totalitem);
+        for (var i = 1; i <= totalitem; i++) {
+            if(document.getElementById("price" + i) && document.getElementById("price" + i).value!="" && document.getElementById("numofroom" + i).value!="" && document.getElementById("totalday" + i).value!=""&& document.getElementById("total" + i).value!=""){
+                formdata.append("fromdate" + i, getDateId(document.getElementById("fromdate" + i).value));
+                formdata.append("todate" + i, getDateId(document.getElementById("todate" + i).value));
+                formdata.append("price" + i, valNum(document.getElementById("price" + i).value));
+                formdata.append("numofroom" + i, document.getElementById("numofroom" + i).value);
+                formdata.append("totalday" + i, document.getElementById("totalday" + i).value);
+                formdata.append("total" + i, valNum(document.getElementById("total" + i).value));
+                formdata.append("totalextrabed" + i, valNum(document.getElementById("totalextrabed" + i).value));
+                formdata.append("totalextraother" + i, valNum(document.getElementById("totalextraother" + i).value));
+                formdata.append("totalprice" + i, valNum(document.getElementById("totalprice" + i).value));
+            }
+        }
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/addNewInvoice');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+    function deleteInvoice(){
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", currentIdbooking);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/deleteInvoice');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+    function search() {
+        //alert(document.getElementById("fromdate").value);
+        window.location.href = "/HotelBooking/Index?name=" + document.getElementById("name").value+"&provin="+document.getElementById("provin").value+"&statusadmin="+document.getElementById("statusadmin").value+"&fromdate="+getDateIdNew(document.getElementById("fromdate").value)+"&todate="+getDateIdNew(document.getElementById("todate").value);
+    }
+    function getDateIdNew(d){
+        d = d.replace(/\-/g, "");
+        return d;
+    }
+    function extrafee(id){
+        showLoadingImage();       
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        var extrabedfee=0;
+        var extraotherfee=0;
+        if (document.getElementById("extrabedfee_"+id).checked){
+            extrabedfee=1;
+        }
+        if (document.getElementById("extraotherfee_"+id).checked){
+            extraotherfee=1;
+        }
+        //alert(extrabedfee+","+extraotherfee);
+        formdata.append("extrabedfee", extrabedfee);
+        formdata.append("extraotherfee", extraotherfee);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/updateExtraFeeStatus');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                alert("Xác nhận thành công!");
+                window.location.reload();
+            }
+        }
+    }
+    function updateadminstatus(id,typebook,idhotel,idroom){
+        showLoadingImage();
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        formdata.append("typebook", typebook);
+        formdata.append("idhotel", idhotel);
+        formdata.append("idroom", idroom);
+        formdata.append("statusadmin", $("#statusadmin_"+id).val());
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/updateAdminStatus');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                alert("Xác nhận thành công!");
+            }
+        }
+    }
+    function emailConfirm(id,idhotel,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        showLoadingImage();
+        document.getElementById("emailbt_"+id).disabled = true;
+        //$("#emailbt_"+id).disabled();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", idhotel);
+        formdata.append("code", code);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/emailConfirmBooking');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                document.getElementById("emailbt_"+id).disabled = false;
+                if(xhr.responseText!="-1"){
+                    alert("Gửi email xác nhận khách hàng thành công!");
+                }else{
+                    alert("Không gửi được email, kiểm tra lại địa chỉ email!");
+                }
+            }
+        }
+    }
+    function emailConfirmPayment(id,idhotel,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        showLoadingImage();
+        document.getElementById("paymentbt_"+id).disabled = true;
+        //$("#emailbt_"+id).disabled();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", idhotel);
+        formdata.append("code", code);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/emailConfirmPayment');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                document.getElementById("paymentbt_"+id).disabled = false;
+                if(xhr.responseText!="-1"){
+                    alert("Gửi email xác nhận khách hàng thành công!");
+                }else{
+                    alert("Không gửi được email, kiểm tra lại địa chỉ email!");
+                }
+            }
+        }
+    }
+    function printConfirm(id,idhotel,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        //document.getElementById("printbt_"+id).disabled = true;
+        window.open("/HotelBooking/print?idhotel="+idhotel+"&code="+code,"_blank");
+    }
+    function getHotelRoomListPrice(idhotel,month,typebook) {
+        if (typebook==1){
+            getHotelChouponList(idhotel);
+            return;
+        }
+        showLoadingImage();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", idhotel);
+        formdata.append("fromdate", month);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelRoom/getHotelRoomListBasic');
+        xhr.send(formdata);
+        var content = "";
+        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                content = "<h4>Danh sách phòng</h4><table class=tbl_price_room><tr><th>Tên phòng</th><th>Giá(tháng "+month+")</th><th>Bao gồm</th><th>Giường phụ</th><th>Phụ phí</th><tr>";
+                $("#listRoom").show();
+                $("#listRoom").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        
+                        var n=json_parsed.news[i];
+                        var breakfast=n.breakfast;
+                        var extrabed="không";
+                        //alert(name);
+                        var extrafee="giường phụ: "+n.extrabedfee+"\r\nkhác:"+n.extraotherfee;
+                        if (n.extrabed==1){extrabed="có";}
+                        content += "<tr><td>" + n.roomname + "</td><td>" + n.price + "</td><td>" + breakfast + "</td><td>" + extrabed + "</td><td>"+extrafee+"</td><tr>";
+                    }
+                }
+                //alert(content);
+                content +="</table><h5 onclick=\"$('#listRoom').hide();\" style=\"cursor:pointer;\">Đóng lại</h5>";
+                $("#listRoom").html(content);
+                //alert(news);
+            }
+        }
+    }
+    function getHotelChouponList(idhotel) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", idhotel);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelChoupon/getHotelChouponList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách choupon đang có</h4><table class=tbl_price_room><tr><th>Tên phòng</th><th>Giá choupon</th><tr>";
+                $("#listRoom").show();
+                $("#listRoom").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        var facility = "";
+                        var facility1 = "";
+                        var facility2 = "";
+                        var facility3 = "";
+                        var facility4 = "";
+                        var facility5 = "";
+                        var facility6 = "";
+                        //alert(name);
+                        if (n.facility1 != null) { facility+=n.facility1+","; }
+                        if (n.facility2 != null) { facility+= n.facility2 + ","; }
+                        if (n.facility3 != null) { facility += n.facility3 + ","; }
+                        if (n.facility4 != null) { facility += n.facility4 + ","; }
+                        if (n.facility5 != null) { facility += n.facility5 + ","; }
+                        if (n.facility6 != null) { facility += n.facility6 + ","; }
+                        content += "<tr><td>" + n.roomname + "<i><br>" + facility + "</i></td><td>" + n.chouponprice + "</td><tr>";
+                    }
+                }
+                content +="</table><h5 onclick=\"$('#listRoom').hide();\" style=\"cursor:pointer;\">Đóng lại</h5>";
+                $("#listRoom").html(content);
+                //alert(news);
+            }
+        }
+    }
+</script>
+<!--Script references. -->
+     <!--Reference the jQuery library. -->
+    <script src="/Scripts/howler.js" ></script>
+    <!--Reference the jQuery library. -->
+    <script src="/Scripts/jquery-1.8.2.min.js" ></script>
+    <!--Reference the SignalR library. -->
+    <script src="/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="/signalr/hubs"></script>
+    <!--Add script to update the page and send messages.--> 
+    <script type="text/javascript">
+        //var sound = new Howl({
+        //    urls: ['/Images/ftrue.mp3', 'sounds.ogg'],
+        //    sprite: {
+        //        blast: [0, 2000],
+        //        laser: [3000, 700],
+        //        winner: [5000, 9000]
+        //    }
+        //});
+        //sound.play('laser');
+        
+        $(function () {
+            // Declare a proxy to reference the hub. 
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call to broadcast messages.
+            chat.client.addChatMessage = function (name, message) {
+                //alert(message);
+                // Html encode display name and message. 
+                //var encodedName = $('<div />').text(name).html();
+                //var encodedMsg = $('<div />').text(message).html();
+                // Add the message to the page. 
+                if (message!="joined"){
+                    
+                    $('#alertadmin').show();
+                    $('#alertadmin').html('<strong>Thông báo: </strong>:&nbsp;&nbsp;' + message);
+                    var sound = new Howl({
+                        urls: ['/Images/ftrue.mp3']
+                    }).play();
+                }
+            };
+           
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                //$('#sendmessage').click(function () {
+                    // Call the Send method on the hub. 
+                    chat.server.joinRoom("alertadmin", 'joined');
+                   
+                //});
+            });
+        });
+        
+
+    </script>

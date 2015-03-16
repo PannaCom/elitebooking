@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "BackUp";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Backup cơ sở dữ liệu, nên 2 đến 3 ngày backup 1 lần.</h2>
+<div class="col-md-6">
+    <input type="button" id="startbtn" value="Click vào đây để bắt đầu" onclick="backup();">
+    <div id="progressbar" class="progressbar">
+        <div id="progresslabel" class="progressbarlabel"></div>
+    </div> 
+    <div id="notice"></div>
+</div>
+<script>
+    function backup() {
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        xhr.open('POST', '/Admin/backupdb');
+        xhr.send();
+        document.getElementById("startbtn").disabled = true;
+        $("#notice").html("Đang tạo, xin chờ...");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == "1") {
+                    alert("Back up thành công!");
+                    document.getElementById("startbtn").disabled = false;
+                    $("#notice").html("Download tại đây: <a href=\"@HotelGolfBooking.Config.domain/elitehotel.bak.rar\">download</a>");
+                } else {
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");
+                }
+            }
+        }
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+</script>

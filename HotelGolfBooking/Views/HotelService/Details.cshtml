@@ -1,0 +1,29 @@
+﻿@model HotelGolfBooking.Models.hotel_service
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_service</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.service)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.service)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

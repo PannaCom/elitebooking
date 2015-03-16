@@ -1,0 +1,201 @@
+﻿@model HotelGolfBooking.Models.slide
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Thêm mới </h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Create", "Slide", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>                       
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh nền(kích cỡ: 1700x449)</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         </div> 
+         <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh nền</label>
+                <input name="image" type="hidden" id="image" value="" class="form-control" />                  
+                  <div id="imageShow" style="width:600px;height:200px;"></div>
+              </div>
+         </div>
+         <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tiêu đề lớn</label>
+                <input name="caption" type="text" id="caption" value="" class="form-control" placeholder="Gõ tiêu đề" />                
+              </div>
+         </div>
+         <div class="col-md-6">
+              <div class="form-group">
+                 <label for="room" style="width:auto;display:block;">Slogan</label>
+                 <input name="slogan" type="text" id="slogan" value="" class="form-control" placeholder="Slogan"/>
+              </div>
+        </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                 <label for="room" style="width:auto;display:block;">text(chữ trong ô nhỏ)</label>
+                 <input name="linktext" type="text" id="linktext" value="" class="form-control" placeholder="nhập text"/>
+              </div>
+        </div>
+         <div class="col-md-6">
+              <div class="form-group">
+                 <label for="room" style="width:auto;display:block;">link đến</label>
+                 <input name="link" type="text" id="link" value="" class="form-control" placeholder="đường dẫn khi click vào text"/>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Vị trí xuất hiện</label>                
+                <select class="form-control" name="type" id="type">
+                    <option selected="selected" disabled="disabled" value="">Chọn thứ tự xuất hiện</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select>                         
+                <input type="hidden" id="catid" name="catid">
+              </div>
+        </div>               
+    </fieldset>
+}
+<p>
+    <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+</p>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+   
+    //Image upload
+    function uploadProcess() {       
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", "@ViewBag.filename");
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        xhr.open('POST', '/Slide/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=600 height=200>");
+                $('#image').val(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    //Image upload
+    function uploadProcessContent() {        
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFileContent');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", "@ViewBag.filenamelink");
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbarContent").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/Slide/UploadImageProcessContent');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                $('#imageShowContent').html("<img src=\"" + xhr.responseText + "\" width=600 height=90>");
+                $('#imagelink').val(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    $("#progressbarContent").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabelContent").text($("#progressbarContent").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabelContent").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+    function checkField() {
+        
+
+        if (document.getElementById("image").value == "") {
+            alert("upload ảnh nền!");            
+            return false;
+        }
+        if (document.getElementById("caption").value == "") {
+            alert("Nhập tiêu đề lớn!");
+            document.getElementById("caption").focus();
+            return false;
+        }       
+        if (document.getElementById("slogan").value == "") {
+            alert("Nhập slogan!");
+            document.getElementById("slogan").focus();
+            return false;
+        }
+        if (document.getElementById("linktext").value == "") {
+            alert("chữ trong ô nhỏ!");
+            document.getElementById("linktext").focus();
+            return false;
+        }
+        if (document.getElementById("link").value == "") {
+            alert("Nhập link cho text!");
+            document.getElementById("link").focus();
+            return false;
+        }
+        if (document.getElementById("type").value == "") {
+            alert("Nhập vị trí xuất hiện!");
+            document.getElementById("type").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+
+</script>

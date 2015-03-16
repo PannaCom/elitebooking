@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHotelDetail.cshtml";
+}
+
+<h2>Bản đồ khách sạn @ViewBag.hotelname</h2>
+<h3>@ViewBag.address</h3>
+<div class="col-sm-12 col-md-12">
+    <div id="map" class=smallmap style="display:block;position:relative;float:left;"></div>
+</div>
+<script>
+    var map = L.map('map').setView([@ViewBag.lat, @ViewBag.lon], 16);
+
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        id: 'examples.map-i875mjb7'
+    }).addTo(map);
+
+
+    L.marker([@ViewBag.lat, @ViewBag.lon]).addTo(map)
+        .bindPopup("<div style='width:200px;'><span style='color:red;'><b>@ViewBag.hotelname</b></span><br/><p style='color:blue;'>@ViewBag.address</p></div>").openPopup();
+
+    var popup = L.popup();
+    
+   
+</script>

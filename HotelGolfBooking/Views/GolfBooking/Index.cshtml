@@ -1,0 +1,505 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.golf_booking>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string icon = "<img src=\"/Images/new-icon.png\" height=20 width=20>";
+    string iconchoupon = "";
+    int totalprice = 0;
+}
+<div style="height:55px"></div>
+<!-- Reservation form -->
+<section id="reservation-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">           
+        <form class="form-inline reservation-horizontal clearfix" role="form"   name="reservationform" id="reservationform">
+        <div id="message"></div><!-- Error message display -->
+          <div class="row">
+              <div class="col-sm-2" >
+                <div class="form-group">
+                    <label for="room" style="width:auto;display:block;">Tên khách hàng</label>
+                    <input name="name" type="text" id="name" value="@ViewBag.name" class="form-control" style="width:auto;"/>    
+                </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">
+                    <label for="room" style="width:auto;display:block;">Tỉnh thành</label>
+                    <select  name="provin" id="provin" class="form-control">
+                    </select>
+                    <script>getProvinList("@Html.Raw(@ViewBag.provin)");</script>
+                </div>
+              </div>       
+              <div class="col-sm-2" >
+                <div class="form-group">                     
+                <label for="room" style="width:auto;display:block;">Trạng thái</label>
+                <select name="statusadmin" id="statusadmin" class="form-control">
+                    <option disabled value="">Chọn</option>
+                    <option value="@HotelGolfBooking.Config.admin_status_step1">@HotelGolfBooking.Config.admin_status_step1</option>
+                    <option value="@HotelGolfBooking.Config.admin_status_step2">@HotelGolfBooking.Config.admin_status_step2</option>
+                </select>
+              </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">                              
+                    <label for="room" style="width:auto;display:block;">Từ ngày</label>
+                    <input name="fromdate" type="date" id="fromdate" value="" style="width:auto;" class="form-control"/> 
+                </div>
+              </div>
+              <div class="col-sm-2" >
+                <div class="form-group">     
+                <label for="room" style="width:auto;display:block;">Từ ngày</label>
+                <input name="todate" type="date" id="todate" value="" style="width:auto;" class="form-control"/> 
+              </div>
+              </div>
+              <div class="col-sm-2">
+                    <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button>
+              </div>
+         </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<h2>Danh sách Đặt sân Golf</h2>
+<div class="col-md-12">
+<table class="tbl_price_room" cellpadding="1" cellspacing="1">
+    <tr style="border-bottom:solid 1px #808080">       
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Thông tin đặt sân
+        </th>
+        <th>Email xác nhận</th>
+        <th>Phương thức thanh toán</th>
+        <th>Thanh toán</th>
+        <th>Thành tiền</th>        
+    </tr>
+@foreach (var item in Model)
+{
+    if (item.statusadmin.Contains(@HotelGolfBooking.Config.booking_status_step3))
+    {
+        icon = "<img src=\"/Images/new-icon.png\" height=20 width=20>";
+    }
+    else {
+        icon = "";
+    }
+    if (item.typebook == @HotelGolfBooking.Config.typebook2)
+    {
+        iconchoupon = "<img src=\"/Images/coupon-icon.png\" height=32 width=32>(Choupon)";
+    }
+    else
+    {
+        iconchoupon = "";
+    }
+    totalprice = item.totalprice != null ? (int)item.totalprice : 0;
+    <tr style="border-bottom:solid 1px #808080;">        
+        <td>
+            <h5>@item.cname @Html.Raw(@icon) </h5>
+            <p>Số điện thoại: @item.cphone, Email: @item.cemail, @item.caddress,</p>    
+            <p>&nbsp;<a href="/GolfBooking/Edit/@item.id" style="color:red;">Sửa</a>&nbsp;</p>        
+        </td>
+        <td>
+            <p>Đặt sân tại @item.golfname</p>
+            <p>Chơi ngày @HotelGolfBooking.Config.convertFromDateIdToDateString(@item.dateplay.ToString()), từ @item.checkin</p>
+            <p>Ghi chú: @item.note</p>
+            <p id="totalprice_@item.id"><img src="/Images/loading.gif" height="32" width="32"></p>
+             <p><a style="cursor:pointer;color:#808080;font-weight:bold;" onclick="viewInvoice(@item.id,@item.idgolf,@item.numofbuggies,@item.numofguest,@item.dateplay,@item.typebook);">Xem chi tiết hóa đơn<img src="/Images/invoice.png"></a></p>
+            <div id="promotionList_@item.id"></div>
+            <script>
+                @if (item.dateplay!=null){
+                <text>
+                    getGolfTotalPrice(@item.id,@item.idgolf,@item.dateplay,@item.typebook);
+                </text>  
+                }
+            </script>
+             @Html.Raw(@iconchoupon)
+        </td>        
+        <td style="border-right:1px solid #00ff90;">
+            <p><input type="button" value="email thông tin đặt sân" id="emailbt_@item.id" title="email cho khách hàng xác nhận thông tin đặt sân thành công" onclick="emailConfirm(@item.id,@item.idgolf,'@item.idsession',@totalprice);"></p>
+            @if (item.paymenttype != null && item.paymenttype.Contains(@HotelGolfBooking.Config.payment_method2))
+            {
+                <p><input type="button" value="yêu cầu kh chuyển khoản" id="paymentbt_@item.id" title="với khách hàng thanh toán bằng chuyển khoản" onclick="emailConfirmPayment(@item.id,@item.idgolf,'@item.idsession',@totalprice);"></p>
+            }
+            <p><input type="button" value="in phiếu xác nhận" id="printbt_@item.id" title="in phiếu xác nhận đặt phòng, đóng dấu và gửi cho khách hàng" onclick="printConfirm(@item.id,@item.idgolf,'@item.idsession',@totalprice);"></p>
+        </td>
+        <td style="border-right:1px solid #00ff90;">
+            @item.paymenttype
+        </td>
+        <td style="border-right:1px solid #00ff90;">
+            <select name="statusadmin_@item.id" id="statusadmin_@item.id">
+                <option value="@HotelGolfBooking.Config.admin_status_step1">@HotelGolfBooking.Config.admin_status_step1</option> 
+                <option value="@HotelGolfBooking.Config.admin_status_step2">@HotelGolfBooking.Config.admin_status_step2</option> 
+            </select>
+            <script>
+                $("#statusadmin_@item.id").val("@Html.Raw(@item.statusadmin)");
+            </script>
+            <input type="button" onclick="updateadminstatus(@item.id);" value="Cập nhật">
+        </td>
+        <td style="border-right:1px solid #00ff90;">
+            <input type="text" class="form-control" placeholder="Tự tính(nếu có)" value="@item.totalprice" id="totalprice_@item.id" name="totalprice_@item.id">
+            <input type="button" onclick="updatetotalprice(@item.id);" value="Cập nhật">
+        </td>
+    </tr>
+}
+</table>
+</div>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+           <text><li><a href="/GolfBooking/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
+        }
+</ul>
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:20%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<div id="listInvoice" name="listInvoice" style="z-index:1001;position:fixed;left:2%;top:40%;width:90%;height:auto;display:none;background-color:#b6ff00;border:1px solid #b6ff00;">
+   <table class="tbl_price_room" id="tblListInvoice">
+       <tr><th width="73" style="display:none;">Ngày chơi</th><th width="73">Giá</th><th width="73">Giá xe Buggy</th><th width="73">Phụ thu hố</th><th width="73">Phụ thu xe buggies</th><th width="73">Số khách</th><th width="73">Số xe buggies</th><th width="73">Tổng tiền</th><th width="73">Ghi chú</th><th></th></tr>
+       <tr id="tr1">
+           <td width="73" style="display:none;"><input type="text" id="playdate1" name="playdate1" value="" style="width:82px;"></td>
+           <td width="73"><input type="text" id="price1" name="price1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="pricebuggies1" name="pricebuggies1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="priceextralhole1" name="priceextralhole1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="priceextralbuggies1" name="priceextralbuggies1" value="" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofguest1" name="numofguest1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="numofbuggies1" name="numofbuggies1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="totalprice1" name="totalprice1" value="0" style="width:82px;" onblur="autocal();"></td>
+           <td width="73"><input type="text" id="noteextrafee1" name="noteextrafee1" value="" style="width:192px;" ></td>
+           
+       </tr>
+       <tr>
+           <td style="display:none;"></td>
+           <td id="sumprice"></td>
+           <td id="sumpricebuggies"></td>
+           <td id="sumpriceextralhole"></td>
+           <td id="sumpriceextralbuggies"></td>
+           <td id="sumnumofguest"></td>
+           <td id="sumnumofbuggies"></td>
+           <td id="sumntotalprice"></td>
+           <td></td>
+       </tr>  
+       <tr><td colspan="10"><a onclick="$('#listInvoice').hide();" class="btn btn-info">Đóng lại</a><a onclick="saveInvoice();" class="btn btn-info">Lưu hóa đơn</a><a onclick="deleteInvoice();" class="btn btn-info">Xóa hóa đơn</a></td></tr>
+    </table>
+</div>
+<script>
+    var totalitem=1;
+    var currentIdbooking=-1;
+    var playdate=0;
+    document.getElementById("name").value="@Html.Raw(@ViewBag.name)";
+    $("#provin").val("@Html.Raw(@ViewBag.provin)");
+    document.getElementById("statusadmin").value="@Html.Raw(@ViewBag.statusadmin)";
+    document.getElementById("fromdate").value="@ViewBag.fromdate";
+    document.getElementById("todate").value="@ViewBag.todate";
+    function search() {
+        //alert(document.getElementById("fromdate").value);
+        window.location.href = "/GolfBooking/Index?name=" + document.getElementById("name").value+"&provin="+document.getElementById("provin").value+"&statusadmin="+document.getElementById("statusadmin").value+"&fromdate="+getDateIdNew(document.getElementById("fromdate").value)+"&todate="+getDateIdNew(document.getElementById("todate").value);
+    }
+    function getDateIdNew(d){
+        d = d.replace(/\-/g, "");
+        return d;
+    }
+    function clearInvoice(){
+       
+        for(var index=1;index<=1;index++){
+            $("#playdate"+index).val("");
+            $("#price"+index).val("");
+            $("#pricebuggies"+index).val("");
+            $("#priceextralhole"+index).val("");
+            $("#priceextralbuggies"+index).val("");
+            $("#numofguest"+index).val("0");
+            $("#numofbuggies"+index).val("0");
+            $("#totalprice"+index).val("0");
+            $("#noteextrafee"+index).val("");
+        }
+       
+        $("#sumprice").html("");
+        $("#sumpricebuggies").html("");
+        $("#sumpriceextralhole").html("");
+        $("#sumpriceextralbuggies").html("");
+        $("#sumnumofguest").html("");
+        $("#sumnumofbuggies").html("");
+        $("#sumntotalprice").html("");
+        //removeItem(4);
+        removeItem(2);
+        totalitem=1;
+    }
+    function removeItem(index) {
+        if (!document.getElementById("tr"+index)) return;
+        $("#tr" + index).remove();
+        totalitem--;
+        autocal();
+    }
+    function autocal(){
+        var sumprice=0;
+        var sumpricebuggies=0;
+        var sumpriceextralhole=0;
+        var sumpriceextralbuggies=0;    
+        var sumnumofguest=0;
+        var sumnumofbuggies=0;
+        var sumntotalprice=0;
+        var tempsumprice=0;
+        var temsumextrabuggy=0;
+        for(var index=1;index<=totalitem;index++){
+            if (!document.getElementById("price" + index)||!document.getElementById("totalprice" + index)) continue;
+           
+            //alert($("#total"+index).val());
+            sumprice+=valNum($("#price"+index).val());
+            sumpricebuggies+=valNum($("#pricebuggies"+index).val());
+            sumpriceextralhole+=valNum($("#priceextralhole"+index).val());
+            sumpriceextralbuggies+=valNum($("#priceextralbuggies"+index).val());  
+            sumnumofguest+=valNum($("#numofguest"+index).val());  
+            sumnumofbuggies+=valNum($("#numofbuggies"+index).val());  
+            tempsumprice=valNum($("#numofguest"+index).val())*valNum($("#price"+index).val())+valNum($("#numofbuggies"+index).val())*valNum($("#pricebuggies"+index).val())+valNum($("#priceextralhole"+index).val());
+            //alert(tempsumprice);
+            sumntotalprice+=tempsumprice;
+            temsumextrabuggy=valNum($("#numofbuggies"+index).val())*valNum($("#pricebuggies"+index).val());
+            $("#totalprice"+index).val(formatCurrency(tempsumprice));
+            $("#priceextralbuggies"+index).val(formatCurrency(temsumextrabuggy));
+        }
+        //alert(sumtotal);
+        $("#sumprice").html("<b>"+formatCurrency(sumprice)+"</b>");
+        $("#sumpricebuggies").html("<b>"+formatCurrency(sumpricebuggies)+"</b>");
+        $("#sumpriceextralhole").html("<b>"+formatCurrency(sumpriceextralhole)+"</b>");
+        $("#sumpriceextralbuggies").html("<b>"+formatCurrency(sumpriceextralbuggies)+"</b>");
+        $("#sumnumofguest").html("<b>"+formatCurrency(sumnumofguest)+"</b>");
+        $("#sumnumofbuggies").html("<b>"+formatCurrency(sumnumofbuggies)+"</b>");
+        $("#sumntotalprice").html("<b>"+formatCurrency(sumntotalprice)+"</b>");
+    }
+    function addItem(index) {
+        totalitem++;
+        var content='<tr id=tr'+totalitem+'><td width="73" style=\"display:none;\"><input type="text" id="playdate'+totalitem+'" name=id="playdate'+totalitem+'" value="" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="price'+totalitem+'" name="price'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="pricebuggies'+totalitem+'" name="pricebuggies'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="priceextralhole'+totalitem+'" name="priceextralhole'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="priceextralbuggies'+totalitem+'" name="priceextralbuggies'+totalitem+'" value="" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="numofguest'+totalitem+'" name="numofguest'+totalitem+'" value="0" style="width:82px;"></td>';
+        content+='<td width="73"><input type="text" id="numofbuggies'+totalitem+'" name="numofbuggies'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="totalprice'+totalitem+'" name="totalprice'+totalitem+'" value="0" style="width:82px;" onblur="autocal();"></td>';
+        content+='<td width="73"><input type="text" id="noteextrafee'+totalitem+'" name="noteextrafee'+totalitem+'" value="" style="width:182px;"></td>';
+        //content+='<td width="73"><input type="button" value="+Thêm" onclick="addItem('+totalitem+');">|<input type="button" value="-Xóa" onclick="removeItem('+totalitem+');"></td></tr>'; 
+        $("#tblListInvoice").append(content);
+        autocal();
+    }
+    function saveInvoice(){
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", currentIdbooking);
+        formdata.append("totalitem", totalitem);
+        formdata.append("playdate", playdate);
+        for (var i = 1; i <= totalitem; i++) {
+            if(document.getElementById("price" + i) && document.getElementById("price" + i).value!="" && document.getElementById("numofguest" + i).value!="" && document.getElementById("numofbuggies" + i).value!=""&& document.getElementById("totalprice" + i).value!=""){
+                formdata.append("playdate" + i, valNum(document.getElementById("playdate" + i).value));
+                formdata.append("price" + i, valNum(document.getElementById("price" + i).value));
+                formdata.append("pricebuggies" + i, valNum(document.getElementById("pricebuggies" + i).value));
+                formdata.append("priceextralhole" + i, valNum(document.getElementById("priceextralhole" + i).value));
+                formdata.append("priceextralbuggies" + i, valNum(document.getElementById("priceextralbuggies" + i).value));
+                formdata.append("numofguest" + i, valNum(document.getElementById("numofguest" + i).value));
+                formdata.append("numofbuggies" + i, valNum(document.getElementById("numofbuggies" + i).value));
+                formdata.append("totalprice" + i, valNum(document.getElementById("totalprice" + i).value));
+                formdata.append("noteextrafee" + i, document.getElementById("noteextrafee" + i).value);
+            }
+        }
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/addNewInvoice');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+    function valNum(v){
+        v=removeSpecialCharater(v);
+        return parseInt(v);
+    }
+    function isNum(v){
+        if (v=="" || v==null) return false;
+        v=removeSpecialCharater(v);
+        return !isNaN(v);
+    }
+    function deleteInvoice(){
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", currentIdbooking);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/deleteInvoice');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+    function updateadminstatus(id){
+        showLoadingImage();
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        formdata.append("statusadmin", $("#statusadmin_"+id).val());
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/updateAdminStatus');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Xác nhận thành công!");
+                hideLoadingImage();
+            }
+        }
+    }
+    function emailConfirm(id,idgolf,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        showLoadingImage();
+        document.getElementById("emailbt_"+id).disabled = true;
+        //$("#emailbt_"+id).disabled();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", idgolf);
+        formdata.append("code", code);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/emailConfirmBooking');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Gửi email xác nhận khách hàng thành công!");
+                hideLoadingImage();
+                document.getElementById("emailbt_"+id).disabled = false;
+            }
+        }
+    }
+    function emailConfirmPayment(id,idgolf,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        showLoadingImage();
+        document.getElementById("paymentbt_"+id).disabled = true;
+        //$("#emailbt_"+id).disabled();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", idgolf);
+        formdata.append("code", code);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/emailConfirmBookingPayment');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("Gửi email thành công!");
+                hideLoadingImage();
+                document.getElementById("paymentbt_"+id).disabled = false;
+            }
+        }
+    }
+    function updatetotalprice(id){
+        showLoadingImage();
+        document.getElementById("totalprice_"+id).disabled = true;        
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);      
+        formdata.append("totalprice", document.getElementById("totalprice_"+id).value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/updatetotalprice');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert("cập nhật thành công!");
+                hideLoadingImage();
+                document.getElementById("totalprice_"+id).disabled = false;
+            }
+        }
+    }
+    function printConfirm(id,idgolf,code,totalprice){
+        if (totalprice==null || totalprice==0){
+            alert("Xem và lưu hóa đơn chi tiết trước khi dùng chức năng này!");
+            return;
+        }
+        //document.getElementById("printbt_"+id).disabled = true;
+        window.open("/GolfBooking/print?idgolf="+idgolf+"&code="+code,"_blank");
+    }
+    
+    function viewInvoice(idbooking,idgolf, numofbuggies, numofguest, dateplay,typebook){
+        playdate=dateplay;
+        currentIdbooking=idbooking;
+        showLoadingImage(); 
+        clearInvoice();
+        $("#listInvoice").show();
+        var formdata = new FormData(); //FormData object
+        formdata.append("idbooking", idbooking);
+        formdata.append("idgolf", idgolf);
+        formdata.append("numofbuggies", numofbuggies);
+        formdata.append("numofguest", numofguest);
+        formdata.append("dateplay", dateplay);
+        formdata.append("typebook", typebook);
+       
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/viewInvoice');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                var sumprice=0;
+                var sumpricebuggies=0;
+                var sumpriceextralhole=0;
+                var sumpriceextralbuggies=0;    
+                var sumnumofguest=0;
+                var sumnumofbuggies=0;
+                var sumntotalprice=0;
+                var from=totalitem;
+                //alert(totalitem+"-"+json_parsed.news.length);
+                for(var j=from;j<json_parsed.news.length;j++){
+                    if (json_parsed.news[j] && json_parsed.news[j].price!=null && json_parsed.news[j].price!=0){addItem(j);}
+                }
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n=json_parsed.news[i];
+                        var index=i+1;
+                        if (n.price!=null && n.price!=0){
+                            totalitem++;
+                            $("#playdate"+index).val(convertFromDateIdToDateString(n.playdate+""));
+                            $("#price"+index).val(formatCurrency(n.price));
+                            $("#pricebuggies"+index).val(formatCurrency(n.pricebuggies));
+                            $("#priceextralhole"+index).val(formatCurrency(n.priceextralhole));
+                            $("#priceextralbuggies"+index).val(formatCurrency(n.priceextralbuggies));
+                            $("#numofguest"+index).val(n.numofguest);
+                            $("#numofbuggies"+index).val(n.numofbuggies);
+                            $("#totalprice"+index).val(formatCurrency(n.totalprice));
+                            $("#noteextrafee"+index).val(n.noteextrafee);
+                            sumprice+=n.price;
+                            sumpricebuggies+=n.pricebuggies;
+                            sumpriceextralhole+=n.priceextralhole;
+                            sumpriceextralbuggies+=n.priceextralbuggies;
+                            sumnumofguest+=n.numofguest;
+                            sumnumofbuggies+=n.numofbuggies;
+                            sumntotalprice+=n.totalprice;
+                        }
+                    }
+                }
+                totalprice=sumntotalprice;
+                $("#sumprice").html("<b>"+formatCurrency(sumprice)+"</b>");
+                $("#sumpricebuggies").html("<b>"+formatCurrency(sumpricebuggies)+"</b>");
+                $("#sumpriceextralhole").html("<b>"+formatCurrency(sumpriceextralhole)+"</b>");
+                $("#sumpriceextralbuggies").html("<b>"+formatCurrency(sumpriceextralbuggies)+"</b>");
+                $("#sumnumofguest").html("<b>"+formatCurrency(sumnumofguest)+"</b>");
+                $("#sumnumofbuggies").html("<b>"+formatCurrency(sumnumofbuggies)+"</b>");
+                $("#sumntotalprice").html("<b>"+formatCurrency(sumntotalprice)+"</b>");
+            }
+        }
+    }
+</script>

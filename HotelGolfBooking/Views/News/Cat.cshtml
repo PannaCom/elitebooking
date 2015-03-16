@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.news>
+@using PagedList.Mvc; 
+
+@{
+    ViewBag.Title = Model[0].catname;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var catname = "";
+    var keyword = "";
+    var catid = "";
+    
+}
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function () { $('#parallax-pagetitle').parallax("50%", -0.55); });</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url(./images/parallax/1900x911.gif);">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Tin tức chuyên mục @ViewBag.Title</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="row"> 
+    <!-- Blog -->
+    <section class="blog mt50">
+      <div class="col-md-9">
+          @foreach (var item in Model)
+          {
+              catname = HotelGolfBooking.Config.unicodeToNoMarkCat(@item.catname);
+               catid = item.catid.ToString();
+               keyword += item.keyword + ","; 
+              <div style="margin-bottom:15px;display:block;position:relative;float:left;"> 
+                  <a href="/detail/@item.url-@item.id" class="mask" style="display:block;position:relative;float:left;"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="@item.title" class="imagenewslist"></a>
+                  <div class="row rowimagenewslist" >
+                    <div class="col-sm-11 col-xs-10 meta">
+                      <h2 style="font-size:26px;"><a href="/detail/@item.url-@item.id">@Html.Raw(@item.title)</a></h2>
+                      <p><span class="meta-category" style="width:auto;display:block;"><i class="fa fa-pencil"></i><a href="/category/all-@catname-@item.catid-1/">@item.catname</a></span>&nbsp;Gửi ngày @item.datetime</p>
+				      <p class="intro">@Html.Raw(@item.des)</p>
+                    </div>
+                   </div> 
+              </div>
+          }
+          <!-- Pagination -->
+        <div class="text-center mt50">
+          <ul class="pagination clearfix">
+            <li class="disabled"><a href="#">«</a></li>
+            @for (int i = 1; i <= Model.PageCount; i++)
+            { 
+              <text><li><a href="/category/all-@catname-@catid-@i">@i</a></li></text>
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Aside -->
+    <aside class="mt50"> 
+      <!-- Widget: Text -->
+      <div class="col-md-3">
+        <div class="widget">
+          <h3>Tin tức</h3>
+          <p>Nơi cung cấp cho các bạn thông tin khách sạn, du lịch, golf</p>
+        </div>
+        <!-- Widget: Categories -->
+        <div class="widget">
+          <h3>Chuyên mục</h3>
+          <ul class="list-unstyled arrow" id="listSumCat" name="listSumCat">
+            
+          </ul>
+        </div>
+        <!-- Widget: Tags -->
+        <div class="widget">
+          <h3>Tags</h3>
+          <div class="tags">@Html.Raw(@HotelGolfBooking.Config.displayTagNews(@keyword))</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<script>
+    getListSumCat();
+</script>

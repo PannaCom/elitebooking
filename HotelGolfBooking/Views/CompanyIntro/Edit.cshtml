@@ -1,0 +1,47 @@
+﻿@model HotelGolfBooking.Models.company_introduction
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa Địa chỉ</h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Edit", "CompanyIntro", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Nội dung</label>                
+                 <textarea name="fullcontent" id="fullcontent" rows="20" cols="80">
+                     @Model.fullcontent
+                </textarea>
+                <script>
+                    CKEDITOR.replace('fullcontent');
+                </script>     
+               <p>
+                <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+               </p>                  
+              </div>
+           
+        </div>
+        
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("fullcontent").value == "") {
+            alert("Nhập nội dung!");
+            document.getElementById("fullcontent").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

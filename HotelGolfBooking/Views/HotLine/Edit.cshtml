@@ -1,0 +1,50 @@
+﻿@model HotelGolfBooking.Models.hotline
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm mới Email và HotLine</h2>
+@using (Html.BeginForm("Edit", "HotLine", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">email</label>                
+                 <input name="email" type="text" id="email" value="@Model.email" class="form-control"/>                        
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">HotLine</label>                
+                 <input name="phone" type="text" id="phone" value="@Model.phone" class="form-control"/>                        
+              </div>
+            </div>
+            <p>
+                <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+            </p>
+        
+        
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("email").value == "") {
+            alert("Nhập email!");
+            document.getElementById("email").focus();
+            return false;
+        }
+        if (document.getElementById("phone").value == "") {
+            alert("Nhập phone!");
+            document.getElementById("phone").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

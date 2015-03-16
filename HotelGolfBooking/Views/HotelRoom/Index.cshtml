@@ -1,0 +1,75 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.hotel_room>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idhotel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.roomname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sprice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.breakfast)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.extrabed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.maxofadult)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nonsmoking)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.noofroom)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idhotel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.roomname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sprice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.breakfast)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.extrabed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxofadult)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nonsmoking)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.noofroom)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

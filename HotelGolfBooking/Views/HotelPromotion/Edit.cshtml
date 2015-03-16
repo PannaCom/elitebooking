@@ -1,0 +1,83 @@
+﻿@model HotelGolfBooking.Models.hotel_promotion
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdminBasic.cshtml";
+}
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<div class="col-md-8">
+<h2>Sửa khuyến mại cho khách sạn @Session["hotelName"]</h2>
+@using (Html.BeginForm("Edit", "HotelPromotion", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        
+              <div class="form-group">
+                <label for="room">Tỷ lệ % discount</label>
+                <input name="discount" type="text" id="discount" value="@Model.discount" class="form-control" onblur="checkDiscount();"/>                                
+                <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
+                <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />                
+                <input name="fdate" type="hidden" id="fdate" value="@Model.fdate" class="form-control" />                
+                <input name="tdate" type="hidden" id="tdate" value="@Model.tdate" class="form-control" />                
+              </div>
+              <div class="form-group">
+                <label style="width:auto;display:block;">Áp dụng từ ngày</label>
+                <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.fdate.ToString())" class="form-control" placeholder="từ ngày"/>                                            
+              </div>
+              <div class="form-group">
+                <label style="width:auto;display:block;">Đến ngày</label>
+                <input name="checkout" type="text" id="checkout" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.tdate.ToString())" class="form-control" placeholder="đến ngày"/>                                                 
+              </div>
+              
+                  <div class="form-group">
+                    <label for="room" style="width:auto;display:block;">Nội dung chi tiết</label>                
+                     <textarea name="details" id="details" rows="20" cols="220">
+                         @Model.details
+                    </textarea>
+                    <script>
+                        CKEDITOR.replace('details');
+                    </script>                       
+                  </div>
+              
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+        </p>
+    </fieldset>    
+}
+ 
+<div>
+    <a href="/HotelPromotion/Create/">Quay lại</a>    
+</div>
+</div>
+
+<script>
+
+   
+    function checkDiscount() {
+        document.getElementById("discount").value = parseInt(removeSpecialCharater(document.getElementById("discount").value));
+    }
+    //alert(getDateId("23/11/2014"));
+    function checkField() {
+        if (document.getElementById("discount").value == "") {
+            alert("Nhập tỷ lệ giảm giá!");
+            document.getElementById("discount").focus();
+            return false;
+        }
+        if (document.getElementById("checkin").value == "") {
+            alert("Nhập ngày bắt đầu áp dụng!");
+            document.getElementById("checkin").focus();
+            return false;
+        }
+        if (document.getElementById("checkout").value == "") {
+            alert("Nhập ngày kết thúc áp dụng!");
+            document.getElementById("checkout").focus();
+            return false;
+        }
+        document.getElementById("fdate").value = getDateId(document.getElementById("checkin").value);
+        //alert(document.getElementById("fdate").value);
+        document.getElementById("tdate").value = getDateId(document.getElementById("checkout").value);
+        //return;
+        document.getElementById("EditForm").submit();
+    }
+</script>
+

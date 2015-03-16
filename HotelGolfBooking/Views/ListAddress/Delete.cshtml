@@ -1,0 +1,17 @@
+﻿@model HotelGolfBooking.Models.list_address
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn muốn xóa quận huyện này?</h3>
+<fieldset>
+    <label for="room">@Model.dis, @Model.provin</label>    
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" class="btn btn-info" value="Xóa" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

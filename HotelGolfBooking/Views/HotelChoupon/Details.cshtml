@@ -1,0 +1,114 @@
+﻿@model HotelGolfBooking.Models.hotel_choupon
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_choupon</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.hotelname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.hotelname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idroom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idroom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.roomname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.roomname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.chouponprice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.chouponprice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.total)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.total)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.provin)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.provin)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility2)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility2)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility3)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility3)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility4)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility4)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility5)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility5)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.facility6)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.facility6)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

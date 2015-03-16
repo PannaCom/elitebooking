@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" >
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">            
+            <h2 style="margin-top:4px;">@ViewBag.provin - @ViewBag.hotelname</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="row"> 
+    <!-- Contact form -->
+    <section id="contact-form" class="mt50" style="margin-top:2px;">
+      <div class="col-md-8">
+        <h2 class="lined-heading" style="margin-bottom:2px;"><span>Điền thông tin khách hàng</span></h2>
+        <p>Nếu bạn chưa chọn ngày đi thì để trống</p>
+        <div id="message"></div>
+        <!-- Error message display -->
+        <form class="clearfix mt50" role="form" method="post" name="contactform" id="contactform" style="margin-top:2px;">
+		  <div class="form-group">
+			<label for="email" accesskey="E" class="wauto">Chọn số phòng</label>
+				<select class="form-control" name="numofroom" id="numofroom">                  
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>                  
+				  <option value="6">6</option>                  
+                </select>
+          </div>
+          <div class="form-group">
+                <label style="width:auto;display:block;">Số khách</label>
+                <input name="numofguest" type="text" id="numofguest" value="1" class="form-control" placeholder="Số khách"/>                                            
+          </div>   
+		  <div class="form-group">
+				<label for="checkin" class="wauto">Ngày nhận phòng</label>                
+                <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.checkin.ToString())" class="form-control" placeholder="Check-in"/>
+          </div> 
+		  <div class="form-group">
+				<label for="checkin" class="wauto">Ngày trả phòng</label>               
+                <input name="checkout" type="text" id="checkout" value="" class="form-control" placeholder="Check-in"/>
+          </div> 	
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" class="wauto"><span class="required">*</span>Họ Tên</label>
+                <input name="cname" type="text" id="cname" class="form-control" value=""/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> E-mail</label>
+                <input name="cemail" type="text" id="cemail" value="" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Di động</label>
+                <input name="cphone" type="text" id="cphone" value="" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Địa chỉ</label>
+                <input name="caddress" type="text" id="caddress" value="" class="form-control"/>
+              </div>
+            </div>			
+          </div>
+          <div class="form-group">
+			<label for="email" accesskey="E" class="wauto">Chọn hình thức thanh toán</label>
+				<select class="form-control" name="paymenttype" id="paymenttype">                  
+                  <option value="@HotelGolfBooking.Config.payment_method1">@HotelGolfBooking.Config.payment_method1</option>
+                  <option value="@HotelGolfBooking.Config.payment_method2" selected>@HotelGolfBooking.Config.payment_method2</option>
+                  <option value="@HotelGolfBooking.Config.payment_method3">@HotelGolfBooking.Config.payment_method3</option>
+				  <option value="@HotelGolfBooking.Config.payment_method4">@HotelGolfBooking.Config.payment_method4</option>				                 
+                </select>
+            <label for="comments" accesskey="C"><span class="required">*</span> Ghi chú</label>
+            <textarea name="cnote" rows="9" id="cnote" class="form-control"></textarea>
+          </div>          
+          <button type="button" class="btn btn-info" onclick="checkField();" id="btnconfirm">Xác nhận</button>
+        </form>
+      </div>
+    </section>
+    
+    <!-- Contact details -->
+    <section class="contact-details mt50" style="margin-top:2px;">
+      <div class="col-md-4">
+        <h2 class="lined-heading" style="margin-bottom:4px;"><span>Cách đặt & sử dụng Coupon</span></h2>
+		<p><b>Bước 1:</b> Đăng kí mua Coupons trên website EliteHotel(Bạn đang ở bước này)</p>
+		<p><b>Bước 2:</b> EliteHotel điện thoại cho bạn xác nhận đơn hàng.</p>
+		<p><b>Bước 3:</b> Bạn thanh toán cho EliteHotel (chuyển khoản, ATM, tiền mặt tại văn phòng, thu tiền tận nhà trong trung tâm Hà Nội - HCM, thẻ tín dụng + thẻ nội địa)</p>
+		<p><b>Bước 4:</b> Bạn nhận Coupons qua email với Mã Số Coupons</p>
+		<p><b>Bước 5:</b> Bạn cung cấp Mã Số Coupons cho EliteHotel khi có ngày đi cụ thể để EliteHotel giúp bạn đặt phòng</p>
+		<p><b>Bước 6:</b> Sau khi đặt phòng thành công, EliteHotel gởi phiếu xác nhận đặt phòng tới email của bạn.</p>
+		<p><b>Bước 7:</b> Bạn in phiếu xác nhận này, và mang tới khách sạn khi nhận phòng.</p>
+        <div id="divCompanyBanking">
+            <script>
+                getCompanyBanking();
+            </script>
+        </div> 
+	  </div>
+    </section>
+  </div>
+</div>
+<script>
+    function checkField() {
+        
+        //return;
+        //check field
+        if(isNaN($("#numofguest").val())){
+            alert("Nhập số khách");
+            $("#numofguest").focus();
+            return;
+        }
+        if($("#cname").val()==""){
+            alert("Nhập họ tên khách hàng");
+            $("#cname").focus();
+            return;
+        }
+        if($("#cemail").val()==""){
+            alert("Nhập email");
+            $("#cemail").focus();
+            return;
+        }
+        if($("#cphone").val()==""){
+            alert("Nhập số điện thoại");
+            $("#cphone").focus();
+            return;
+        }
+        document.getElementById("btnconfirm").disabled=true;
+        var fdate = getDateId($("#checkin").val());
+        var tdate = getDateId($("#checkout").val());
+        //alert(fdate+tdate);
+
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", @ViewBag.idhotel);
+        formdata.append("hotelname", "@Html.Raw(@ViewBag.hotelname)");
+        formdata.append("provin", "@Html.Raw(@ViewBag.provin)");
+        formdata.append("idroom", @ViewBag.idroom);
+        formdata.append("roomname", "@Html.Raw(@ViewBag.roomname)");
+        formdata.append("numofroom", $("#numofroom").val());
+        formdata.append("numofguest", $("#numofguest").val());
+        formdata.append("fromdate", fdate);
+        formdata.append("todate", tdate);
+        formdata.append("cname", $("#cname").val());
+        formdata.append("cemail", $("#cemail").val());
+        formdata.append("cphone", $("#cphone").val());
+        formdata.append("caddress", $("#caddress").val());
+        formdata.append("paymenttype", $("#paymenttype").val());
+        formdata.append("cnote", $("#cnote").val());
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelBooking/addNewChoupon');
+        xhr.send(formdata);        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                if(xhr.responseText!="0"){
+                    //alert("Xác nhận đặt phòng thành công! Chúng tôi sẽ liên hệ với khách hàng qua email và điện thoại sớm nhất!");
+                    //if ($("#paymenttype").val()=="Chuyển khoản Ebanking"){
+                    //window.location.href="/HotelBooking/Payment?idhotel=@ViewBag.idhotel&code=@ViewBag.code";
+                    //}else{
+                    window.location.href="/HotelBooking/ConfirmEmail";
+                    //}
+                }else{
+                    alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                }
+            }
+        }
+    }
+</script>

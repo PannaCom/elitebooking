@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "EliteHotel - Đặt phòng khách sạn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Revolution Slider -->
+<section class="revolution-slider">
+  <div class="bannercontainer">
+    <div class="banner">
+      <ul>
+        <!-- Slide 1 -->
+        <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" > 
+          <!-- Main Image --> 
+          <img src="@ViewBag.image1" style="opacity:0;" alt="slidebg1"  data-bgfit="cover" data-bgposition="left bottom" data-bgrepeat="no-repeat"> 
+          <!-- Layers -->
+          <!-- Layer 11 -->	
+		  <div class="textlink"><span style="text-shadow: 0 0 5px #0026ff, 0 0 7px #0026ff;margin: 0 0 0 0;color:#fff;display: block;font-size:18px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;">@Html.Raw(@ViewBag.caption1)</span><b><a href="@ViewBag.link1" style="color:#fff;font-weight:bold;font-size:12px;">@ViewBag.linktext1</a></b></div>
+		    <!-- Layer 12 -->
+          <div class="caption sft revolution-starhotel smalltext"  
+          				data-x="35" 
+                        data-y="330" 
+                        data-speed="800" 
+                        data-start="1700" 
+                        data-easing="easeOutBack">
+						<span style="text-shadow: 0 0 25px #000, 0 0 27px #000;margin: 10px 0;color:#fff;display: block;font-size:28px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;">@Html.Raw(@ViewBag.slogan1)</span><br>
+						
+						</div>			
+      
+        </li>
+		<!-- Slide 2 -->
+        <li data-transition="boxfade" data-slotamount="7" data-masterspeed="1000" > 
+          <!-- Main Image --> 
+          <img src="@ViewBag.image2"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left bottom" data-bgrepeat="no-repeat"> 
+          <!-- Layers -->           
+        
+         <!-- Layer 2 -->
+          <div class="textlink"><span style="text-shadow: 0 0 5px #0026ff, 0 0 7px #0026ff;margin: 0 0 0 0;color:#fff;display: block;font-size:18px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;">@Html.Raw(@ViewBag.caption2)</span><b><a href="@ViewBag.link2" style="color:#fff;font-weight:bold;font-size:15px;">@ViewBag.linktext2</a></b></div>
+		    <!-- Layer 21 -->
+          <div class="caption sft revolution-starhotel smalltext"  
+          				data-x="35" 
+                        data-y="330" 
+                        data-speed="800" 
+                        data-start="1700" 
+                        data-easing="easeOutBack">
+						<span style="text-shadow: 5px 2px 2px #0026ff;margin: 10px 0;color:#fff;display: block;font-size:28px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;">@Html.Raw(@ViewBag.slogan2)</span><br>
+						
+						</div>		
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Reservation form -->
+<section id="reservation-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">           
+        <form class="form-inline reservation-horizontal clearfix" role="form"   name="reservationform" id="reservationform">
+        <div id="message"></div><!-- Error message display -->
+          <div class="row">
+            <div class="col-sm-2" >
+              <div class="form-group">
+                <label >Thành Phố</label>
+				<select class="form-control" name="dis" id="dis" style="width:20px;">
+                  <option selected="selected" disabled="disabled">Chọn</option>
+                  
+                </select>                
+              </div>
+            </div>
+			<div class="col-sm-2" >
+              <div class="form-group">
+                <label >Tiêu chuẩn</label>
+                <select class="form-control" name="rate" id="rate" style="width:20px;">
+                  <option selected="selected" disabled="disabled">Chọn tiêu chuẩn</option>
+				  <option value="6">Cao cấp và Resort</option>                  
+				  <option value="5">5 sao</option>
+				  <option value="4">4 sao</option>
+                  <option value="3">3 sao</option>
+                </select> 
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Khách sạn</label>
+                <input name="hotelname" type="text" id="hotelname" value="" class="form-control" placeholder="Gõ tên " style="width:170px;" onkeyup="searchHotel();"/>
+              </div>
+            </div>
+            <div class="col-sm-2" >
+              <div class="form-group">
+                <label for="checkin" style="width:auto;display:block;">Ngày nhận phòng</label>                
+                <i class="fa fa-calendar infield" onclick='$("#checkin").datepicker("show");'></i>
+                <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.fromdate)" class="form-control" placeholder="Check-in" style="width:100px;"/>                
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="checkout" style="width:auto;display:block;">Ngày trả phòng</label>                
+                <i class="fa fa-calendar infield" onclick='$("#checkout").datepicker("show");'></i>
+                <input name="checkout" type="text" id="checkout" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.todate)" class="form-control" placeholder="Check-out" style="width:100px;"/>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" class="btn btn-info" onclick="searchHotelSubmit();">Tìm Khách Sạn</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row"> 
+    <!-- Testimonials -->
+    <section class="testimonials mt20">
+      <div class="col-md-6">
+        <h2 class="lined-heading bounceInLeft appear" data-start="0"><span>Đánh giá của khách hàng</span></h2>
+        <div id="owl-reviews" class="owl-carousel">
+             @Html.Raw(@ViewBag.contentFeedback)
+        </div>
+		<h3 class="lined-heading bounceInLeft appear" data-start="0"><span><a href="/Feedback/Contact">Phản hồi của bạn</a></span></h3>
+      </div>
+    </section>
+    
+    <!-- About -->
+    <section class="about mt20">
+      <div class="col-md-6" >
+        <h2 class="lined-heading bounceInRight appear" data-start="800"><span>Top khách sạn bán chạy nhất</span></h2>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" >
+          <li class="active"><a href="#hotel" data-toggle="tab" style="background-color: #1F497D;color:#fff;">TOP DEALS</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" >
+          <div class="tab-pane fade in active" id="hotel">
+				<table class="tbl_price_room" id="TopDeal">
+					
+				</table>				
+          </div>          
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="col-md-12" >
+	<h2 class="lined-heading bounceInRight appear" data-start="800"><span>Khách sạn rẻ nhất</span></h2>
+		<div style="display:block;float:left;position:relative;width:100%;" id="GoodPrice">
+			
+		</div>	
+  </div>
+</div>
+<!-- Gallery -->
+<section class="gallery-slider mt20">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="lined-heading"><span>Khách sạn nhiều người quan tâm nhất</span></h2>
+      </div>
+    </div>
+  </div>
+  <div id="owl-gallery" class="owl-carousel">
+     @Html.Raw(@ViewBag.goodhotel)
+  </div>
+</section>
+
+<script>
+    getAddressList();
+    getTopDeal(@ViewBag.fromdate,@ViewBag.todate); 
+    getGoodPrice(@ViewBag.fromdate,@ViewBag.todate);
+    //getFeedbackList(@ViewBag.fromdate,@ViewBag.todate);
+    $("#owl-gallery").find("owl-item").css("width","292px");
+</script>

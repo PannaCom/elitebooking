@@ -1,0 +1,23 @@
+﻿@model HotelGolfBooking.Models.hotel_rule
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_rule</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.rulehotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.rulehotel)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

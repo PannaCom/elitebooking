@@ -1,0 +1,117 @@
+﻿@model HotelGolfBooking.Models.golf_promotion
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<div class="col-md-8" id="listPromotion" style="display:none;">
+        
+</div>
+<div class="col-md-8">
+<h2>Nhập khuyến mại cho sân golf @Session["golfname"]</h2>
+@using (Html.BeginForm("Create", "GolfPromotion", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        
+              <div class="form-group">
+                <label for="room">Chi tiết khuyến mại</label>
+                <textarea name="note" id="note" rows="20" cols="80">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('note');
+                </script>                                  
+                <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />                
+                <input name="fdate" type="hidden" id="fdate" value="" class="form-control" />                
+                <input name="tdate" type="hidden" id="tdate" value="" class="form-control" />                
+              </div>
+              <div class="form-group">
+                <label style="width:auto;display:block;">Áp dụng từ ngày</label>
+                <input name="checkin2" type="date" id="checkin2" value="" class="form-control" placeholder="từ ngày"/>
+                                                         
+              </div>
+              <div class="form-group">
+                <label style="width:auto;display:block;">Đến ngày</label>
+                <input name="checkout2" type="date" id="checkout2" value="" class="form-control" placeholder="đến ngày"/>   
+                                                             
+              </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>    
+}
+ 
+<div>
+    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    function getDateIdNew(d) {
+        d = d.replace(/\-/g, "");
+        return d;
+    }
+
+    function getGolfPromotionList(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfPromotion/getGolfPromotionList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách khuyến mại đang có</h4><table class=tbl_price_room><tr><th>Chi tiết</th><th>Từ ngày</th><th>Đến ngày</th><th></th><tr>";
+                $("#listPromotion").show();
+                $("#listPromotion").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+
+                        //alert(n.fdate + "-"+n.tdate);
+
+                        content += "<tr><td><a href=\"/GolfPromotion/Details?id="+n.id+"\" target=\"_blank\">Chi tiết</a></td><td>" + convertFromDateIdToDateString("" + n.fdate + "") + "</td><td>" + convertFromDateIdToDateString("" + n.tdate + "") + "</td><td><a href=\"/GolfPromotion/Edit/" + n.id + "\">Sửa</a>&nbsp;<a href=\"/GolfPromotion/Delete/" + n.id + "\">Xóa</a></td><tr>";
+                    }
+                }
+                //alert(content);
+                $("#listPromotion").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getGolfPromotionList(@Session["idgolf"]);
+    function checkDiscount() {
+        document.getElementById("discount").value = parseInt(removeSpecialCharater(document.getElementById("discount").value));
+    }
+    //alert(getDateId("23/11/2014"));
+    function checkField() {
+        if (document.getElementById("note").value == "") {
+            alert("Nhập chi tiết khuyến mại!");
+            document.getElementById("note").focus();
+            return false;
+        }
+        if (document.getElementById("checkin2").value == "") {
+            alert("Nhập ngày bắt đầu áp dụng!");
+            document.getElementById("checkin2").focus();
+            return false;
+        }
+        if (document.getElementById("checkout2").value == "") {
+            alert("Nhập ngày kết thúc áp dụng!");
+            document.getElementById("checkout2").focus();
+            return false;
+        }
+        document.getElementById("fdate").value = getDateIdNew(document.getElementById("checkin2").value);
+        //alert(document.getElementById("fdate").value);
+        document.getElementById("tdate").value = getDateIdNew(document.getElementById("checkout2").value);
+        //return;
+        document.getElementById("EditForm").submit();
+    }
+</script>

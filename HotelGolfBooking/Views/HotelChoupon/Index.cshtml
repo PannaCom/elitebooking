@@ -1,0 +1,112 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.hotel_choupon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idhotel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hotelname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idroom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.roomname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.chouponprice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.provin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.facility6)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idhotel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hotelname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idroom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.roomname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.chouponprice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.provin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.facility6)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

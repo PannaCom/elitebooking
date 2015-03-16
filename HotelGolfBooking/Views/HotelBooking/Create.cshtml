@@ -1,0 +1,157 @@
+﻿@model HotelGolfBooking.Models.hotel_booking
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>hotel_booking</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idhotel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idhotel)
+            @Html.ValidationMessageFor(model => model.idhotel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.hotelname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.hotelname)
+            @Html.ValidationMessageFor(model => model.hotelname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idroom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idroom)
+            @Html.ValidationMessageFor(model => model.idroom)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.roomname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.roomname)
+            @Html.ValidationMessageFor(model => model.roomname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.numofroom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.numofroom)
+            @Html.ValidationMessageFor(model => model.numofroom)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fromdate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fromdate)
+            @Html.ValidationMessageFor(model => model.fromdate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.todate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.todate)
+            @Html.ValidationMessageFor(model => model.todate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.datebook)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.datebook)
+            @Html.ValidationMessageFor(model => model.datebook)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cname)
+            @Html.ValidationMessageFor(model => model.cname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cphone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cphone)
+            @Html.ValidationMessageFor(model => model.cphone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cemail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cemail)
+            @Html.ValidationMessageFor(model => model.cemail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.caddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.caddress)
+            @Html.ValidationMessageFor(model => model.caddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cnote)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cnote)
+            @Html.ValidationMessageFor(model => model.cnote)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cip)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cip)
+            @Html.ValidationMessageFor(model => model.cip)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.status)
+            @Html.ValidationMessageFor(model => model.status)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.typebook)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.typebook)
+            @Html.ValidationMessageFor(model => model.typebook)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,192 @@
+﻿@model HotelGolfBooking.Models.golf_price
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-8" id="listGolfPrice" style="display:none;">
+        
+</div>
+<div class="col-md-8">
+<h2>Quản lý giá sân golf @Session["golfname"]</h2>
+@using (Html.BeginForm("Create", "GolfPrice", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>      
+        <input name="idgolf" type="hidden" id="idhotel" value="@Session["idgolf"]" class="form-control" />                
+        <input name="golfname" type="hidden" id="hotelname" value="@Session["golfname"]" class="form-control" />
+        <div class="form-group">
+              <div id="listMonth" name="listMonth">
+                   <table style="border:1px solid #ff6a00;width:90%;">
+                        <tr><th colspan="12" nowrap>Chọn tháng</th></tr>
+                        <tr>
+                            <td onclick="chooseMonth(1);" id="bgm1" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>1</B></td>
+                            <td onclick="chooseMonth(2);" id="bgm2" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>2</B></td>
+                            <td onclick="chooseMonth(3);" id="bgm3" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>3</B></td>
+                            <td onclick="chooseMonth(4);" id="bgm4" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>4</B></td>
+                            <td onclick="chooseMonth(5);" id="bgm5" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>5</B></td>
+                            <td onclick="chooseMonth(6);" id="bgm6" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>6</B></td>
+                            <td onclick="chooseMonth(7);" id="bgm7" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>7</B></td>
+                            <td onclick="chooseMonth(8);" id="bgm8" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>8</B></td>
+                            <td onclick="chooseMonth(9);" id="bgm9" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>9</B></td>
+                            <td onclick="chooseMonth(10);" id="bgm10" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>10</B></td>
+                            <td onclick="chooseMonth(11);" id="bgm11" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>11</B></td>
+                            <td onclick="chooseMonth(12);" id="bgm12" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>12</B></td>
+                        </tr>
+                   </table>
+              </div>
+              <table id="listPrice">
+                <tr><th>Giá trong tuần</th><th>Giá cuối tuần/lễ</th><th>Giá xe điện</th><th>Trong các tháng</th><th><th></tr>
+                <tr>
+                    <td><input name="price0" type="text" id="price0" value="" class="form-control" placeholder="Nhập giá trong tuần" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>  
+                    <td><input name="pricewk0" type="text" id="pricewk0" value="" class="form-control" placeholder="Nhập giá cuối tuần" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>  
+                    <td><input name="pricebuggy0" type="text" id="pricebuggy0" value="0" class="form-control" placeholder="Nhập giá xe điện" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>                               
+                    <td><input name="month0" type="text" id="month0" value="" class="form-control" placeholder="ví dụ:,1,,2,,3,,4," onblur="checkMonth(this);" onfocus="getIndex(0);"/></td>  
+                    <td><input type="button" value="+Thêm" onclick="addItem();">|<input type="button" value="-Xóa" onclick="removeItem();"></td>
+                </tr>       
+              </table>
+         </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Save</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    var bgcolor = ["lime", "red", "green", "grey", "yellow", "orange","brown","lime"];
+    var currentIndex=0;
+    var totalitem = 1;
+    function getIndex(value){
+        currentIndex=value;
+    }
+    function chooseMonth(v){
+        $("#bgm"+v).css("background-color",bgcolor[currentIndex%7]);
+        if (document.getElementById("month"+currentIndex).value.indexOf(","+v+",")<0){
+            document.getElementById("month"+currentIndex).value+=","+v+",";
+        }else{
+            document.getElementById("month"+currentIndex).value=document.getElementById("month"+currentIndex).value.replace(","+v+",","");
+            $("#bgm"+v).css("background-color","blue");
+        }
+    }
+    function addItem() {
+        var content = "";
+        content+="<tr id=tr"+totalitem+">";
+        content+= " <td><input name=\"price"+totalitem+"\" type=\"text\" id=\"price"+totalitem+"\" value=\"\" class=\"form-control\" placeholder=\"Nhập giá\" onblur=\"checkPrice(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>";  
+        content+= " <td><input name=\"pricewk"+totalitem+"\" type=\"text\" id=\"pricewk"+totalitem+"\" value=\"\" class=\"form-control\" placeholder=\"Nhập giá cuối tuần\" onblur=\"checkPrice(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>"; 
+        content+= " <td><input name=\"pricebuggy"+totalitem+"\" type=\"text\" id=\"pricebuggy"+totalitem+"\" value=\"0\" class=\"form-control\" placeholder=\"Nhập giá cuối tuần\" onblur=\"checkPrice(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>";
+        content+= " <td><input name=\"month"+totalitem+"\" type=\"text\" id=\"month"+totalitem+"\" value=\"\" class=\"form-control\" placeholder=\"ví dụ:,1,2,3,12,\" onblur=\"checkMonth(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>";  
+        content+= " <td><input type=\"button\" value=\"+Thêm\" onclick=\"addItem();\">|<input type=\"button\" value=\"-Xóa\" onclick=\"removeItem("+totalitem+");\"></td>";
+        content += "</tr>";
+        $("#listPrice").append(content);
+        totalitem++;
+    }
+    function checkMonth(obj){        
+        //var val=removeSpecialCharater(obj.value);
+        //if (isNaN(val))
+        //{
+        //    alert("Dữ liệu phải định dạng kiểu ,1,2,3,4, (có đủ dấu phẩy ở hai đầu)");
+        //    obj.focus();
+        //    return false;
+        //}
+        //var s1=obj.value.substring(0,1);
+        //var s2=obj.value.substring(obj.value.length-1,obj.value.length);
+       
+        //if (s1!=","|| s2!=","){
+        //    alert("Dữ liệu phải định dạng kiểu ,1,2,3,4, (có đủ dấu phẩy ở hai đầu)");
+        //    obj.focus();
+        //    return false;
+        //}
+    }
+    function removeItem(index) {
+        $("#tr" + index).remove();
+    }
+    
+    function getGolfPriceList(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfPrice/getGolfPriceList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách giá đang có</h4><table class=tbl_price_room><tr><th>Giá trong tuần</th><th>Giá cuối tuần</th><th>Giá xe điện</th><th>Trong tháng</th><th></th><tr>";
+                $("#listGolfPrice").show();
+                $("#listGolfPrice").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                       
+                        content += "<tr><td>" + n.price + "</td><td>" + n.priceweekend + "</td><td>" + n.pricebuggy + "</td><td>" + n.month + "</td><td><a href=\"/GolfPrice/Edit/" + n.id + "\">Sửa</a><a href=\"/GolfPrice/Delete/" + n.id + "\"> Xóa</a></td><tr>";
+                    }
+                }
+                //alert(content);
+                $("#listGolfPrice").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getGolfPriceList(@Session["idgolf"]);
+    
+    function checkTotal() {
+        document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
+    }
+    function checkPrice(obj) {
+        if (obj.value=="") return 0;
+        obj.value = parseInt(removeSpecialCharater(obj.value));
+    }
+    function checkField() {
+       
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", @Session["idgolf"]);
+        formdata.append("golfname", "@Html.Raw(@Session["golfname"])");
+        formdata.append("totalitem", totalitem);        
+        for (var i = 0; i < totalitem; i++) {
+            if (!document.getElementById("price" + i)||!document.getElementById("month" + i)) continue;
+            if (document.getElementById("price" + i).value == 0 || isNaN(document.getElementById("price" + i).value)) {
+                alert("Nhập giá");
+                document.getElementById("price" + i).focus();
+                return;
+            }
+            if (document.getElementById("pricewk" + i).value == 0 || isNaN(document.getElementById("pricewk" + i).value)) {
+                alert("Nhập giá cuối tuần");
+                document.getElementById("pricewk" + i).focus();
+                return;
+            }
+            if (document.getElementById("month" + i).value == 0) {
+                alert("Nhập giai đoạn");
+                document.getElementById("month" + i).focus();
+                return;
+            }
+            formdata.append("price" + i, document.getElementById("price" + i).value);
+            formdata.append("pricewk" + i, document.getElementById("pricewk" + i).value);
+            formdata.append("pricebuggy" + i, document.getElementById("pricebuggy" + i).value);
+            formdata.append("month" + i, document.getElementById("month" + i).value);
+        }
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfPrice/addNewItem');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+</script>
+

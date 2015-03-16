@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Bản đồ khách sạn "+@ViewBag.hotelname;
+    Layout = "~/Views/Shared/_LayoutHotelDetail.cshtml";
+}
+
+<h2>Bản đồ khách sạn @ViewBag.hotelname</h2>
+<h3>@ViewBag.address</h3>
+<div id="map-canvas" style="height: 400px; width: 100%;">
+  
+</div>
+<div id="divMapInfoWindow" class="ui-corner-all" style="width: 400px; display: none;
+	position: absolute; border: 2px solid #888; background-color: white; padding: 10px;
+	z-index: 200;">
+</div>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<script>
+    $(function () {
+
+        $(window).load(function() {
+            initialize();
+        });
+
+        var map;
+        var overlay;
+
+        function initialize() {
+            var mapDiv = document.getElementById('map-canvas');
+            map = new google.maps.Map(mapDiv, {
+                center: new google.maps.LatLng(@ViewBag.lat, @ViewBag.lon),
+                zoom: 16,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.SMALL 
+                },
+                //minZoom: 15, maxZoom: 19,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scaleControl: true,
+                scaleControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_LEFT
+                }
+            });
+
+            google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
+
+            overlay = new google.maps.OverlayView();
+            overlay.draw = function() {};
+            overlay.setMap(map);
+
+            //BienDongInit(map, "map-canvas");
+
+        }
+
+        //var imageRed = new google.maps.MarkerImage('/img/icons/marker-house-red.gif',new google.maps.Size(16, 16),new google.maps.Point(0,0),new google.maps.Point(8, 16));
+        var imageGreen = new google.maps.MarkerImage('/img/icons/marker-house-green.gif',new google.maps.Size(16, 16),new google.maps.Point(0,0),new google.maps.Point(8, 16));
+
+        function addMarkers() {
+            // current hotel pointer
+            var latLng = new google.maps.LatLng(@ViewBag.lat, @ViewBag.lon);
+            var marker = new google.maps.Marker({ position: latLng, map: map });
+            var content = '<div style="width:100px;float:left;margin-right:10px;"><img src="@ViewBag.image" width="100" height="100"/></div><div style="font-size:10pt;width:290px;float:left;"><div style="margin-bottom:5px;font-weight:bold;font-size:1.2em;">@ViewBag.hotelname</div><span style="color:#444;font-size:9pt;">@ViewBag.address</span></div></div><div class="clear"></div>';
+            marker['content'] = content;
+
+            google.maps.event.addListener(marker, 'mouseover', function() { ShowContentPopup(this); });
+            google.maps.event.addListener(marker, 'mouseout', function() { $("#divMapInfoWindow").hide(); });
+
+        }
+        function ShowContentPopup(_this) {
+            var strContent = _this['content'];
+            var divMapInfoWindow = $("#divMapInfoWindow");
+            divMapInfoWindow.html(strContent);
+            var projection = overlay.getProjection(); 
+            var divPixel = projection.fromLatLngToContainerPixel(_this.getPosition());
+            var x = 0;
+            if (divPixel.x + divMapInfoWindow.width() < $("#map-canvas").width()) {
+                x = divPixel.x + $("#map-canvas").position().left + 10;
+            } else {
+                x = $("#map-canvas").position().left + divPixel.x - divMapInfoWindow.width() - 28;
+            }
+            var y = 0;
+            if (divPixel.y + divMapInfoWindow.height() < $("#map-canvas").height()) {
+                y = divPixel.y + $("#map-canvas").position().top
+            } else {
+                y = $("#map-canvas").position().top + divPixel.y - divMapInfoWindow.height() - 58;
+            }
+            divMapInfoWindow.css('left', x);
+            divMapInfoWindow.css('top', y);
+            divMapInfoWindow.show();
+        }
+
+    });
+</script>

@@ -1,0 +1,15 @@
+﻿@model HotelGolfBooking.Models.golf_promotion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Bạn có chắc chắn xóa khuyến mại @Model.discount% của sân golf này?</h3>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Create")
+    </p>
+}

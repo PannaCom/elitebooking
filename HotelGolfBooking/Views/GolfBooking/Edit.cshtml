@@ -1,0 +1,255 @@
+﻿@model HotelGolfBooking.Models.golf_booking
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h1 ><span>Đặt chỗ @ViewBag.golfname</span></h1>
+
+        <!-- Error message display -->
+        <form>
+        <fieldset>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" class="wauto"><span class="required">*</span> Họ Tên</label>
+                <input name="cname" type="text" id="cname" class="form-control" value="@Model.cname"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> E-mail</label>
+                <input name="cemail" type="text" id="cemail" value="@Model.cemail" class="form-control"/>
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E"><span class="required">*</span> Số điện thoại</label>
+                <input name="cphone" type="text" id="cphone" value="@Model.cphone" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E">Địa chỉ</label>
+                <input name="caddress" type="text" id="caddress" value="@Model.caddress" class="form-control"/>
+              </div>
+            </div>			
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="room"><span class="required">*</span>Loại hố</label> 
+                <div id="divholes">                 
+                    <select class="form-control" name="holes" id="holes" onchange="selectHoles();">
+                      <option selected="selected" disabled="disabled">Chọn số hố</option>
+                      <option value="9">9</option>
+                      <option value="18">18</option>
+                      <option value="27">27</option>
+                      <option value="-1">Số khác</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số người chơi</label>                
+                <select class="form-control" name="numofguest" id="numofguest">
+                  <option selected="selected" value="1">1</option>
+                  <option value="2">2</option>    
+                  <option value="3">3</option>  
+                  <option value="4">4</option>    
+                  <option value="5">5</option>
+                  <option value="6">6</option>    
+                  <option value="7">7</option> 
+                  <option value="8">8</option>  
+                  <option value="9">9</option> 
+                  <option value="10">10</option>   
+                  <option value="11">11</option>    
+                  <option value="12">12</option>                                         
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label style="width:auto;display:block;"><span class="required">*</span>Teetime</label>
+                    <input name="teetime" type="text" id="teetime" value="" class="form-control" placeholder="ví dụ: 09:00" onblur="getCheckIn();"/>
+                </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="room"><span class="required">*</span>Checkin</label>                
+                <input name="hcheckin" type="text" id="hcheckin" value="" class="form-control"/>
+              </div>
+            </div> 
+            <div class="col-md-6">
+                <div class="form-group">
+                        <label style="width:auto;display:block;"><span class="required">*</span>Ngày chơi</label>
+                        <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@Model.dateplay.ToString())" class="form-control" placeholder="Ngày chơi"/>                                                 
+                        <input type="hidden" id="dateplay" name="dateplay">
+                </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Có kèm Buggy</label>
+               
+                <select class="form-control" name="buggies" id="buggies">
+                  <option selected="selected" value="1">Có</option>
+                  <option value="0">Không</option>                  
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số xe Buggy</label>                
+                <select class="form-control" name="numofbuggies" id="numofbuggies">
+                  <option selected="selected" value="1">1</option>
+                  <option value="2">2</option>    
+                  <option value="3">3</option>  
+                  <option value="4">4</option>    
+                  <option value="5">5</option>
+                  <option value="6">6</option>    
+                  <option value="7">7</option> 
+                  <option value="8">8</option>  
+                  <option value="9">9</option> 
+                  <option value="10">10</option>   
+                  <option value="11">11</option>    
+                  <option value="12">12</option>                                         
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email" accesskey="E" class="wauto"><span class="required">*</span>Chọn hình thức thanh toán</label>
+				    <select class="form-control" name="paymenttype" id="paymenttype">                  
+                      <option value="@HotelGolfBooking.Config.payment_method1">@HotelGolfBooking.Config.payment_method1</option>
+                      <option value="@HotelGolfBooking.Config.payment_method2">@HotelGolfBooking.Config.payment_method2</option>
+                      <option value="@HotelGolfBooking.Config.payment_method3">@HotelGolfBooking.Config.payment_method3</option>
+				      <option value="@HotelGolfBooking.Config.payment_method4">@HotelGolfBooking.Config.payment_method4</option>				                    
+                    </select>
+                </div>
+            </div>  
+          <div class="col-md-6">  
+              <div class="form-group">
+                <label for="comments" accesskey="C"><span class="required">*</span> Ghi chú</label>
+                <textarea name="note" rows="9" id="note" class="form-control">@Model.note</textarea>
+              </div>
+          </div>  
+          <button type="button" class="btn btn-info" onclick="checkField();">Sửa thông tin</button>
+        </fieldset>
+        </form>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>       
+<script>
+    document.getElementById("holes").value="@Model.holes";
+    //$("#holes").val("@Model.holes");
+    document.getElementById("hcheckin").value="@Model.checkin";
+    document.getElementById("teetime").value="@Model.teetime";
+    document.getElementById("buggies").value="@Model.buggies";
+    document.getElementById("paymenttype").value="@Model.paymenttype";
+    document.getElementById("numofbuggies").value="@Model.numofbuggies";
+    document.getElementById("numofguest").value="@Model.numofguest";
+    function selectHoles(){
+        if (parseInt($("#holes").val())%9!=0){
+            $("#divholes").html("<input type=text id=holes name=holes placeholder=\"Nhập số hố\">");
+        }
+    }
+    function getCheckIn(){
+        if(!checkTimeFormat($("#teetime").val())){
+            alert("Nhập teetime sai định dạng hh:mm");
+            $("#teetime").focus();
+            return;
+        }
+        var obj=document.getElementById("teetime");
+        var hh= obj.value.substring(0, 2);
+        var mm= obj.value.substring(3, 5);
+        var total=parseInt(hh)*60+parseInt(mm)-30;
+        hh=total/60;
+        hh=parseInt(hh);
+        mm=total%60;
+        if (hh<10) hh="0"+hh;
+        if (mm<10) mm="0"+mm;
+        $("#hcheckin").val(hh+":"+mm);
+    }
+    function checkField() {
+        //check field
+        //alert($("#time").val());
+        
+        if($("#cname").val()==""){
+            alert("Nhập họ tên khách hàng");
+            $("#cname").focus();
+            return;
+        }
+        if($("#cemail").val()==""){
+            alert("Nhập email");
+            $("#cemail").focus();
+            return;
+        }
+        if($("#cphone").val()==""){
+            alert("Nhập số điện thoại");
+            $("#cphone").focus();
+            return;
+        }
+        if($("#holes").val()==null){
+            alert("Nhập số hố");
+            $("#holes").focus();
+            return;
+        }
+        if($("#buggies").val()==null){
+            alert("Nhập buggies");
+            $("#buggies").focus();
+            return;
+        }
+        if($("#teetime").val()==""){
+            alert("Nhập teetime");
+            $("#teetime").focus();
+            return;
+        }
+        if($("#numofguest").val()==""){
+            alert("Nhập số người chơi");
+            $("#numofguest").focus();
+            return;
+        }
+        
+        if($("#buggies").val()==1 && $("#numofbuggies").val()==""){
+            alert("Nhập số xe buggy");
+            $("#numofbuggies").focus();
+            return;
+        }
+        //document.getElementById("fromtime").value=document.getElementById("checkin").value+" "+document.getElementById("ffromtime").value;
+        //document.getElementById("totime").value=document.getElementById("checkin").value+" "+document.getElementById("ttotime").value;
+        //document.getElementById("EditForm").submit();
+        document.getElementById("dateplay").value=getDateId(document.getElementById("checkin").value);
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", @ViewBag.id);       
+        formdata.append("cname", $("#cname").val());
+        formdata.append("cemail", $("#cemail").val());
+        formdata.append("cphone", $("#cphone").val());
+        formdata.append("caddress", $("#caddress").val());
+        formdata.append("holes", $("#holes").val());
+        formdata.append("numofbuggies", $("#numofbuggies").val());
+        formdata.append("numofguest", $("#numofguest").val());
+        formdata.append("buggies", $("#buggies").val());
+        formdata.append("checkin", document.getElementById("hcheckin").value);
+        formdata.append("teetime", document.getElementById("teetime").value);     
+        formdata.append("dateplay", document.getElementById("dateplay").value);
+        formdata.append("note", $("#note").val());
+        formdata.append("paymenttype", $("#paymenttype").val());
+       
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfBooking/update');
+        xhr.send(formdata);        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                if(xhr.responseText!="0"){
+                    //alert("Xác nhận đặt phòng thành công! Chúng tôi sẽ liên hệ với khách hàng qua email và điện thoại sớm nhất!");
+                    //if ($("#paymenttype").val()=="Chuyển khoản Ebanking"){
+                    //window.location.href="/HotelBooking/Payment?idhotel=@ViewBag.idhotel&code=@ViewBag.code";
+                    //}else{
+                    window.location.href="/GolfBooking/Index";
+                    //}
+                }else{
+                    alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                }
+            }
+        }
+    }
+    getNewsGolfList();
+    //getGolfListGallery();
+</script>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HotelGolfBooking.Models.slide>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Danh sách Slide ảnh lớn trang chủ</h2>
+<h4>(Hạn chế thêm mới, khi muốn cập nhật nên sửa trên cái cũ)</h4>
+<div class="col-md-12">
+        <div class="form-group">
+                <button type="button" class="btn  btn-lg btn-info" style="float:right;" onclick="add();">Thêm mới</button> 
+        </div>
+</div>
+<table class="tbl_price_room">
+    <tr style="border-bottom:solid 1px #808080;">
+        <th>Vị trí slide</th>
+        <th>
+            Ảnh nền
+        </th>
+        <th>
+            Tiêu đề lớn
+        </th>
+        <th>
+            Slogan
+        </th>
+        <th>
+            Text
+        </th>
+        <th>
+            Link text
+        </th>
+        <th></th>
+    </tr>
+@foreach (var item in Model) {
+    <tr style="border-bottom:solid 1px #808080;">
+        <td style="border-right:1px solid #808080">
+            @item.type
+        </td>
+        <td>
+            <img src="@HotelGolfBooking.Config.domain/@item.image" width="300" height="100">
+        </td>
+        <td style="border-right:1px solid #808080">
+            @item.caption
+        </td>
+        <td style="border-right:1px solid #808080">
+            @item.slogan
+        </td>
+        <td style="border-right:1px solid #808080">
+            @item.linktext
+        </td>
+        <td style="border-right:1px solid #808080">
+            @item.link
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id=item.id }) |            
+            @Html.ActionLink("Xóa", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+</table>
+<script>   
+    function add() {
+        window.location.href = "/Slide/Create";
+    }
+</script>

@@ -1,0 +1,41 @@
+﻿@model HotelGolfBooking.Models.catnew
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Sửa Danh mục tin</h2>
+
+@using (Html.BeginForm("Edit", "CatNews", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="form-group">
+                <label for="room" class="wauto">Tên chuyên mục tin</label>
+                <input name="catname" type="text" id="catname" value="@Model.catname" class="form-control" style="width:60%;" placeholder="Gõ tên "/>
+                @Html.ValidationMessageFor(model => model.catname)
+        </div>
+        <p>
+            <input type="button" class="btn btn-info" onclick="checkField();" value="Sửa" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+
+
+    function checkField() {
+        if (document.getElementById("catname").value.trim() == "") {
+            alert("Nhập tên!");
+            document.getElementById("catname").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

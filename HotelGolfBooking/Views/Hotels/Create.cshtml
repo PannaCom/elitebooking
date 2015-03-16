@@ -1,0 +1,279 @@
+﻿@model HotelGolfBooking.Models.hotel
+@{
+    ViewBag.Title = "Thêm mới";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>        
+<script src="/Scripts/jquery.geocomplete.js"></script>  
+<div class="map_canvas" style="display:none;"></div>
+<h2>Thêm mới Khách sạn</h2>
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+@using (Html.BeginForm("Create", "Hotels", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên khách sạn</label>
+                <input name="name" type="text" id="name" value="" class="form-control" placeholder="Gõ tên"/>                
+              </div>
+         </div>               
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Địa chỉ</label>
+                <input name="address" type="text" id="address" value="" class="form-control"/>                                  
+                  <input name="lon" type="hidden" id="lon" value="" class="form-control"/>
+                  <input name="lat" type="hidden" id="lat" value="" class="form-control"/>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Thuộc tỉnh thành</label>                
+                <select class="form-control" name="provin" id="provin">
+                </select>                         
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Quận huyện</label>                
+                <input name="dis" type="text" id="dis" value="" class="form-control" onkeyup="searchDis();"/>                        
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh đại diện(800x504)</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh</label>
+                <input name="image" type="hidden" id="image" value="" class="form-control" />                  
+                  <div id="imageShow" style="width:200px;height:126px;"></div>
+                    
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Số điện thoại</label>
+                <input name="phone" type="text" id="phone" value="" class="form-control" placeholder="Gõ số điện thoại"/>                
+              </div>
+         </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Giờ checkin</label>
+                <input name="hcheckin" type="text" id="hcheckin" value="14:00" class="form-control" placeholder="Gõ giờ checkin"/>                
+              </div>
+         </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Giờ checkout</label>
+                <input name="hcheckout" type="text" id="hcheckout" value="12:00" class="form-control" placeholder="Gõ giờ checkout"/>                
+              </div>
+         </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Bao gồm</label>
+                <input name="include" type="text" id="include" value="ăn sáng" class="form-control" placeholder="ví dụ: ăn sáng, thuế, phí dịch vụ"/>                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Giới thiệu:</label>
+                <textarea name="des" id="des" rows="9">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('des');
+                </script> 
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Quy định nhận và hủy phòng:</label>
+                <textarea name="ruleroom" id="ruleroom" rows="9">
+                   
+                </textarea>
+                <script>
+                    CKEDITOR.replace('ruleroom');
+                </script> 
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group" >
+                <label for="room" style="width:auto;display:block;">Quy định trẻ em và giường phụ(quy định khác):</label>
+                 <textarea name="ruleextra" id="ruleextra" rows="9">
+                     
+                </textarea>
+                <script>
+                    CKEDITOR.replace('ruleextra');
+                </script> 
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tiêu chuẩn</label>
+                <select class="form-control" name="rate" id="rate">
+                  <option selected="selected" disabled="disabled" value="">Chọn tiêu chuẩn</option>
+				  <option value="6">Cao cấp và Resort</option>                  
+				  <option value="5">5 sao</option>
+				  <option value="4">4 sao</option>
+                  <option value="3">3 sao</option>
+                </select>
+                <input name="type" type="hidden" id="type" value="0" class="form-control"/>
+                  
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Có hiển thị giá</label>
+                <select class="form-control" name="invisibleprice" id="invisibleprice">
+				  <option value="0" selected>Có</option>                  
+				  <option value="1">Không</option>			 
+                </select>
+              </div>
+        </div>
+        <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    getProvinList("Hà Nội");
+    getDisList("Hà Nội", "");
+    $(function () {
+        var long;
+        var lat;
+        var options = {
+            map: ".map_canvas"
+        };
+        $("#address").geocomplete(options)
+          .bind("geocode:result", function (event, result) {
+              $("#lon").val(result.geometry.location.lng());
+              $("#lat").val(result.geometry.location.lat());
+              //alert("long" + result.geometry.location.lng() + ", lat=" + result.geometry.location.lat());
+          })
+          .bind("geocode:error", function (event, status) {
+              $.log("ERROR: " + status);
+          })
+          .bind("geocode:multiple", function (event, results) {
+              $.log("Multiple: " + results.length + " results found");
+          });
+    });
+
+
+    //Image upload
+    function uploadProcess() {
+        
+        var name = unicodeToNoMark($("#name").val());
+        var dis = unicodeToNoMark($("#dis").val());
+        if (name.trim() == "") {
+            alert("Nhập tên khách sạn trước");
+            document.getElementById("name").focus();
+            document.getElementById('imageFile').value = "";
+            return;
+        }
+        if (dis.trim() == "") {
+            alert("Nhập quận huyện trước");
+            document.getElementById("dis").focus();
+            document.getElementById('imageFile').value = "";
+            return;
+        }
+        name = name + "-" + dis;
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename",name);
+        //alert("ok2");
+        //formdata.append("countTotalFile", document.getElementById("countTotalFile").value);
+        //Creating an XMLHttpRequest and sending
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+        if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+           }
+        }, false);
+        //alert("ok3");
+        xhr.open('POST', '/Hotels/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //alert(xhr.responseText);
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#image').val(xhr.responseText);
+                hideLoadingImage();
+            }
+        }        
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+    function checkField() {
+        if (document.getElementById("name").value == "") {
+            alert("Nhập tên khách sạn!");
+            document.getElementById("name").focus();
+            return false;
+        }
+        if (document.getElementById("imageFile").value == "") {
+            alert("Upload ảnh đại diện!");
+            document.getElementById("imageFile").focus();
+            return false;
+        }
+        if (document.getElementById("address").value == "") {
+            alert("Nhập địa chỉ!");
+            document.getElementById("address").focus();
+            return false;
+        }
+        if (document.getElementById("provin").value == "") {
+            alert("Nhập tỉnh thành phố!");
+            document.getElementById("provin").focus();
+            return false;
+        }
+        if (document.getElementById("dis").value == "") {
+            alert("Nhập quận huyện!");
+            document.getElementById("dis").focus();
+            return false;
+        }
+        if (document.getElementById("dis").value == "") {
+            alert("Nhập quận huyện!");
+            document.getElementById("dis").focus();
+            return false;
+        }
+        if (document.getElementById("rate").value == "") {
+            alert("Nhập tiêu chuẩn!");
+            document.getElementById("rate").focus();
+            return false;
+        }
+        
+        document.getElementById("EditForm").submit();
+    }
+    function selectDis(obj) {
+        var name = obj.value;
+        //alert(name);
+        getDisList(name,"");
+    }
+</script>

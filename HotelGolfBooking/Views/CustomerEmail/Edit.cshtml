@@ -1,0 +1,36 @@
+﻿@model HotelGolfBooking.Models.customer_list_email
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Sửa Địa chỉ email</h2>
+@using (Html.BeginForm("Edit", "CustomerEmail", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Email khách hàng</label>                
+                 <input name="cemail" type="text" id="cemail" value="@Model.cemail" class="form-control"/>   
+                 <input name="date" type="hidden" id="date" value="@Model.date" />                     
+              </div>
+             <p>
+                <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+             </p>
+        </div>
+        
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function checkField() {
+        if (document.getElementById("cemail").value == "") {
+            alert("Nhập cemail!");
+            document.getElementById("cemail").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

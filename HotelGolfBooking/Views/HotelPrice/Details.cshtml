@@ -1,0 +1,65 @@
+﻿@model HotelGolfBooking.Models.hotel_room_price
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>hotel_room_price</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idhotel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idhotel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.hotelname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.hotelname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idroom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idroom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.roomname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.roomname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.price)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.price)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.month)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.month)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

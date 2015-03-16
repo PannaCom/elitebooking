@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Đặt phòng sân Golf";
+    Layout = "~/Views/Shared/_LayoutHotelDetailNoIndex.cshtml";
+}
+
+<!-- Parallax Effect -->
+<script type="text/javascript">$(document).ready(function(){$('#parallax-pagetitle').parallax("50%", -0.55);});</script>
+
+<section class="parallax-effect">
+  <div id="parallax-pagetitle" style="background-image: url(./images/parallax/1900x911.gif);">
+    <div class="color-overlay"> 
+      <!-- Page title -->
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ol class="breadcrumb">
+              <li class="active" style="display:block;width:auto;">Đặt sân Thành Công</li>
+            </ol>
+            <h1>Xác nhận thanh toán</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="row"> 
+    <!-- Contact form -->
+    <section id="contact-form" class="mt50">
+      <div class="col-md-8">              
+		<h2 class="lined-heading"><span>Thông tin khách hàng</span></h2>
+        <div id="message"></div>
+        <!-- Error message display -->
+        <form class="clearfix mt50" role="form" method="post" name="contactform" id="contactform">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name" accesskey="U" class="wauto">Họ Tên:</label>
+                @ViewBag.cname, điện thoại: @ViewBag.cphone, @ViewBag.caddress
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E" class="wauto">Sân golf</label>
+                 <b>@ViewBag.golfname</b>
+                 <p>@ViewBag.address</p>
+                 <p>@ViewBag.phone</p>   
+              </div>
+            </div>
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E" class="wauto">Ngày chơi</label>
+                 @ViewBag.dateplay lúc @ViewBag.checkin
+              </div>
+            </div>		
+			<div class="col-md-6">
+              <div class="form-group">
+                <label for="email" accesskey="E" class="wauto">Thành tiền</label>
+                 @HotelGolfBooking.Config.formatNumber(@ViewBag.totalprice) VND                 
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                <label for="email" accesskey="E" class="wauto">Chọn loại thẻ thanh toán</label>
+				    <select class="form-control" name="paymenttype" id="paymenttype">                  
+                      <option value="1" selected>@HotelGolfBooking.Config.payment_card_type1</option>
+                      <option value="2" >@HotelGolfBooking.Config.payment_card_type2</option>
+                     </select>
+                </div> 		
+            </div>	
+          </div>                    
+          <button type="button" class="btn btn-info" onclick="confirmPayment();">Thanh toán</button>
+        </form>
+      </div>
+    </section>
+    
+    <!-- Contact details -->
+    <section class="contact-details mt50">
+      <div class="col-md-4">
+        <div id="divCompanyBanking">
+            <script>
+                getCompanyBanking();
+            </script>
+        </div>  
+        <p> EliteHotel xác nhận còn sân như bạn yêu cầu, xin kiểm tra lại thông tin đặt sân của bạn và tiến hành thủ tục thanh toán bằng hình thức chuyển khoản Ebanking</p>        
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+    function confirmPayment() {
+        
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf", @ViewBag.idgolf);
+        formdata.append("code", "@ViewBag.code");             
+        formdata.append("amount", "@ViewBag.amount"); 
+        formdata.append("type", document.getElementById("paymenttype").value);  
+        formdata.append("info", "@Html.Raw(@ViewBag.info)");  
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/GolfBooking/PaymentProccess');
+            xhr.send(formdata);        
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) { 
+                    if(xhr.responseText!="0"){
+                        //alert("Xác nhận thành công! Chúng tôi sẽ liên hệ với khách hàng sớm nhất sau khi nhận được thanh toán đầy đủ!");
+                        window.location.href=xhr.responseText;
+                    }
+                    else{
+                        alert("Chương trình đang cập nhật, mời bạn quay lại sau!");
+                    }
+                }
+            }
+            
+       
+        }
+</script>

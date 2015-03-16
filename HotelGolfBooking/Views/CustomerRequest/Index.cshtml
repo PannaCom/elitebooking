@@ -1,0 +1,59 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.customer_hotel_price>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Danh sách yêu cầu đặt phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-12">
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Số điện thoại</label>
+                <input name="phone" type="text" id="phone" value="" class="form-control" style="width:auto;" />                                  
+                <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button>
+        </div>
+</div>
+<h2>Danh sách yêu cầu đặt phòng</h2>
+<div class="col-md-12">
+<table class="tbl_price_room">
+    <tr style="border-bottom:solid 1px #808080;">
+        <th>
+            Email
+        </th>
+        <th>
+            Điện thoại
+        </th>        
+        <th>Nội dung yêu cầu</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.email
+        </td>
+        <td>
+            @item.phone
+        </td>
+        <td>
+            @Html.Raw(@item.requirement)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+</table>
+</div>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+                            <text><li><a href="/CustomerRequest/Index?phone=@ViewBag.phone&page=@i">@i</a></li></text>
+         }
+</ul>
+</div>
+<script>
+    function search() {
+        window.location = "/CustomerRequest/Index?phone=" + document.getElementById("phone").value;
+    }
+</script>

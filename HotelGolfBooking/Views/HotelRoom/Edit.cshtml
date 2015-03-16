@@ -1,0 +1,128 @@
+﻿@model HotelGolfBooking.Models.hotel_room
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-8">
+<h2>Sửa thông tin phòng</h2>
+@using (Html.BeginForm("Edit", "HotelRoom", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên phòng</label>
+                <input name="roomname" type="text" id="roomname" value="@Model.roomname" class="form-control" placeholder="Nhập tên"/>                
+                <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
+                <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Diện tích(m2)</label>
+                <input name="square" type="text" id="square" value="@Model.square" class="form-control" placeholder="m2" onblur="checkSquare();"/>                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Có ăn sáng</label>                
+                <input name="breakfast" type="text" id="breakfast" value="@Model.breakfast" class="form-control" placeholder="ăn sáng"/>
+                <input type="checkbox" id="br" onclick="checkBR(this, 'ăn sáng');">ăn sáng
+                <input type="checkbox" id="hl" onclick="checkBR(this, 'ăn trưa');">ăn trưa
+                <input type="checkbox" id="dn" onclick="checkBR(this, 'ăn tối');">ăn tối 
+                <input type="checkbox" id="sp" onclick="checkBR(this, 'spa');">spa                      
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Có giường phụ</label>                
+                <select class="form-control" name="extrabed" id="extrabed" >
+                    <option selected value="1">Có</option>
+                    <option value="0">Không</option>
+                </select>                         
+                <script>$("#extrabed").val("@Model.extrabed");</script>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Phụ thu giường phụ</label>
+                <input name="extrabedfee" type="text" id="extrabedfee" value="@Model.extrabedfee" class="form-control" placeholder="" />                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Phụ thu khác</label>
+                <input name="extraotherfee" type="text" id="extraotherfee" value="@Model.extraotherfee" class="form-control" placeholder="" />                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ghi chú phụ thu</label>
+                <input name="notefee" type="text" id="notefee" value="@Model.notefee" class="form-control" placeholder="ví dụ: lễ tết, cao điểm.." />
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Max of Adults</label>      
+                <input name="maxofadult" type="text" id="maxofadult" value="@Model.maxofadult" class="form-control"/>   
+                <input name="nonsmoking" type="hidden" id="nonsmoking" value="1" class="form-control" />                            
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Số lượng phòng</label>
+                <input name="noofroom" type="text" id="noofroom" value="@Model.noofroom" class="form-control" placeholder="Gõ tên"/>                                
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Hiển thị giá</label>                
+                <select class="form-control" name="showprice" id="showprice">
+                    <option value="0">Có</option>
+                    <option value="1">Không</option>
+                </select>
+                <script>$("#showprice").val("@Model.showprice");</script>                         
+              </div>
+        </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Create")
+</div>
+</div>
+<script>
+    function checkBR(obj, value) {
+        if (obj.checked) {
+            if (document.getElementById("breakfast").value.indexOf(value) < 0) document.getElementById("breakfast").value += ", " + value;
+        } else {
+            document.getElementById("breakfast").value = document.getElementById("breakfast").value.replace(", " + value, "");
+        }
+    }
+    function checkSquare() {
+        document.getElementById("square").value = parseInt(removeSpecialCharater(document.getElementById("square").value));
+    }
+    function checkPrice() {
+        document.getElementById("price").value = parseInt(removeSpecialCharater(document.getElementById("price").value));
+    }
+    function checkField() {
+        if (document.getElementById("roomname").value == "") {
+            alert("Nhập tên phòng!");
+            document.getElementById("roomname").focus();
+            return false;
+        }
+     
+        if (document.getElementById("noofroom").value == "" || isNaN(document.getElementById("noofroom").value)) {
+            alert("Nhập số lượng phòng!");
+            document.getElementById("noofroom").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

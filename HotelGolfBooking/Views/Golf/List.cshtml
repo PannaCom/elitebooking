@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.golf>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Danh sách sân golf";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    if (ViewBag.fdate == null) {ViewBag.fdate = HotelGolfBooking.Config.datetimeid();}
+    string provinpr = "";
+    string selectprovin = "<li class='active has-sub'><a >Chọn sân</a>";
+    selectprovin += "<ul >";
+    string name = ViewBag.name;
+    string provin = ViewBag.provin;
+    if (name == null) {name = "";}
+    if (provin == null) {provin = "";}
+}
+
+<!-- Filter -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="nav nav-pills">
+        <li>
+              <div  id='cssmenu' style="height:32px;">
+                    
+              </div> 
+		</li>    
+        <li>
+            <input name="checkin" type="text" id="checkin" value="@HotelGolfBooking.Config.convertFromDateIdToDateString(@ViewBag.fdate.ToString())" class="form-control" placeholder="Ngày chơi" style="width:100px;"/> 
+        </li>   
+        <li><input type="button" value="Tìm kiếm" class="btn btn-info" onclick="searchGolfList();"></li>         
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Rooms -->
+<section class="rooms mt100">
+  <div class="container">
+    <div class="row room-list fadeIn appear"> 
+            @foreach (var item in Model){
+                if ((name=="" && provin=="") || (name != "" && name.Contains(item.name)) || (provin != "" && provin.Contains(item.provin)))
+                {
+                    <div class="col-sm-4 single" style="height:345px;">
+                    <div ><a href="/GolfBooking/Contact?idgolf=@item.id&checkin=@ViewBag.fdate&typebook=@HotelGolfBooking.Config.typebook1"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="room 1" class="img-responsive" /></a>
+                      <div class="mask">			
+                        <div class="main">
+                          <h4 style="color:#067C02;"><span class="CityName">@item.provin</span> - @item.name</h4>
+                          <h4><span class="CityName" id="price_@item.id"><script>getGolfPrice(@item.id,@ViewBag.fdate);</script></span></h4>
+                          <div ><script>getGolfPromotion(@item.id,@ViewBag.fdate);</script></div>  
+                        </div>
+                        <div class="content" id="promotionList_@item.id"><a href="/GolfBooking/Contact?idgolf=@item.id&checkin=@ViewBag.fdate&typebook=@HotelGolfBooking.Config.typebook1" class="btn btn-info">Mua ngay</a></div>
+                      </div>
+                    </div>
+                   </div>
+                 }
+                 if (provinpr != item.provin)
+                 {
+
+                        if (!provinpr.Equals("")) { selectprovin += "</ul></li>"; }
+                        provinpr = item.provin;
+                        selectprovin += "<li class='has-sub'><a href='/Golf/List?provin=" + item.provin + "&checkin="+ViewBag.fdate+"'>" + item.provin + "</a>";
+                        selectprovin += "<ul >";
+                 }
+                selectprovin += "<li><a href='/Golf/List?name=" + item.name + "&checkin="+ViewBag.fdate+"'>" + item.name + "</a></li>";
+
+                
+            }      
+            @{     
+              selectprovin += "</ul></li>";
+              selectprovin += "</ul>";
+              selectprovin += "</li>";
+              //selectprovin = "<li><a href='/Golf/List?name='>aaaa</a></li>";
+            }
+      </div>
+  </div>
+</section>
+ <!-- Pagination -->
+            <div class="text-center mt50">
+              <ul class="pagination clearfix">
+                <li class="disabled"><a href="#">«</a></li>
+                @for (int i = 1; i <= Model.PageCount; i++)
+                { 
+                  <text><li><a href="/Golf/List?name=@ViewBag.name&page=@i">@i</a></li></text>
+                }
+              </ul>
+            </div>
+<script>
+    $("#cssmenu").html("<ul>@Html.Raw(@selectprovin)</ul>");
+    function selectGolfProvin(obj){
+        window.location.href="/Golf/List?provin="+obj.value;
+    }
+    function searchGolfList(){
+        window.location.href="/Golf/List?provin=@provin&name=@name&checkin="+getDateId(document.getElementById("checkin").value);
+    }
+    function getGolfCityList(value){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/Golf/getGolfCityList');
+        xhr.send();
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                var json_parsed = $.parseJSON(news);
+                //alert(news);
+                $("#city").html("<option selected=\"selected\" value=\"\">Chọn thành phố</option>");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var name = json_parsed.news[i];
+                        //alert(name);
+                        $("#city").append("<option value='"+name+"'>"+name+"</option>");
+                    }
+                }
+                $("#city").val(value);
+                //alert(news);
+            }
+        }
+    }
+    getGolfCityList("@Html.Raw(@ViewBag.provin)");
+</script>

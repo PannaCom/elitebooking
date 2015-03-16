@@ -1,0 +1,85 @@
+﻿@model HotelGolfBooking.Models.golf
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>golf</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.url)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.url)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.image)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.image)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.address)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.dis)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.dis)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.provin)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.provin)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.des)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.des)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.website)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.website)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.contact)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.contact)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.deleted)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.deleted)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

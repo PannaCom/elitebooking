@@ -1,0 +1,96 @@
+﻿@model HotelGolfBooking.Models.golf_price
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-8">
+<h2>Quản lý giá sân golf @Session["golfname"]</h2>
+@using (Html.BeginForm("Edit", "GolfPrice", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+                   
+        <input name="idgolf" type="hidden" id="idgolf" value="@Model.idgolf" class="form-control" />                
+        <input name="golfname" type="hidden" id="golfname" value="@Html.Raw(@Model.golfname)" class="form-control" />
+              
+        <div class="form-group">
+              <div id="listMonth" name="listMonth">
+                   <table style="border:1px solid #ff6a00;width:90%;">
+                        <tr><th colspan="12" nowrap>Chọn tháng</th></tr>
+                        <tr>
+                            <td onclick="chooseMonth(1);" id="bgm1" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>1</B></td>
+                            <td onclick="chooseMonth(2);" id="bgm2" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>2</B></td>
+                            <td onclick="chooseMonth(3);" id="bgm3" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>3</B></td>
+                            <td onclick="chooseMonth(4);" id="bgm4" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>4</B></td>
+                            <td onclick="chooseMonth(5);" id="bgm5" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>5</B></td>
+                            <td onclick="chooseMonth(6);" id="bgm6" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>6</B></td>
+                            <td onclick="chooseMonth(7);" id="bgm7" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>7</B></td>
+                            <td onclick="chooseMonth(8);" id="bgm8" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>8</B></td>
+                            <td onclick="chooseMonth(9);" id="bgm9" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>9</B></td>
+                            <td onclick="chooseMonth(10);" id="bgm10" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>10</B></td>
+                            <td onclick="chooseMonth(11);" id="bgm11" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>11</B></td>
+                            <td onclick="chooseMonth(12);" id="bgm12" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>12</B></td>
+                        </tr>
+                   </table>
+              </div>
+              <table id="listPrice">
+                <tr><th>Giá trong tuần</th><th>Giá cuối tuần</th><th>Giá xe điện</th><th>Trong các tháng</th><th><th></tr>
+                <tr>
+                    <td><input name="price" type="text" id="price" value="@Model.price" class="form-control" placeholder="Nhập giá" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>   
+                    <td><input name="priceweekend" type="text" id="priceweekend" value="@Model.priceweekend" class="form-control" placeholder="Nhập giá cuối tuần" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td> 
+                    <td><input name="pricebuggy" type="text" id="pricebuggy" value="@Model.pricebuggy" class="form-control" placeholder="Nhập giá xe điện" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>                             
+                    <td><input name="month" type="text" id="month" value="@Model.month" class="form-control" placeholder="ví dụ:,1,2,3,4," onblur="checkMonth(this);" onfocus="getIndex(0);"/></td>  
+                </tr>       
+              </table>
+         </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Sửa</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/GolfPrice/Create">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    var bgcolor = ["lime", "red", "green", "grey", "yellow", "orange", "brown", "lime"];
+    var currentIndex = 0;
+    var totalitem = 1;
+    function getIndex(value) {
+        currentIndex = value;
+    }
+    function chooseMonth(v) {
+        $("#bgm" + v).css("background-color", bgcolor[currentIndex % 7]);
+        if (document.getElementById("month").value.indexOf("," + v + ",") < 0) {
+            document.getElementById("month").value += "," + v + ",";
+        } else {
+            document.getElementById("month").value = document.getElementById("month").value.replace("," + v + ",", "");
+            $("#bgm" + v).css("background-color", "blue");
+        }
+    }
+    function checkPrice(obj) {
+        obj.value = parseInt(removeSpecialCharater(obj.value));
+    }
+    function checkField() {
+      
+        if ($("#price").val() == "" || $("#price").val() == null) {
+            alert("Nhập giá");
+            document.getElementById("price").focus();
+            return;
+        }
+        if ($("#priceweekend").val() == "" || $("#priceweekend").val() == null) {
+            alert("Nhập giá cuối tuần");
+            document.getElementById("priceweekend").focus();
+            return;
+        }
+        if ($("#month").val() == "" || $("#month").val() == null) {
+            alert("Nhập thời gian");
+            document.getElementById("month").focus();
+            return;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

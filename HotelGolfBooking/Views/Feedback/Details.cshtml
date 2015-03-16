@@ -1,0 +1,50 @@
+﻿@model HotelGolfBooking.Models.customer_feedback
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>customer_feedback</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.cemail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.cemail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.caddress)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.caddress)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.topic)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.topic)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.fullcontent)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.fullcontent)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

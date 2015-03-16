@@ -1,0 +1,156 @@
+﻿@model HotelGolfBooking.Models.golf_choupon
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-8" id="listGolfChoupon" style="display:none;">
+        
+</div>
+<div class="col-md-8">
+<h2>Nhập Choupon cho sân golf @Session["golfname"]</h2>
+@using (Html.BeginForm("Create", "GolfChoupon", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Giá choupon</label>
+                <input name="chouponprice" type="text" id="chouponprice" value="" class="form-control" placeholder="Nhập giá choupon" onblur="checkPrice();"/>                                
+                <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />   
+              </div>
+         </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room">Số lượng</label>
+                <input name="total" type="text" id="total" value="" class="form-control" placeholder="gõ số lượng" onblur="checkTotal();"/>                                
+              </div>
+         </div>        
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">ữu đãi</label>
+                <input name="facility1" type="text" id="facility1" value="" class="form-control" placeholder="nhập ưu đãi nếu có"/>                                
+              </div>
+         </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    function getChouponListGolf(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/GolfChoupon/getChouponListGolf');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách choupon đang có</h4><table class=tbl_price_room><tr style=\"border-bottom:solid 1px #808080;\"><th>Giá choupon</th><th>Số lượng</th><th></th><tr>";
+                $("#listGolfChoupon").show();
+                $("#listGolfChoupon").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        var facility = "";
+                        var facility1 = "";
+                        var facility2 = "";
+                        var facility3 = "";
+                        var facility4 = "";
+                        var facility5 = "";
+                        var facility6 = "";
+                        //alert(name);
+                        if (n.facility1 != null) { facility += n.facility1 + ","; }
+                        if (n.facility2 != null) { facility += n.facility2 + ","; }
+                        if (n.facility3 != null) { facility += n.facility3 + ","; }
+                        if (n.facility4 != null) { facility += n.facility4 + ","; }
+                        if (n.facility5 != null) { facility += n.facility5 + ","; }
+                        if (n.facility6 != null) { facility += n.facility6 + ","; }
+                        content += "<tr style=\"border-bottom:solid 1px #808080;\"><td>" + n.chouponprice + "<i><br>" + facility + "</i></td><td>" + n.total + "</td><td><a href=\"/GolfChoupon/Edit/" + n.id + "\">Sửa</a><a href=\"/GolfChoupon/Delete/" + n.id + "\"> Xóa</a></td><tr>";
+                    }
+                }
+                //alert(content);
+                $("#listGolfChoupon").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getChouponListGolf(@Session["idgolf"]);
+    @*function getGolfChouponList(idgolf) {
+        
+        var formdata = new FormData(); //FormData object
+        formdata.append("idgolf",idgolf);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/GolfChoupon/getGolfChouponList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert(news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách choupon đang có</h4><table class=tbl_price_room><tr><th>Tên phòng</th><th>Giá choupon</th><th>Số lượng</th><th></th><tr>";
+                $("#listChoupon").show();
+                $("#listChoupon").html();
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        var facility = "";
+                        var facility1 = "";
+                        var facility2 = "";
+                        var facility3 = "";
+                        var facility4 = "";
+                        var facility5 = "";
+                        var facility6 = "";
+                        //alert(name);
+                        if (n.facility1 != null) { facility += n.facility1 + ","; }
+                        if (n.facility2 != null) { facility += n.facility2 + ","; }
+                        if (n.facility3 != null) { facility += n.facility3 + ","; }
+                        if (n.facility4 != null) { facility += n.facility4 + ","; }
+                        if (n.facility5 != null) { facility += n.facility5 + ","; }
+                        if (n.facility6 != null) { facility += n.facility6 + ","; }
+                        content += "<tr><td>" + n.roomname + "<i><br>" + facility + "</i></td><td>" + n.chouponprice + "</td><td>" + n.total + "</td><td><a href=\"/HotelChoupon/Edit/" + n.id + "\">Sửa</a><a href=\"/HotelChoupon/Delete/" + n.id + "\"> Xóa</a></td><tr>";
+                    }
+                }
+                //alert(content);
+                $("#listChoupon").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getGolfChouponList(@Session["idgolf"]);  *@  
+    function checkTotal() {
+        document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
+    }
+    function checkPrice() {
+        document.getElementById("chouponprice").value = parseInt(removeSpecialCharater(document.getElementById("chouponprice").value));
+    }
+    function checkField() {
+        
+        if (document.getElementById("chouponprice").value == "") {
+            alert("Nhập giá phòng shoupon!");
+            document.getElementById("chouponprice").focus();
+            return false;
+        }
+        if (document.getElementById("total").value == "") {
+            alert("Nhập số lượng shoupon!");
+            document.getElementById("total").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+</script>

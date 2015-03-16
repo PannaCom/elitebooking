@@ -1,0 +1,46 @@
+﻿@model HotelGolfBooking.Models.list_provin
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa tên tỉnh thành</h2>
+
+@using (Html.BeginForm("Edit", "ListProvince", FormMethod.Post, new { id = "EditForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>       
+        @Html.HiddenFor(model => model.id)
+       
+        <div class="form-group">
+                <label for="room">Tên mới</label>
+                <input name="provin" type="text" id="provin" value="@Model.provin" class="form-control" style="width:60%;" placeholder="Gõ tên "/>
+                @Html.ValidationMessageFor(model => model.provin)
+        </div>
+
+        <p>
+            <input type="button" class="btn btn-info" onclick="checkField();" value="Sửa" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+
+
+    function checkField() {
+        if (document.getElementById("provin").value.trim() == "") {
+            alert("Nhập tỉnh thành!");
+            document.getElementById("provin").focus();
+            return false;
+        }
+        document.getElementById("provin").value = document.getElementById("provin").value.replace("-", ",");
+        document.getElementById("EditForm").submit();
+    }
+</script>

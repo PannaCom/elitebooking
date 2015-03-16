@@ -1,0 +1,90 @@
+﻿@model PagedList.IPagedList<HotelGolfBooking.Models.customer_feedback>
+@using PagedList.Mvc; >
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var status = "chưa duyệt";
+}
+<div class="col-md-12">
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên khách hàng</label>
+                <input name="name" type="text" id="name" value="" class="form-control" style="width:auto;"/>                                  
+                <button type="button" class="btn btn-info" onclick="search();">Tìm kiếm</button> 
+        </div>
+</div>
+<h2>Danh sách Phản hồi dịch vụ</h2>
+<div class="col-md-12">
+<table class="tbl_price_room" cellpadding="1" cellspacing="1">
+    <tr style="border-bottom:solid 1px #808080">
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Thông tin phản hồi
+        </th>
+        <th>Trạng thái</th>    
+        <th>Duyệt bài</th>        
+    </tr>
+@foreach (var item in Model)
+{
+    if (item.status==0)
+    {
+        status = "chưa duyệt";
+    }
+    else {
+        status = "đã duyệt";
+    }
+    
+    <tr style="border-bottom:solid 1px #808080;">
+        <td>
+            <h5>@item.cname </h5>
+            <p>Email: @item.cemail, Địa chỉ:@item.caddress,</p> 
+            <p><a href="/Feedback/Edit/@item.id"><b>Sửa</b></a></p>           
+        </td>
+        <td>
+            <p>@Html.Raw(@item.fullcontent)</p>
+            <p>Gửi ngày: @item.date</p>           
+        </td>        
+        <td>@status</td>
+        <td>
+            <input type="button" class="btn btn-sm btn-purple" value="duyệt bài" id="status_@item.id" title="Duyệt bài này lên trang chủ" onclick="updatestatus(@item.id,1);">
+            <input type="button" class="btn btn-sm btn-purple" value="xóa" id="delete_@item.id" title="Xóa" onclick="updatestatus(@item.id,-1);">
+        </td>
+    </tr>
+}
+</table>
+</div>
+<div class="col-md-12">
+<ul class="pagination clearfix">
+        <li class="disabled"><a href="#">«</a></li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        { 
+           <text><li><a href="/FeedBack/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
+        }
+</ul>
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:20%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    function search() {
+        window.location.href = "/FeedBack/Index?name=" + document.getElementById("name").value;
+    }
+    function updatestatus(id,type){
+        showLoadingImage();
+        var formdata = new FormData(); //FormData object
+        formdata.append("id", id);
+        formdata.append("type", type);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Feedback/updatestatus');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                hideLoadingImage();
+                alert("Cập nhật thành công!");
+                window.location.reload();
+            }
+        }
+    }
+   
+</script>

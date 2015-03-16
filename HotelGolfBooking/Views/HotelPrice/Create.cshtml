@@ -1,0 +1,230 @@
+﻿@model HotelGolfBooking.Models.hotel_room_price
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-md-8" id="listHotelPrice" style="display:none;">
+        
+</div>
+<div class="col-md-8">
+<h2>Quản lý giá phòng khách sạn @Session["hotelName"]</h2>
+@using (Html.BeginForm("Create", "HotelPrice", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+        <input name="idroom" type="hidden" id="idroom" value="@ViewBag.idroom" class="form-control" />                
+        <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
+        <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />
+              <div class="form-group">
+                <label for="room">Tên phòng</label>
+                <select class="form-control" name="roomname" id="roomname" onchange="setIdRoom();">                    
+                </select>       
+              </div>
+         
+        <div class="form-group">
+              <div id="listMonth" name="listMonth">
+                   <table style="border:1px solid #ff6a00;width:90%;">
+                        <tr><th colspan="12" nowrap>Chọn tháng</th></tr>
+                        <tr>
+                            <td onclick="chooseMonth(1);" id="bgm1" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>1</B></td>
+                            <td onclick="chooseMonth(2);" id="bgm2" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>2</B></td>
+                            <td onclick="chooseMonth(3);" id="bgm3" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>3</B></td>
+                            <td onclick="chooseMonth(4);" id="bgm4" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>4</B></td>
+                            <td onclick="chooseMonth(5);" id="bgm5" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>5</B></td>
+                            <td onclick="chooseMonth(6);" id="bgm6" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>6</B></td>
+                            <td onclick="chooseMonth(7);" id="bgm7" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>7</B></td>
+                            <td onclick="chooseMonth(8);" id="bgm8" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>8</B></td>
+                            <td onclick="chooseMonth(9);" id="bgm9" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>9</B></td>
+                            <td onclick="chooseMonth(10);" id="bgm10" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>10</B></td>
+                            <td onclick="chooseMonth(11);" id="bgm11" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>11</B></td>
+                            <td onclick="chooseMonth(12);" id="bgm12" style="border:1px solid #ff6a00;color:#fff;background-color:blue;cursor:pointer;"><B>12</B></td>
+                        </tr>
+                   </table>
+              </div>
+              <table id="listPrice">
+                <tr><th>Giá phòng</th><th>Trong các tháng</th><th><th></tr>
+                <tr>
+                    <td><input name="price0" type="text" id="price0" value="" class="form-control" placeholder="Nhập giá" onblur="checkPrice(this);" onfocus="getIndex(0);"/></td>                                
+                    <td><input name="month0" type="text" id="month0" value="" class="form-control" placeholder="ví dụ:,1,,2,,3,,4," onblur="checkMonth(this);" onfocus="getIndex(0);" size="36"/></td>  
+                    <td><input type="button" value="+Thêm" onclick="addItem();">|<input type="button" value="-Xóa" onclick="removeItem();"></td>
+                </tr>       
+              </table>
+         </div>
+         <p>
+           <button type="button" class="btn btn-info" onclick="checkField();">Thêm</button>
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>    
+</div>
+</div>
+
+<script>
+    var bgcolor = ["lime", "red", "green", "grey", "yellow", "orange","brown","lime"];
+    var currentIndex=0;
+    var totalitem = 1;
+    function getIndex(value){
+        currentIndex=value;
+    }
+    function chooseMonth(v){
+        $("#bgm"+v).css("background-color",bgcolor[currentIndex%7]);
+        if (document.getElementById("month"+currentIndex).value.indexOf(","+v+",")<0){
+            document.getElementById("month"+currentIndex).value+=","+v+",";
+        }else{
+            document.getElementById("month"+currentIndex).value=document.getElementById("month"+currentIndex).value.replace(","+v+",","");
+            $("#bgm"+v).css("background-color","blue");
+        }
+    }
+    function addItem() {
+        var content = "";
+        content+="<tr id=tr"+totalitem+">";
+        content+= " <td><input name=\"price"+totalitem+"\" type=\"text\" id=\"price"+totalitem+"\" value=\"\" class=\"form-control\" placeholder=\"Nhập giá\" onblur=\"checkPrice(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>";                                
+        content+= " <td><input name=\"month"+totalitem+"\" type=\"text\" id=\"month"+totalitem+"\" value=\"\" class=\"form-control\" placeholder=\"ví dụ:,1,2,3,12,\" onblur=\"checkMonth(this);\" onfocus=\"getIndex("+totalitem+");\"/></td>";  
+        content+= " <td><input type=\"button\" value=\"+Thêm\" onclick=\"addItem();\">|<input type=\"button\" value=\"-Xóa\" onclick=\"removeItem("+totalitem+");\"></td>";
+        content += "</tr>";
+        $("#listPrice").append(content);
+        totalitem++;
+    }
+    function checkMonth(obj){
+        //var val=removeSpecialCharater(obj.value);
+        //if (isNaN(val))
+        //{
+        //    alert("Dữ liệu phải định dạng kiểu ,1,2,3,4, (có đủ dấu phẩy ở hai đầu)");
+        //    obj.focus();
+        //    return false;
+        //}
+        //var s1=obj.value.substring(0,1);
+        //var s2=obj.value.substring(obj.value.length-1,obj.value.length);
+       
+        //if (s1!=","|| s2!=","){
+        //    alert("Dữ liệu phải định dạng kiểu ,1,2,3,4, (có đủ dấu phẩy ở hai đầu)");
+        //    obj.focus();
+        //    return false;
+        //}
+    }
+    function removeItem(index) {
+        $("#tr" + index).remove();
+    }
+    function setIdRoom() {
+        var idroom = $("#roomname").find(':selected').attr("idroom");
+        //alert(idroom);
+        $("#idroom").val(idroom);
+    }
+    function getHotelPriceList(value) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelPrice/getHotelPriceList');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert("Đang test"+news);
+                var json_parsed = $.parseJSON(news);
+                if (json_parsed.news.length <= 0) return;
+                content = "<h4>Danh sách giá phòng đang có</h4><table class=tbl_price_room><tr><th>Tên phòng</th><th>Giá</th><th>Trong tháng</th><th></th><tr>";
+                $("#listHotelPrice").show();
+                $("#listHotelPrice").html();
+                //alert("Đang test"+content);
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        
+                       
+                        content += "<tr><td>" + n.roomname + "</i></td><td>" + n.price + "</td><td>" + n.month + "</td><td><a href=\"/HotelPrice/Edit/" + n.id + "\">Sửa</a><a href=\"/HotelPrice/Delete/" + n.id + "\"> Xóa</a></td><tr>";
+                    }
+                }
+                //alert("Đang test"+content);
+                $("#listHotelPrice").html(content);
+                //alert(news);
+            }
+        }
+    }
+    getHotelPriceList(@Session["idhotel"]);
+    getHotelRoomList(@Session["idhotel"],@ViewBag.idroom);
+    function getHotelRoomList(value,idroom) {
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", value);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelRoom/getHotelRoom');
+        xhr.send(formdata);
+        var content = "";
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                //alert("Đang test"+news);
+                var json_parsed = $.parseJSON(news);
+                content = "";
+                $("#roomname").html("<option selected=\"selected\" disabled=\"disabled\" value=\"\">Chọn phòng</option>");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        var n = json_parsed.news[i];
+                        if (n.id==idroom){
+                            content += "<option value=\"" + n.roomname + "\" idroom=" + n.id + " selected>" + n.roomname + "</option>";
+                        }else{
+                            content += "<option value=\"" + n.roomname + "\" idroom=" + n.id + ">" + n.roomname + "</option>";
+                        }
+                    }
+                }
+                //alert(content);
+                $("#roomname").append(content);
+                
+                //alert(news);
+            }
+        }
+    }
+    function checkTotal() {
+        document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
+    }
+    function checkPrice(obj) {
+        obj.value = parseInt(removeSpecialCharater(obj.value));
+    }
+    function checkField() {
+        if ($("#roomname").val() == "" || $("#roomname").val()==null) {
+            alert("Nhập tên phòng");
+            document.getElementById("roomname").focus();
+            return;
+        }
+        var formdata = new FormData(); //FormData object
+        formdata.append("idhotel", @Session["idhotel"]);
+        formdata.append("hotelname", "@Html.Raw(@Session["hotelname"])");
+        formdata.append("totalitem", totalitem);
+        formdata.append("idroom", $("#idroom").val());
+        formdata.append("roomname", $("#roomname").val());
+        for (var i = 0; i < totalitem; i++) {
+            if (!document.getElementById("price" + i)||!document.getElementById("month" + i)) continue;
+            if (document.getElementById("price" + i).value == 0 || isNaN(document.getElementById("price" + i).value)) {
+                alert("Nhập giá");
+                document.getElementById("price" + i).focus();
+                return;
+            }
+            if (document.getElementById("month" + i).value == 0) {
+                alert("Nhập giai đoạn");
+                document.getElementById("month" + i).focus();
+                return;
+            }
+            formdata.append("price" + i, document.getElementById("price" + i).value);
+            formdata.append("month" + i, document.getElementById("month" + i).value);
+        }
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/HotelPrice/addNewItem');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText=="1"){
+                    alert("Cập nhật thành công");
+                    window.location.reload();
+                }else{
+                    alert("Chương trình đang cập nhật, xin quay lại sau!");   
+                }
+            }
+        }
+    }
+</script>

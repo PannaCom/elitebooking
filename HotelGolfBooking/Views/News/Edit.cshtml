@@ -1,0 +1,246 @@
+﻿@model HotelGolfBooking.Models.news
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Sửa bài viết</h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tiêu đề bài viết</label>
+                <input name="title" type="text" id="title" value="@Model.title" class="form-control" placeholder="Gõ tiêu đề" onchange="urlSeo();"/>                
+              </div>
+         </div>               
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh đại diện</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         </div> 
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ảnh đại diện</label>
+                <input name="image" type="hidden" id="image" value="@Model.image" class="form-control" />                  
+                  <div id="imageShow" style="width:200px;height:126px;"><img src="@HotelGolfBooking.Config.domain/@Model.image"></div>
+              </div>
+         </div>            
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;position:relative;">Chuyên mục</label>                
+                <select class="form-control" name="catname" id="catname">
+
+                </select>                         
+                <input type="hidden" id="catid" name="catid">
+              </div>
+        </div>  
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tóm tắt:</label>
+                <textarea name="des" rows="3" id="des" class="form-control">@Model.des</textarea>
+              </div>
+        </div>
+        <div class="col-md-6" style="width:auto;display:none;">
+              <div class="form-group">
+                 <label for="room" style="width:auto;display:block;height:auto;">url</label>
+                 <input name="url" type="text" id="url" value="@Model.url" class="form-control" placeholder="for seo"/>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Chèn ảnh vào bài viết</label>
+                <input name="imageFileContent" type="file" id="imageFileContent" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcessContent();"/>                                
+                <div id="progressbarContent" class="progressbar">
+                    <div id="progresslabelContent" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         </div> 
+         <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">List ảnh bài viết</label>
+                  <div id="imageShowContent" style="width:auto;height:auto;"></div>
+              </div>
+         </div>
+         <div class="col-md-6">
+              <div class="form-group">
+                 <label for="room" style="width:auto;display:block;">Từ khóa</label>
+                 <input name="keyword" type="text" id="keyword" value="@Model.keyword" class="form-control" placeholder="Từ khóa tiêu biểu"/>
+              </div>
+        </div>  
+        <div class="col-md-6">
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Nội dung</label>                
+                 <textarea name="fullcontent" id="fullcontent" rows="20" cols="80">
+                     @Model.fullcontent
+                </textarea>
+                <script>
+                    CKEDITOR.replace('fullcontent');
+                </script>                       
+              </div>
+        </div>         
+                     
+    </fieldset>
+}
+<p>
+    <button type="button" class="btn btn-info" onclick="checkField();">Sửa bài viết</button>
+</p>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+    getCatNewsList("@Html.Raw(@Model.catname)");
+    getImageShowContentList("@Model.url");
+    function urlSeo() {
+        $("#url").val(unicodeToNoMark($("#title").val()));
+    }
+    //Image upload
+    function uploadProcess() {
+        var title = unicodeToNoMark($("#title").val());
+        if (title.trim() == "") {
+            alert("Nhập tên bài viết trước");
+            document.getElementById("title").focus();
+            document.getElementById('imageFile').value = "";
+            return;
+        }
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        formdata.append("filename", title);
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+        $('#imageShow').html("");
+        xhr.open('POST', '/News/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {                
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#image').val(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    //Image upload
+    function uploadProcessContent() {
+        var title = unicodeToNoMark($("#title").val());
+        if (title.trim() == "") {
+            alert("Nhập tên bài viết trước");
+            document.getElementById("title").focus();
+            document.getElementById('imageFileContent').value = "";
+            return;
+        }
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFileContent');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            //break;
+        }
+        formdata.append("filename", title);
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbarContent").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/News/UploadImageProcessContent');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //$('#imageShowContent').append("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#imageShowContent').append(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    $("#progressbarContent").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabelContent").text($("#progressbarContent").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabelContent").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+    function checkField() {
+        //alert(CKEDITOR.instances.fullcontent.document.getBody().getHtml());
+        //return;
+        var catid = $('option:selected', document.getElementById("catname")).attr('catid');
+        //alert(catid);
+        //return;
+        document.getElementById("catid").value = catid;
+        if (document.getElementById("title").value == "") {
+            alert("Nhập tên bài viết!");
+            document.getElementById("name").focus();
+            return false;
+        }
+        if (document.getElementById("url").value == "") {
+            alert("Nhập url!");
+            document.getElementById("url").focus();
+            return false;
+        }
+        if (document.getElementById("image").value == "") {
+            alert("Upload ảnh đại diện!");
+            document.getElementById("image").focus();
+            return false;
+        }
+        if (document.getElementById("des").value == "") {
+            alert("Nhập tóm tắt!");
+            document.getElementById("des").focus();
+            return false;
+        }
+        if (document.getElementById("catname").value == "") {
+            alert("Nhập chuyên mục!");
+            document.getElementById("catname").focus();
+            return false;
+        }
+        if (document.getElementById("fullcontent").value == "") {
+            alert("Nhập nội dung!");
+            document.getElementById("fullcontent").focus();
+            return false;
+        }
+        if (document.getElementById("keyword").value == "") {
+            alert("Nhập từ khóa!");
+            document.getElementById("keyword").focus();
+            return false;
+        }
+
+        document.getElementById("EditForm").submit();
+    }
+
+</script>

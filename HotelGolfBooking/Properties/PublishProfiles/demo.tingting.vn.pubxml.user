@@ -62,7 +62,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:36:35</publishTime>
     </File>
     <File Include="bin/HotelGolfBooking.dll">
-      <publishTime>03/17/2015 12:34:50</publishTime>
+      <publishTime>03/17/2015 17:59:49</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/13/2014 13:36:20</publishTime>
@@ -1237,6 +1237,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/invoice.png">
       <publishTime>01/06/2015 16:26:27</publishTime>
     </File>
+    <File Include="Images/khuyenmai.gif">
+      <publishTime>03/17/2015 17:36:06</publishTime>
+    </File>
     <File Include="Images/logo-black-retina.png">
       <publishTime>12/19/2014 15:09:47</publishTime>
     </File>
@@ -2351,7 +2354,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:46</publishTime>
     </File>
     <File Include="Scripts/core.js">
-      <publishTime>03/15/2015 12:13:19</publishTime>
+      <publishTime>03/17/2015 17:39:12</publishTime>
     </File>
     <File Include="Scripts/howler.js">
       <publishTime>02/27/2015 22:29:50</publishTime>
@@ -2840,7 +2843,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/23/2014 14:25:46</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Create.cshtml">
-      <publishTime>03/13/2015 17:04:42</publishTime>
+      <publishTime>03/17/2015 17:55:01</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Delete.cshtml">
       <publishTime>01/08/2015 15:53:56</publishTime>
@@ -2849,7 +2852,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/13/2015 17:40:07</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Edit.cshtml">
-      <publishTime>03/13/2015 17:04:19</publishTime>
+      <publishTime>03/17/2015 17:57:59</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Index.cshtml">
       <publishTime>12/13/2014 13:35:24</publishTime>
@@ -2864,7 +2867,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/HotelRoom/Edit.cshtml">
-      <publishTime>03/09/2015 17:15:39</publishTime>
+      <publishTime>03/17/2015 17:56:07</publishTime>
     </File>
     <File Include="Views/HotelRoom/Index.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
@@ -3023,7 +3026,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2015 08:41:12</publishTime>
     </File>
     <File Include="Views/Search/Promotion.cshtml">
-      <publishTime>03/13/2015 17:18:17</publishTime>
+      <publishTime>03/17/2015 17:43:10</publishTime>
     </File>
     <File Include="Views/Search/SearchHotel.cshtml">
       <publishTime>03/12/2015 08:39:31</publishTime>

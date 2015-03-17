@@ -93,7 +93,7 @@
 					    <p>@Html.Raw(@HotelGolfBooking.Config.displayHotelRate(@item.rate)) &nbsp; <img src="/Images/map.png" width="24" height="24"><a target="_blank" href="/Map/Index?idhotel=@item.id">Bản đồ</a></p>
 					    <p>@item.address</p>					    
 					    <p>
-                            <div id="promotionList_@item.id" style="background-color:#E6E534;width:103px;text-align:center;"><a href="/HotelPromotion/Details?idhotel=@item.id&fdate=@ViewBag.fdate&tdate=@ViewBag.tdate" target="_blank">Khuyến Mãi</a></div>
+                            <div id="promotionList_@item.id" style="width:103px;"><a href="/HotelPromotion/Details?idhotel=@item.id&fdate=@ViewBag.fdate&tdate=@ViewBag.tdate" target="_blank"><img src="/Images/khuyenmai.gif"></a></div>
 						    <table class="tbl_price_room" id="roomList_@item.id">                                    						
 						            <tr><td><img src="/Images/loading.gif"></td></tr>
 						    </table>

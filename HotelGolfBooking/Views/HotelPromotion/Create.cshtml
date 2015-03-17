@@ -14,7 +14,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset>
-        
+            
               <div class="form-group">
                 <label for="room">Tỷ lệ % discount</label>
                 <input name="discount" type="text" id="discount" value="" class="form-control" onblur="checkDiscount();"/>                                
@@ -23,14 +23,20 @@
                 <input name="fdate" type="hidden" id="fdate" value="" class="form-control" />                
                 <input name="tdate" type="hidden" id="tdate" value="" class="form-control" />                
               </div>
+           
+            
               <div class="form-group">
                 <label style="width:auto;display:block;">Áp dụng từ ngày</label>
-                <input name="checkin" type="text" id="checkin" value="" class="form-control" placeholder="từ ngày"/>                                            
+                <input name="checkin1" type="date" id="checkin1" value="" placeholder="từ ngày"/>                                            
               </div>
+           
+          
               <div class="form-group">
                 <label style="width:auto;display:block;">Đến ngày</label>
-                <input name="checkout" type="text" id="checkout" value="" class="form-control" placeholder="đến ngày"/>                                                 
+                <input name="checkout1" type="date" id="checkout1" value="" placeholder="đến ngày"/>                                                 
               </div>
+          
+          
               <div class="form-group">
                     <label for="room" style="width:auto;display:block;">Nội dung chi tiết</label>                
                      <textarea name="details" id="details" rows="20" cols="220">
@@ -40,6 +46,7 @@
                         CKEDITOR.replace('details');
                     </script>                       
                   </div>
+            
          <p>
            <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
         </p>
@@ -96,20 +103,24 @@
             document.getElementById("discount").focus();
             return false;
         }
-        if (document.getElementById("checkin").value == "") {
+        if (document.getElementById("checkin1").value == "") {
             alert("Nhập ngày bắt đầu áp dụng!");
-            document.getElementById("checkin").focus();
+            document.getElementById("checkin1").focus();
             return false;
         }
-        if (document.getElementById("checkout").value == "") {
+        if (document.getElementById("checkout1").value == "") {
             alert("Nhập ngày kết thúc áp dụng!");
-            document.getElementById("checkout").focus();
+            document.getElementById("checkout1").focus();
             return false;
         }
-        document.getElementById("fdate").value = getDateId(document.getElementById("checkin").value);
+        document.getElementById("fdate").value = getDateIdNew(document.getElementById("checkin1").value);
         //alert(document.getElementById("fdate").value);
-        document.getElementById("tdate").value = getDateId(document.getElementById("checkout").value);
+        document.getElementById("tdate").value = getDateIdNew(document.getElementById("checkout1").value);
         //return;
         document.getElementById("EditForm").submit();
+    }
+    function getDateIdNew(d) {
+        d = d.replace(/\-/g, "");
+        return d;
     }
 </script>

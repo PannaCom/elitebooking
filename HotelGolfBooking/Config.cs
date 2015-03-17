@@ -226,10 +226,15 @@ namespace HotelGolfBooking
             return input;
         }
         public static string smoothDes(string des) {
+            if (des != null && des.Trim() != "") des = StripTagsRegex(des);
             if (des.Length >= 155) {
                 des = des.Substring(0, 154)+"..";
             }
             return des;
+        }
+        public static string StripTagsRegex(string source)
+        {
+            return Regex.Replace(source, "<.*?>", string.Empty);
         }
         public static string mail(string from, string to,string topic, string pass, string content) {
             try

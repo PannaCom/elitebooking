@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <title>@Html.Raw(@ViewBag.title)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="@Html.Raw(@ViewBag.des)">                        
+<meta name="description" content="@Html.Raw(HttpUtility.HtmlDecode(@ViewBag.des))">                        
         <meta name="robots" content="index,follow,noodp"/>
         <meta name="author" content="elitehotel.com.vn"/>
         <meta property="og:locale" content="vi_VN" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="@ViewBag.url" />        
         <meta property="og:title" content="Đặt phòng khách sạn @ViewBag.title" />
-        <meta property="og:description" content="@ViewBag.des" />
+        <meta property="og:description" content="@Html.Raw(HttpUtility.HtmlDecode(@ViewBag.des))" />
         <meta property="og:image" itemprop="thumbnailUrl" content="@ViewBag.image" />
 
 <link rel="shortcut icon" href="favicon.ico">

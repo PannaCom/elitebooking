@@ -281,7 +281,8 @@ function searchGolf() {
                         var name = json_parsed.news[i].discount;
                         var tdate = convertFromDateIdToDateString("" + json_parsed.news[i].tdate + "");
                         var fdate = convertFromDateIdToDateString("" + json_parsed.news[i].fdate + "");
-                        content += "<p><b>Khuyến mại " + name + "% từ "+fdate+" đến " + tdate + "</b></p>";
+                        //content += "<p><b>Khuyến mại " + name + "% từ "+fdate+" đến " + tdate + "</b></p>";
+                        content = "<a href=\"/HotelPromotion/Details?idhotel=" + idhotel + "&fdate=" + fromdate + "&tdate=" + todate + "\" target=\"_blank\"><img src=\"/Images/khuyenmai.gif\"></a>";
                     }
                 }
                 $("#promotionList_" + id).html(content);

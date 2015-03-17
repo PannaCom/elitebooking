@@ -41,7 +41,7 @@ namespace HotelGolfBooking.Controllers
             //return JsonConvert.SerializeObject(p.ToList());
             string query = "select id,idhotel,roomname,price,breakfast,extrabed,square,noofroom,extrabedfee,extraotherfee,showprice from ";
             query += "(select id,idhotel,roomname,breakfast,extrabed,square,noofroom,extrabedfee,extraotherfee,showprice from hotel_room where deleted=0 and idhotel=" + idhotel + ") as A left join ";
-            query += "(select idroom,price from hotel_room_price where deleted=0 and month like '%," + month + ",%' and idhotel=" + idhotel + ") as B on A.id=B.idroom order by price";
+            query += "(select idroom,price from hotel_room_price where deleted=0 and month like '%," + month + ",%' and idhotel=" + idhotel + ") as B on A.id=B.idroom order by price,square";
 
             var p = db.Database.SqlQuery<roomdetail>(query).ToList();
             return JsonConvert.SerializeObject(p);
@@ -60,7 +60,7 @@ namespace HotelGolfBooking.Controllers
             //return JsonConvert.SerializeObject(p.ToList());
             string query = "select id,idhotel,hotelname,roomname,price,breakfast,extrabed,square,noofroom,showprice from ";
             query += "(select id,idhotel,hotelname,roomname,breakfast,extrabed,square,noofroom,showprice from hotel_room where deleted=0 and idhotel=" + idhotel + ") as A left join ";
-            query += "(select idroom,price from hotel_room_price where deleted=0 and month like '%," + month + ",%' and idhotel=" + idhotel + ") as B on A.id=B.idroom order by price";
+            query += "(select idroom,price from hotel_room_price where deleted=0 and month like '%," + month + ",%' and idhotel=" + idhotel + ") as B on A.id=B.idroom order by price,square";
             
             var p = db.Database.SqlQuery<roomdetail>(query).ToList();
             return JsonConvert.SerializeObject(p);

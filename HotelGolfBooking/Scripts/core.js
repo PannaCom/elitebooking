@@ -278,14 +278,18 @@ function searchGolf() {
                 $("#promotionList_" + id).html("");
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {
-                        var name = json_parsed.news[i].discount;
-                        var tdate = convertFromDateIdToDateString("" + json_parsed.news[i].tdate + "");
-                        var fdate = convertFromDateIdToDateString("" + json_parsed.news[i].fdate + "");
+                        //var name = json_parsed.news[i].discount;
+                        //var tdate = convertFromDateIdToDateString("" + json_parsed.news[i].tdate + "");
+                        //var fdate = convertFromDateIdToDateString("" + json_parsed.news[i].fdate + "");
                         //content += "<p><b>Khuyến mại " + name + "% từ "+fdate+" đến " + tdate + "</b></p>";
-                        content = "<a href=\"/HotelPromotion/Details?idhotel=" + idhotel + "&fdate=" + fromdate + "&tdate=" + todate + "\" target=\"_blank\"><img src=\"/Images/khuyenmai.gif\"></a>";
+                        //content = "<a href=\"/HotelPromotion/Details?idhotel=" + idhotel + "&fdate=" + fromdate + "&tdate=" + todate + "\" target=\"_blank\"><img src=\"/Images/khuyenmai.gif\"></a>";
+                        content = json_parsed.news[i].details;
+                        $("#promotionListHidden_" + idhotel).html(content);
+                        $("#promotionList_" + idhotel).html("<a onclick=\"viewPromotionDetail("+idhotel+")\" style=\"cursor:pointer;\"><img src=\"/Images/khuyenmai.gif\" height=40></a>");
+                        break;
                     }
                 }
-                $("#promotionList_" + id).html(content);
+                
                 //$("#promotionList_" + idhotel).append();
             }
         }

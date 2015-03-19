@@ -11,6 +11,16 @@
     int curPage = prePage + 1;
     string linkitem = "";
 }
+<script>
+    function viewPromotionDetail(id){
+        //$("#promotionList_"+id).html($("#promotionListHidden_"+id).html());
+        if (document.getElementById("promotionListHidden_"+id).style.display=="none"){
+            $("#promotionListHidden_"+id).show();
+        }else{
+            $("#promotionListHidden_"+id).hide();
+        }
+    }
+</script>
 <!-- Reservation form -->
 <section id="reservation-form">
   <div class="container mt70">
@@ -95,7 +105,8 @@
 					    <p>@Html.Raw(@HotelGolfBooking.Config.displayHotelRate(@item.rate)) &nbsp; <img src="/Images/map.png" width="24" height="24"><a target="_blank" href="/Map/Index?idhotel=@item.id">Bản đồ</a></p>
 					    <p>@item.address</p>					    
 					    <p>
-                            <div id="promotionList_@item.id"></div>
+                            <div id="promotionList_@item.id" style="width:103px;"></div>
+                            <div id="promotionListHidden_@item.id" style="width:auto;display:none;"></div>
 						    <table class="tbl_price_room" id="roomList_@item.id">                                    						
 						            <tr><td><img src="/Images/loading.gif"></td></tr>
 						    </table>

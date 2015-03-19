@@ -162,9 +162,9 @@ namespace HotelGolfBooking.Controllers
                 }
           
                 string query = "";
-                query = "select top 1000 id,name,provin,image,address,rate,minprice,invisibleprice from ";
+                query = "select top 1000 id,name,provin,image,address,rate,minprice,promotiondetail,invisibleprice from ";
                 query += "(select id,name,provin,image,address,rate,minprice,invisibleprice from hotel where deleted=0 and haspromotion=1) as A inner join ";
-                query+="(select idhotel from hotel_promotion where ((fdate<="+ViewBag.fdate+" and tdate>="+ViewBag.fdate+") or (fdate<="+ViewBag.tdate+" and tdate>="+ViewBag.tdate+"))) as B on A.id=B.idhotel ";
+                query += "(select idhotel,details as promotiondetail from hotel_promotion where ((fdate<=" + ViewBag.fdate + " and tdate>=" + ViewBag.fdate + ") or (fdate<=" + ViewBag.tdate + " and tdate>=" + ViewBag.tdate + "))) as B on A.id=B.idhotel ";
                 query += " order by rate desc,minprice";
 
             

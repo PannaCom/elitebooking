@@ -27,6 +27,7 @@ namespace HotelGolfBooking.Views
             public string address { get; set; }
             public int rate { get; set; }
             public int minprice { get; set; }
+            public string promotiondetail { get; set; }
             public byte invisibleprice { get; set; }   
         }
         public class ModelClassViewHotelSearchManager

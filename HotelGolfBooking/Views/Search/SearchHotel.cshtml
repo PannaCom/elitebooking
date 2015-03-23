@@ -150,12 +150,22 @@
                     <div class="tab-content" >
                       <div class="tab-pane fade in active" id="hotel">
 				            <table class="tbl_price_room" id="TopDealProvin">
-					
+					                <tr><th colspan="2"><img src="/Images/loading.gif"></th></tr>
 				            </table>
                	            <script>getTopDealProvin(@ViewBag.fdate,@ViewBag.tdate,"@Html.Raw(@ViewBag.dis)");</script>	
                       </div>          
                     </div>
-          </div>      
+          </div>  
+          <div class="item TopDealProvinDiv" id="ListGolfServiceDiv" style="display:block;float:right;position:relative;">
+                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:3px;"><span><a href="/Golf/List">Dịch vụ Golf</a></span></h4>
+                    <!-- Tab panes -->
+                    <div class="tab-content" >
+                      <div class="tab-pane fade in active" id="ListGolfService">
+               	            <img src="/Images/loading.gif">
+                      </div>          
+                        <script>getListGolfService(@ViewBag.fdate);</script>	
+                    </div>
+          </div>     
       </div>
     </section>
     @if (ViewBag.gallery!="")
@@ -176,6 +186,7 @@
             </section>
         </text>
     }
+     
   </div>
 </div>
 <div id=dvgetHotelPrice style="z-index:1001;position:fixed;left:20%;top:40%;width:280px;height:120px;display:none;color:#ffffff;background-color:#1F497D;border:1px solid #b6ff00;margin: 2 2 2 2;">

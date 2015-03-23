@@ -341,6 +341,34 @@ function searchGolf() {
             }
         }
     }
+    function getListGolfService(fdate) {
+        //var formdata = new FormData(); //FormData object
+        //formdata.append("fdate", iddate);
+        //formdata.append("idgolf", idgolf);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Golf/getListGolfService');
+        xhr.send();
+        //var content = "<table class=\"tbl_price_room\"><tr><th>Ảnh</th><th>Tên sân</th><tr>";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var news = '{"news":' + xhr.responseText + '}';
+                var content = "<table class=\"tbl_price_room\">";
+                var json_parsed = $.parseJSON(news);
+                $("#ListGolfService").html("");
+                for (var i = 0; i < json_parsed.news.length; i++) {
+                    if (json_parsed.news[i]) {
+                        if (i >= 5) break;
+                        content += "<tr class=\"td_price_room\"><td><img src=\"" + json_parsed.news[i].image + "\" width=75 height=50></td><td ><a href=\"/Golf/List\" style=\"float:left;width:100%;\"><font style=\"color:#002060;margin-top:0px;marin-bottom:0px;size:12px;font-weight:bold;\">" + json_parsed.news[i].name + "</font></a><span class=\"CityName\" id=\"price_" + json_parsed.news[i].id + "\"></span><span id=\"promotionList_" + json_parsed.news[i].id + "\"></span></td></tr>";
+                        getGolfPrice(json_parsed.news[i].id, fdate);
+                        getGolfPromotion(json_parsed.news[i].id,fdate);
+                    }
+                }
+                content += "</table>";
+                $("#ListGolfService").html(content);
+                
+            }
+        }
+    }
     function getGolfPromotion(idgolf,fdate) {
         var formdata = new FormData(); //FormData object
         formdata.append("idgolf", idgolf);
@@ -1123,7 +1151,7 @@ function searchGolf() {
         }
     }
     function getTopDealProvin(fromdate, todate,provin) {
-
+        
         //var formdata = new FormData(); //FormData object
         //formdata.append("url", url);
         var xhr = new XMLHttpRequest();
@@ -1137,7 +1165,7 @@ function searchGolf() {
                 var json_parsed = $.parseJSON(news);
                 content = "";
                 if (json_parsed.news.length <= 0) { $("#TopDealProvinDiv").hide(); return; }
-                $("#TopDealProvinDiv").show();
+                $("#TopDealProvinDiv").show();     
                 $("#TopDealProvin").html("<tr><th>Khách sạn</th><th>Giá/đêm</th></tr>");
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {

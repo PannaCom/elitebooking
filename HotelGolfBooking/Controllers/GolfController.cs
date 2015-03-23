@@ -46,6 +46,10 @@ namespace HotelGolfBooking.Controllers
             int pageNumber = (page ?? 1);
             return View(p.ToPagedList(pageNumber, pageSize));
         }
+        public string getListGolfService() {
+            var p = (from q in db.golves where q.deleted == 0 select q).OrderBy(o=>o.minprice).Take(20);
+            return JsonConvert.SerializeObject(p.ToList());
+        }
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
         public string UploadImageProcess(HttpPostedFileBase file, string filename)

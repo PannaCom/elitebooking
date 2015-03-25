@@ -358,7 +358,7 @@ function searchGolf() {
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {
                         if (i >= 5) break;
-                        content += "<tr class=\"td_price_room\"><td><img src=\"" + json_parsed.news[i].image + "\" width=75 height=50></td><td ><a href=\"/Golf/List\" style=\"float:left;width:100%;\"><font style=\"color:#002060;margin-top:0px;marin-bottom:0px;size:12px;font-weight:bold;\">" + json_parsed.news[i].name + "</font></a><span class=\"CityName\" id=\"price_" + json_parsed.news[i].id + "\"></span><span id=\"promotionList_" + json_parsed.news[i].id + "\"></span></td></tr>";
+                        content += "<tr class=\"td_price_room\"><td valign=top><img src=\"" + json_parsed.news[i].image + "\" width=75 height=50 style=\"margin-top:4px;\"></td><td ><a href=\"/Golf/List\" style=\"float:left;width:100%;\"><font style=\"color:#002060;margin-top:0px;marin-bottom:4px;size:11px;font-weight:bold;\">" + json_parsed.news[i].name + "</font></a><span class=\"CityName\" id=\"price_" + json_parsed.news[i].id + "\"></span><span id=\"promotionList_" + json_parsed.news[i].id + "\"></span></td></tr>";
                         getGolfPrice(json_parsed.news[i].id, fdate);
                         getGolfPromotion(json_parsed.news[i].id,fdate);
                     }

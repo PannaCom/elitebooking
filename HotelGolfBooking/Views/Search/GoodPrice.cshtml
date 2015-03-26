@@ -132,20 +132,20 @@
             </div>
           </div>  
            <div class="item TopDealProvinDiv" id="TopDealProvinDiv" style="display:block;float:right;position:relative;">
-                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:3px;"><span>Khách sạn bán chạy nhất</span></h4>
+                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:6px;"><span style="color:#067C02;font-size:20px;">Khách Sạn Quan Tâm Nhất</span></h4>
                     
                     <!-- Tab panes -->
                     <div class="tab-content" >
                       <div class="tab-pane fade in active" id="hotel">
-				            <table class="tbl_price_room" id="TopDealProvin">
-					                <tr><th colspan="2"><img src="/Images/loading.gif"></th></tr>
+				            <table class="tbl_price_room" id="TopDealProvinView">
+					            <tr><th colspan="2"><img src="/Images/loading.gif"></th></tr>
 				            </table>
-               	            <script>getTopDealProvin(@ViewBag.fdate,@ViewBag.tdate,"@Html.Raw(@ViewBag.provin)");</script>	
+               	            <script>getTopDealViews(@ViewBag.fdate,@ViewBag.tdate);</script>	
                       </div>          
                     </div>
            </div>
-           <div class="item TopDealProvinDiv" id="ListGolfServiceDiv" style="display:block;float:right;position:relative;">
-                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:3px;"><span><a href="/Golf/List">Dịch vụ Golf</a></span></h4>
+           <div class="item TopDealProvinDiv" id="ListGolfServiceDiv" style="display:block;float:right;position:relative;margin-top:5px;">
+                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:12px;margin-top:12px;"><span style="color:#067C02;"><a href="/Golf/List" style="color:#067C02;font-size:20px;">Dịch Vụ Golf</a></span></h4>
                     <!-- Tab panes -->
                     <div class="tab-content" >
                       <div class="tab-pane fade in active" id="ListGolfService">

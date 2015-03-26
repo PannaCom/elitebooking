@@ -358,7 +358,7 @@ function searchGolf() {
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {
                         if (i >= 5) break;
-                        content += "<tr class=\"td_price_room\"><td valign=top><img src=\"" + json_parsed.news[i].image + "\" width=75 height=50 style=\"margin-top:4px;\"></td><td ><a href=\"/Golf/List\" style=\"float:left;width:100%;\"><font style=\"color:#002060;margin-top:0px;marin-bottom:4px;size:11px;font-weight:bold;\">" + json_parsed.news[i].name + "</font></a><span class=\"CityName\" id=\"price_" + json_parsed.news[i].id + "\"></span><span id=\"promotionList_" + json_parsed.news[i].id + "\"></span></td></tr>";
+                        content += "<tr class=\"td_price_room\"><td valign=top><img src=\"" + json_parsed.news[i].image + "\" width=75 height=50 style=\"margin-top:4px;\"></td><td valign=top><table><tr><td><a href=\"/Golf/List\" style=\"float:left;width:100%;margin-bottom:5px;font-size:11px;\"><font style=\"color:#002060;size:8px;font-weight:bold;\">" + json_parsed.news[i].name + "</font></a></td></tr><tr><td><span class=\"CityName\"  id=\"price_" + json_parsed.news[i].id + "\"></td></tr><tr><td></span><span id=\"promotionList_" + json_parsed.news[i].id + "\"></span></td></tr></table></td></tr>";
                         getGolfPrice(json_parsed.news[i].id, fdate);
                         getGolfPromotion(json_parsed.news[i].id,fdate);
                     }
@@ -1228,7 +1228,7 @@ function searchGolf() {
                         //content += "<li><a href=\"/tin/" + unicodeToNoMark(name) + "\">" + name + "<span class=\"badge pull-right\">" + total + "</span></a></li>";
                         //content += "<div class=\"col-md-3\"><a href=\"/hotel/"+name2+"-"+ fromdate + "-" + todate + "-" + id + "\" style=\"color:#64B342;font-size:14px;\">Khách sạn " + name + " giá rẻ nhất</a></div>";
                         content += "<tr>";
-                        content += "	<td><a href=\"/hotel/" + name2 + "-" + fromdate + "-" + todate + "-" + id + "-0\"><h5>" + name + "</h5></a></td>";
+                        content += "	<td width=250><a href=\"/hotel/" + name2 + "-" + fromdate + "-" + todate + "-" + id + "-0\"><h5>" + name + "</h5></a></td>";
                         //content += "	<td>" + fdate + "->" + tdate + "</td>";
                         content += "<td><b style=\"color:#00B08F;font-size:14px;\">" + provin + "</b></td>";
                         content += "</tr>";

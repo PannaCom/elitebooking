@@ -51,14 +51,14 @@ namespace HotelGolfBooking.Controllers
             return View();
         }
         public string getGolfPriceList(int idgolf) {
-            var p = (from q in db.golf_price where q.deleted == 0 && q.idgolf==idgolf select q).OrderBy(o=>o.price);
+            var p = (from q in db.golf_price where q.deleted == 0 && q.idgolf == idgolf select new { id = q.id, idgolf = q.idgolf, price = q.price, pricebuggy = q.pricebuggy, priceweekend = q.priceweekend, golfname = q.golfname, month = q.month }).OrderBy(o => o.price);
             return JsonConvert.SerializeObject(p.ToList());
         }
         public string getGolfPrice(int idgolf,int dateid)
         {
             try
             {
-                //string month = Config.getMonthFromDateId(dateid);
+                string month = Config.getMonthFromDateId(dateid);
                 //int price = 0;
                 //if (!Config.isWeekendDate(dateid))
                 //{
@@ -68,7 +68,7 @@ namespace HotelGolfBooking.Controllers
                 //    price = (int)db.golf_price.Where(o => o.deleted == 0).Where(o => o.idgolf == idgolf).Where(o => o.month.Contains("," + month + ",")).Min(o => o.priceweekend);
                 //}
                 //return price.ToString();
-                var p = (from q in db.golf_price where q.idgolf == idgolf select q).Take(1);
+                var p = (from q in db.golf_price where q.idgolf == idgolf && q.month.Contains("," + month + ",") select new { id = q.id, idgolf = q.idgolf, price = q.price, pricebuggy = q.pricebuggy, priceweekend = q.priceweekend, golfname = q.golfname, month = q.month }).Take(1);
                 return JsonConvert.SerializeObject(p.ToList());
             }
             catch (Exception ex) {

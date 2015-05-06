@@ -64,8 +64,8 @@ namespace HotelGolfBooking
         public static string payment_card_type2 = "Thẻ Visa, Master";
         public static string statusadmin_1 = "Chưa thanh toán";
         public static string statusadmin_2 = "Đã thanh toán";
-        public static string emailcompany = "diemtinvietnam@gmail.com";
-        public static string passemailcompany = "Huynguyenviet1111";
+        public static string emailcompany = "booking@elitehotel.com.vn";
+        public static string passemailcompany = "elitehotel123";
         public static int datetimeid()
         {
             DateTime d1;

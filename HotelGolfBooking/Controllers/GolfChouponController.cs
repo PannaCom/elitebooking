@@ -127,7 +127,7 @@ namespace HotelGolfBooking.Controllers
                             content += "          <h5><span style=\"text-decoration: line-through;\">Giá gốc: " + Config.formatNumber((int)oldprice) + "</span><span style=\"margin-left:7px;\">Giá coupon:</span><span style=\"color:#00B08F;font-size:15px;\"><b>" + Config.formatNumber((int)rscp[i].chouponprice) + "</b></span></h5>";
                             content += "        </div>";
                             content += "        <div class=\"content\" style=\"height:62px;\">";
-                            content += "          <a href=\"/GolfBooking/Contact?idgolf=" + rscp[i].id + "&checkin=" + ViewBag.fdate + "&typebook="+Config.typebook2+"\" class=\"btn btn-info\" style=\"bottom:0;display:block;position:relative;\">Mua ngay</a>";
+                            content += "          <a href=\"/GolfBooking/Contact?idgolf=" + rscp[i].idgolf + "&checkin=" + ViewBag.fdate + "&typebook="+Config.typebook2+"\" class=\"btn btn-info\" style=\"bottom:0;display:block;position:relative;\">Mua ngay</a>";
                             content += "          <p style=\"font-size:14;color:#5e5e5e;font-weight: bold;\">" + rscp[i].facility1;
                             if (rscp[i].facility2 != null && rscp[i].facility2 != "") content += ", " + rscp[i].facility2;
                             if (rscp[i].facility3 != null && rscp[i].facility3 != "") content += ", " + rscp[i].facility3;

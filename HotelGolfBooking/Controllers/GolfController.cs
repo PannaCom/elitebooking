@@ -23,7 +23,7 @@ namespace HotelGolfBooking.Controllers
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
             if (name == null) name = "";
             ViewBag.name = name;
-            var p = (from q in db.golves where q.name.Contains(name) && q.deleted == 0 select q).OrderByDescending(o => o.id).Take(100);
+            var p = (from q in db.golves where q.name.Contains(name) && q.deleted == 0 select q).OrderBy(o => o.name).Take(100);
             int pageSize = Config.PageSize;
             int pageNumber = (page ?? 1);
             return View(p.ToPagedList(pageNumber, pageSize));

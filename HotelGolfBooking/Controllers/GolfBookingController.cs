@@ -97,7 +97,7 @@ namespace HotelGolfBooking.Controllers
             var rs=p.ToList();
             string gallery = "";
             for (int i = 0; i < rs.Count; i++) {
-                gallery += "<div class=\"item\"><a href=\"" + rs[i].website + "\" target=\"_blank\"><img src=\"" +Config.domain+"/"+rs[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs[i].name + "\"><i class=\"fa fa-search\"></i></a></div>";
+                gallery += "<div class=\"item\"><a href=\"" + rs[i].website + "\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs[i].name + "\"><i class=\"fa fa-search\"></i><span>" + rs[i].name + "</span></a></div>";
             }
             ViewBag.gallery = gallery;
             if (Request.Browser.IsMobileDevice)

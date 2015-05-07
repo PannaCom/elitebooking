@@ -65,6 +65,7 @@ namespace HotelGolfBooking
         public static string statusadmin_1 = "Chưa thanh toán";
         public static string statusadmin_2 = "Đã thanh toán";
         public static string emailcompany = "booking@elitehotel.com.vn";
+        public static string emailcompanyadmin = "admin@elitehotel.com.vn";
         public static string passemailcompany = "elitehotel123";
         public static int datetimeid()
         {

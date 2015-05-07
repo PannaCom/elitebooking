@@ -9,7 +9,7 @@
         
 </div>
 <div class="col-md-8">
-<h2>Nhập khuyến mại cho sân golf @Session["golfname"]</h2>
+<h2>Nhập khuyến mại cho sân golf @ViewBag.golfname</h2>
 @using (Html.BeginForm("Create", "GolfPromotion", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -23,8 +23,8 @@
                 <script>
                     CKEDITOR.replace('note');
                 </script>                                  
-                <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
-                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />                
+                <input name="idgolf" type="hidden" id="idgolf" value="@ViewBag.idgolf" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@ViewBag.golfname" class="form-control" />                
                 <input name="fdate" type="hidden" id="fdate" value="" class="form-control" />                
                 <input name="tdate" type="hidden" id="tdate" value="" class="form-control" />                
               </div>
@@ -45,7 +45,7 @@
 }
  
 <div>
-    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+    <a href="/Golf/Edit/@ViewBag.idgolf">Quay lại</a>    
 </div>
 </div>
 
@@ -87,7 +87,7 @@
             }
         }
     }
-    getGolfPromotionList(@Session["idgolf"]);
+    getGolfPromotionList(@ViewBag.idgolf);
     function checkDiscount() {
         document.getElementById("discount").value = parseInt(removeSpecialCharater(document.getElementById("discount").value));
     }

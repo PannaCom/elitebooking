@@ -4,12 +4,12 @@
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h3>Bạn có chắc chắn xóa khuyến mại @Model.discount% của sân golf này?</h3>
+<h3>Bạn có chắc chắn xóa khuyến mại @Html.Raw(@Model.note) của sân golf này?</h3>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Create")
+        @Html.ActionLink("Back to List", "Create", new { id=Model.idgolf})
     </p>
 }

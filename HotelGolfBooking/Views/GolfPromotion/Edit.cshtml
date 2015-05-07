@@ -6,7 +6,7 @@
 }
 <script src="/Scripts/ckeditor/ckeditor.js"></script>
 <div class="col-md-8">
-<h2>Sửa khuyến mại cho sân golf @Session["golfname"]</h2>
+<h2>Sửa khuyến mại cho sân golf @Model.golfname</h2>
 @using (Html.BeginForm("Edit", "GolfPromotion", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -20,8 +20,8 @@
                 <script>
                     CKEDITOR.replace('note');
                 </script>                                 
-                <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
-                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />                
+                <input name="idgolf" type="hidden" id="idgolf" value="@Model.idgolf" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@Model.golfname" class="form-control" />                
                 <input name="fdate" type="hidden" id="fdate" value="@Model.fdate" class="form-control" />                
                 <input name="tdate" type="hidden" id="tdate" value="@Model.tdate" class="form-control" />                
               </div>

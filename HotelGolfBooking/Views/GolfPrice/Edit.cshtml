@@ -6,7 +6,7 @@
 }
 
 <div class="col-md-8">
-<h2>Quản lý giá sân golf @Session["golfname"]</h2>
+<h2>Quản lý giá sân golf @Model.golfname</h2>
 @using (Html.BeginForm("Edit", "GolfPrice", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
@@ -51,7 +51,7 @@
     </fieldset>
 }
 <div>
-    <a href="/GolfPrice/Create">Quay lại</a>    
+    <a href="/GolfPrice/Create?id=@Model.idgolf">Quay lại</a>    
 </div>
 </div>
 

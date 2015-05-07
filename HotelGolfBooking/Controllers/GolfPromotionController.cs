@@ -49,17 +49,20 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /GolfPromotion/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
-            if (Session["idgolf"] == null)
-            {
-                Session["idgolf"] = Config.getCookie("idgolf");
-            }
-            if (Session["golfname"] == null)
-            {
-                Session["golfname"] = Config.getCookie("golfname");
-            }
+            //if (Session["idgolf"] == null)
+            //{
+            //    Session["idgolf"] = Config.getCookie("idgolf");
+            //}
+            //if (Session["golfname"] == null)
+            //{
+            //    Session["golfname"] = Config.getCookie("golfname");
+            //}
+            golf gc = db.golves.Find(id);
+            ViewBag.golfname = gc.name;
+            ViewBag.idgolf = id;
             return View();
         }
 
@@ -82,7 +85,7 @@ namespace HotelGolfBooking.Controllers
                     string query = "update golf set haspromotion=1 where id=" + idgolf;
                     db.Database.ExecuteSqlCommand(query);
                 //}
-                return RedirectToAction("Create");
+                    return RedirectToAction("Create", new { id = idgolf });
             }
 
             return View(golf_promotion);
@@ -120,7 +123,7 @@ namespace HotelGolfBooking.Controllers
                     string query = "update golf set haspromotion=1 where id=" + idgolf;
                     db.Database.ExecuteSqlCommand(query);
                 //}
-                return RedirectToAction("Create");
+                    return RedirectToAction("Create", new { id = golf_promotion.idgolf });
             }
             return View(golf_promotion);
         }
@@ -146,9 +149,10 @@ namespace HotelGolfBooking.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             golf_promotion golf_promotion = db.golf_promotion.Find(id);
+            int idgolf = golf_promotion.idgolf;
             db.golf_promotion.Remove(golf_promotion);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id=idgolf });
         }
 
         protected override void Dispose(bool disposing)

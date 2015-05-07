@@ -49,9 +49,13 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /GolfChoupon/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            if (id == 0) id = -1;
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
+            golf gc = db.golves.Find(id);
+            ViewBag.golfname = gc.name;
+            ViewBag.idgolf = id;
             return View();
         }
         struct golfprovin
@@ -239,7 +243,7 @@ namespace HotelGolfBooking.Controllers
                 golf_choupon.deleted = 0;
                 db.golf_choupon.Add(golf_choupon);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = golf_choupon.idgolf });
             }
 
             return View(golf_choupon);
@@ -256,6 +260,8 @@ namespace HotelGolfBooking.Controllers
             {
                 return HttpNotFound();
             }
+            //ViewBag.golfname = golf_choupon.golfname;
+            //ViewBag.idgolf = id;
             return View(golf_choupon);
         }
 
@@ -271,7 +277,7 @@ namespace HotelGolfBooking.Controllers
                 golf_choupon.deleted = 0;
                 db.Entry(golf_choupon).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = golf_choupon.idgolf });
             }
             return View(golf_choupon);
         }
@@ -298,12 +304,13 @@ namespace HotelGolfBooking.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             golf_choupon golf_choupon = db.golf_choupon.Find(id);
+            int idgolf = golf_choupon.idgolf;
             golf_choupon.deleted = 1;
             db.Entry(golf_choupon).State = EntityState.Modified;
             db.SaveChanges();
             //db.golf_choupon.Remove(golf_choupon);
             //db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id=idgolf});
         }
 
         protected override void Dispose(bool disposing)

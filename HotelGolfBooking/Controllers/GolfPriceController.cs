@@ -37,17 +37,20 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /GolfPrice/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
-            if (Session["idgolf"] == null)
-            {
-                Session["idgolf"] = Config.getCookie("idgolf");
-            }
-            if (Session["golfname"] == null)
-            {
-                Session["golfname"] = Config.getCookie("golfname");
-            }
+            //if (Session["idgolf"] == null)
+            //{
+            //    Session["idgolf"] = Config.getCookie("idgolf");
+            //}
+            //if (Session["golfname"] == null)
+            //{
+            //    Session["golfname"] = Config.getCookie("golfname");
+            //}
+            golf gc = db.golves.Find(id);
+            ViewBag.golfname = gc.name;
+            ViewBag.idgolf = id;
             return View();
         }
         public string getGolfPriceList(int idgolf) {
@@ -142,14 +145,14 @@ namespace HotelGolfBooking.Controllers
         public ActionResult Edit(int id = 0)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
-            if (Session["idgolf"] == null)
-            {
-                Session["idgolf"] = Config.getCookie("idgolf");
-            }
-            if (Session["golfname"] == null)
-            {
-                Session["golfname"] = Config.getCookie("golfname");
-            }
+            //if (Session["idgolf"] == null)
+            //{
+            //    Session["idgolf"] = Config.getCookie("idgolf");
+            //}
+            //if (Session["golfname"] == null)
+            //{
+            //    Session["golfname"] = Config.getCookie("golfname");
+            //}
             golf_price golf_price = db.golf_price.Find(id);
             if (golf_price == null)
             {
@@ -181,7 +184,7 @@ namespace HotelGolfBooking.Controllers
                 catch (Exception ex)
                 {
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = golf_price .idgolf});
             }
             return View(golf_price);
         }
@@ -209,7 +212,7 @@ namespace HotelGolfBooking.Controllers
             golf_price golf_price = db.golf_price.Find(id);
             db.golf_price.Remove(golf_price);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id = golf_price.idgolf });
         }
 
         protected override void Dispose(bool disposing)

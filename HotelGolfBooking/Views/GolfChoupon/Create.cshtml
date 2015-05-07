@@ -7,7 +7,7 @@
         
 </div>
 <div class="col-md-8">
-<h2>Nhập Choupon cho sân golf @Session["golfname"]</h2>
+<h2>Nhập Choupon cho sân golf @ViewBag.golfname</h2>
 @using (Html.BeginForm("Create", "GolfChoupon", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
@@ -16,8 +16,8 @@
               <div class="form-group">
                 <label for="room">Giá choupon</label>
                 <input name="chouponprice" type="text" id="chouponprice" value="" class="form-control" placeholder="Nhập giá choupon" onblur="checkPrice();"/>                                
-                <input name="idgolf" type="hidden" id="idgolf" value="@Session["idgolf"]" class="form-control" />                
-                <input name="golfname" type="hidden" id="golfname" value="@Session["golfname"]" class="form-control" />   
+                <input name="idgolf" type="hidden" id="idgolf" value="@ViewBag.idgolf" class="form-control" />                
+                <input name="golfname" type="hidden" id="golfname" value="@ViewBag.golfname" class="form-control" />   
               </div>
          </div>
         <div class="col-md-6">
@@ -38,7 +38,7 @@
     </fieldset>
 }
 <div>
-    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+    <a href="/Golf/Edit/@ViewBag.idgolf">Quay lại</a>    
 </div>
 </div>
 
@@ -86,7 +86,7 @@
             }
         }
     }
-    getChouponListGolf(@Session["idgolf"]);
+    getChouponListGolf(@ViewBag.idgolf);
     @*function getGolfChouponList(idgolf) {
         
         var formdata = new FormData(); //FormData object

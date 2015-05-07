@@ -8,13 +8,13 @@
         
 </div>
 <div class="col-md-8">
-<h2>Quản lý giá sân golf @Session["golfname"]</h2>
+<h2>Quản lý giá sân golf @ViewBag.golfname</h2>
 @using (Html.BeginForm("Create", "GolfPrice", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
     <fieldset>      
-        <input name="idgolf" type="hidden" id="idhotel" value="@Session["idgolf"]" class="form-control" />                
-        <input name="golfname" type="hidden" id="hotelname" value="@Session["golfname"]" class="form-control" />
+        <input name="idgolf" type="hidden" id="idhotel" value="@ViewBag.idgolf" class="form-control" />                
+        <input name="golfname" type="hidden" id="hotelname" value="@ViewBag.golfname" class="form-control" />
         <div class="form-group">
               <div id="listMonth" name="listMonth">
                    <table style="border:1px solid #ff6a00;width:90%;">
@@ -52,7 +52,7 @@
     </fieldset>
 }
 <div>
-    <a href="/Golf/Edit/@Session["idgolf"]">Quay lại</a>    
+    <a href="/Golf/Edit/@ViewBag.idgolf">Quay lại</a>    
 </div>
 </div>
 
@@ -135,7 +135,7 @@
             }
         }
     }
-    getGolfPriceList(@Session["idgolf"]);
+    getGolfPriceList(@ViewBag.idgolf);
     
     function checkTotal() {
         document.getElementById("total").value = parseInt(removeSpecialCharater(document.getElementById("total").value));
@@ -147,8 +147,8 @@
     function checkField() {
        
         var formdata = new FormData(); //FormData object
-        formdata.append("idgolf", @Session["idgolf"]);
-        formdata.append("golfname", "@Html.Raw(@Session["golfname"])");
+        formdata.append("idgolf", @ViewBag.idgolf);
+        formdata.append("golfname", "@Html.Raw(@ViewBag.golfname)");
         formdata.append("totalitem", totalitem);        
         for (var i = 0; i < totalitem; i++) {
             if (!document.getElementById("price" + i)||!document.getElementById("month" + i)) continue;

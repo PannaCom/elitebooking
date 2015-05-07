@@ -173,8 +173,10 @@ namespace HotelGolfBooking.Controllers
             {
                 return HttpNotFound();
             }
-            Session["idgolf"] = id;
-            Session["golfname"] = golf.name;
+            //Session["idgolf"] = id;
+            //Session["golfname"] = golf.name;
+            ViewBag.idgolf = id;
+            ViewBag.golfname = golf.name;
             Config.setCookie("idgolf", id.ToString());
             Config.setCookie("golfname", golf.name);
             return View(golf);

@@ -109,6 +109,18 @@ namespace HotelGolfBooking.Controllers
             var p = (from q in db.golves where q.name.Contains(keyword) && q.deleted == 0 select q.name).Take(10);
             return JsonConvert.SerializeObject(p.ToList());
         }
+        public string getIdGolfByName(string keyword)
+        {
+            try
+            {
+                int p = (int)db.golves.Where(o => o.deleted == 0).Where(o => o.name.Contains(keyword)).Max(o => o.id);
+                return p.ToString();
+            }
+            catch (Exception ex)
+            {
+                return "-1";
+            }
+        }
         // GET: /Golf/Details/5
         public ActionResult Details(int id = 0)
         {

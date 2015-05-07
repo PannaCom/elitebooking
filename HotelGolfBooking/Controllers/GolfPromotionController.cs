@@ -76,12 +76,12 @@ namespace HotelGolfBooking.Controllers
                 db.golf_promotion.Add(golf_promotion);
                 db.SaveChanges();
                 int idgolf = golf_promotion.idgolf;
-                int discount = (int)db.golf_promotion.Where(o => o.idgolf == idgolf).Max(o => o.discount);
-                if (discount != 0)
-                {
+                int? discount = 0;// (int?)db.golf_promotion.Where(o => o.idgolf == idgolf).Max(o => o.discount);
+                //if (discount != 0)
+                //{
                     string query = "update golf set haspromotion=1 where id=" + idgolf;
                     db.Database.ExecuteSqlCommand(query);
-                }
+                //}
                 return RedirectToAction("Create");
             }
 
@@ -114,12 +114,12 @@ namespace HotelGolfBooking.Controllers
                 db.Entry(golf_promotion).State = EntityState.Modified;
                 db.SaveChanges();
                 int idgolf = golf_promotion.idgolf;
-                int discount = (int)db.golf_promotion.Where(o => o.idgolf == idgolf).Max(o => o.id);
-                if (discount != 0)
-                {
+                int discount = 0;// (int)db.golf_promotion.Where(o => o.idgolf == idgolf).Max(o => o.id);
+                //if (discount != 0)
+                //{
                     string query = "update golf set haspromotion=1 where id=" + idgolf;
                     db.Database.ExecuteSqlCommand(query);
-                }
+                //}
                 return RedirectToAction("Create");
             }
             return View(golf_promotion);

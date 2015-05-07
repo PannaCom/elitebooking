@@ -71,6 +71,15 @@ namespace HotelGolfBooking.Controllers
             {
                 db.customer_hotel_price.Add(customer_hotel_price);
                 db.SaveChanges();
+                try
+                {
+                    string body = "";
+                    body += customer_hotel_price.email + " vừa gửi yêu cầu đặt phòng khách sạn, với nội dung:<br> " + customer_hotel_price.requirement;
+                    body += "<br>Bạn có thể xem thêm tại đây <a href=\"" + Config.domain + "/CustomerRequest/Index\">Link</a>";
+                    Config.mail(Config.emailcompany, Config.emailcompanyadmin, customer_hotel_price.email + " vừa gửi yêu cầu đặt phòng khách sạn", Config.passemailcompany, body);
+                }
+                catch (Exception ex) { 
+                }
                 return RedirectToAction("Confirm");
             }
 

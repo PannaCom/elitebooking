@@ -203,16 +203,50 @@ function searchHotel() {
 function searchHotelAuto() {
     var keyword = document.getElementById('hotelnameauto').value;
     //alert(keyword);
-    $('#hotelnameauto').autocomplete({
-        source: '/Hotels/getListHotel?keyword=' + keyword,
-        select: function (event, ui) {
-            //alert(ui.item.id);
-            $(event.target).val(ui.item.value);
-            autosearchhotel(ui.item.value);
-            return false;
-        },
-        minLength: 2
-    });
+    var domain = window.location.href;
+    
+    if (domain.indexOf("Golf") < 0) {
+        $('#hotelnameauto').autocomplete({
+            source: '/Hotels/getListHotel?keyword=' + keyword,
+            select: function (event, ui) {
+                //alert(ui.item.id);
+                $(event.target).val(ui.item.value);
+                autosearchhotel(ui.item.value);
+                return false;
+            },
+            minLength: 2
+        });
+    } else {
+        //alert("test");
+        $('#hotelnameauto').autocomplete({
+            source: '/Golf/getListGolf?keyword=' + keyword,
+            select: function (event, ui) {
+                //alert(ui.item.id);
+                $(event.target).val(ui.item.value);
+                autosearchgolf(ui.item.value);
+                return false;
+            },
+            minLength: 2
+        });
+    }
+}
+function autosearchgolf(val) {
+    $("#labelautosearch").html("Đang tìm kiếm...<img src=\"/Images/loading.gif\" width=20 height=20>");
+    var formdata = new FormData(); //FormData object
+    formdata.append("keyword", val);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/Golf/getIdGolfByName');
+    xhr.send(formdata);
+    var content = "";
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var id = xhr.responseText;
+            if (id != "-1") {
+                $("#labelautosearch").html("Gõ tên khách sạn(golf) cần tìm..");
+                window.open("/Golf/Edit/" + id, "_blank");
+            }
+        }
+    }
 }
 function autosearchhotel(val){
     $("#labelautosearch").html("Đang tìm kiếm...<img src=\"/Images/loading.gif\" width=20 height=20>");
@@ -226,7 +260,7 @@ function autosearchhotel(val){
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
             if (id != "-1") {
-                $("#labelautosearch").html("Gõ tên khách sạn cần tìm..");
+                $("#labelautosearch").html("Gõ tên khách sạn(golf) cần tìm..");
                 window.open("/Hotels/Edit/"+id,"_blank");
             }
         }

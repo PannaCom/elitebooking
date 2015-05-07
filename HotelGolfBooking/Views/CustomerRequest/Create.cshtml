@@ -37,7 +37,7 @@
                     </script>                                           
                   </div>
                  <p>
-                   <button type="button" class="btn btn-info" onclick="checkField();">Gửi yêu cầu</button>
+                   <button type="button" class="btn btn-info" onclick="checkField();" id="btnSend">Gửi yêu cầu</button>
                 </p>      
         </fieldset> 
     
@@ -72,6 +72,7 @@
             document.getElementById("requirement").focus();
             return false;
         }
+        document.getElementById("btnSend").disabled = true;
         document.getElementById("EditForm").submit();
     }
    

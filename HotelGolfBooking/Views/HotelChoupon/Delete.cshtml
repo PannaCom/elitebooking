@@ -12,6 +12,6 @@
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" class="btn btn-info" value="Xóa" /> |
-        <a href="/HotelChoupon/Create/">Quay lại</a> 
+        <a href="/HotelChoupon/Create?id=@Model.idhotel">Quay lại</a> 
     </p>
 }

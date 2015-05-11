@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="col-md-10" >
-<h2>Cập nhật tiện nghi khách sạn @Session["hotelname"]</h2>
+<h2>Cập nhật tiện nghi khách sạn @ViewBag.hotelname</h2>
 <i>Xóa những tiện nghi mà khách sạn không có</i>
 </div>
 <div class="col-md-10" id="listFacilities">
@@ -26,14 +26,14 @@
                     <button type="button" class="btn btn-info" onclick="insertFacilities();">Thêm mới</button>
                   </p>
               </div>
-              <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>     
+              <a href="/Hotels/Edit/@ViewBag.idhotel">Quay lại</a>     
         </div>
 </div>
 
 <script>
     function insertFacilities() {
         var formdata = new FormData(); //FormData object
-        formdata.append("idhotel", @Session["idhotel"]);
+        formdata.append("idhotel", @ViewBag.idhotel);
         formdata.append("facility", $("#facility").val());
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/HotelFacilities/insertFacilities');
@@ -62,7 +62,7 @@
     }
     function loadFacilities() {
         //var formdata = new FormData(); //FormData object
-        //formdata.append("idhotel", @Session["idhotel"]);
+        //formdata.append("idhotel", @ViewBag.idhotel);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/HotelFacilities/getFacilities');
         xhr.send();

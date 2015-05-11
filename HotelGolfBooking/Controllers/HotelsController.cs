@@ -180,6 +180,9 @@ namespace HotelGolfBooking.Controllers
             Session["idhotel"] = id;
             Session["hotelname"] = hotel.name;
             Session["dis"] = hotel.dis;
+            ViewBag.idhotel = id;
+            ViewBag.hotelname = hotel.name;
+            ViewBag.dis = hotel.dis;
             Config.setCookie("idhotel", id.ToString());
             Config.setCookie("hotelname", hotel.name);
             Config.setCookie("dis", hotel.dis);

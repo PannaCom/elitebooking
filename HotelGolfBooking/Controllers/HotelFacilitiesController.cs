@@ -16,11 +16,21 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /HotelFacilities/
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
-            int idhotel = int.Parse(Session["idhotel"].ToString());
-            var p = (from q in db.hotel_facility where q.idhotel == idhotel select q);
+            //int idhotel = int.Parse(Session["idhotel"].ToString());
+            var p = (from q in db.hotel_facility where q.idhotel == id select q);
+            try
+            {
+                hotel ht = db.hotels.Find(id);
+                ViewBag.idhotel = ht.id;
+                ViewBag.hotelname = ht.name;
+            }
+            catch (Exception ex)
+            {
+
+            }
             return View(p.ToList());
         }
         [HttpPost]

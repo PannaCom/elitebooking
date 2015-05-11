@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="col-md-8">
-<h2>Quản lý giá phòng khách sạn @Session["hotelName"]</h2>
+<h2>Quản lý giá phòng khách sạn @Model.hotelname</h2>
 @using (Html.BeginForm("Edit", "HotelPrice", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
@@ -53,7 +53,7 @@
     </fieldset>
 }
 <div>
-    <a href="/HotelPrice/Create">Quay lại</a>    
+    <a href="/HotelPrice/Create?id=@Model.idhotel">Quay lại</a>    
 </div>
 </div>
 
@@ -78,7 +78,7 @@
         //alert(idroom);
         $("#idroom").val(idroom);
     }
-    getHotelRoomList(@Session["idhotel"]);
+    getHotelRoomList(@Model.idhotel);
     function getHotelRoomList(value) {
         var formdata = new FormData(); //FormData object
         formdata.append("idhotel", value);

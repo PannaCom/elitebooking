@@ -8,14 +8,14 @@
         
 </div>
 <div class="col-md-8">
-<h2>Quản lý giá phòng khách sạn @Session["hotelName"]</h2>
+<h2>Quản lý giá phòng khách sạn @ViewBag.hotelname</h2>
 @using (Html.BeginForm("Create", "HotelPrice", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
     <fieldset>
         <input name="idroom" type="hidden" id="idroom" value="@ViewBag.idroom" class="form-control" />                
-        <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
-        <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />
+        <input name="idhotel" type="hidden" id="idhotel" value="@ViewBag.idhotel" class="form-control" />                
+        <input name="hotelname" type="hidden" id="hotelname" value="@ViewBag.hotelname" class="form-control" />
               <div class="form-group">
                 <label for="room">Tên phòng</label>
                 <select class="form-control" name="roomname" id="roomname" onchange="setIdRoom();">                    
@@ -57,7 +57,7 @@
     </fieldset>
 }
 <div>
-    <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>    
+    <a href="/Hotels/Edit/@ViewBag.idhotel">Quay lại</a>    
 </div>
 </div>
 
@@ -144,8 +144,8 @@
             }
         }
     }
-    getHotelPriceList(@Session["idhotel"]);
-    getHotelRoomList(@Session["idhotel"],@ViewBag.idroom);
+    getHotelPriceList(@ViewBag.idhotel);
+    getHotelRoomList(@ViewBag.idhotel,@ViewBag.idroom);
     function getHotelRoomList(value,idroom) {
         var formdata = new FormData(); //FormData object
         formdata.append("idhotel", value);
@@ -191,8 +191,8 @@
             return;
         }
         var formdata = new FormData(); //FormData object
-        formdata.append("idhotel", @Session["idhotel"]);
-        formdata.append("hotelname", "@Html.Raw(@Session["hotelname"])");
+        formdata.append("idhotel", @ViewBag.idhotel);
+        formdata.append("hotelname", "@Html.Raw(@ViewBag.hotelname)");
         formdata.append("totalitem", totalitem);
         formdata.append("idroom", $("#idroom").val());
         formdata.append("roomname", $("#roomname").val());

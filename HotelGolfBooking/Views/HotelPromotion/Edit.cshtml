@@ -6,7 +6,7 @@
 }
 <script src="/Scripts/ckeditor/ckeditor.js"></script>
 <div class="col-md-8">
-<h2>Sửa khuyến mại cho khách sạn @Session["hotelName"]</h2>
+<h2>Sửa khuyến mại cho khách sạn @Model.hotelname</h2>
 @using (Html.BeginForm("Edit", "HotelPromotion", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -15,8 +15,8 @@
               <div class="form-group">
                 <label for="room">Tỷ lệ % discount</label>
                 <input name="discount" type="text" id="discount" value="@Model.discount" class="form-control" onblur="checkDiscount();"/>                                
-                <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
-                <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />                
+                <input name="idhotel" type="hidden" id="idhotel" value="@Model.idhotel" class="form-control" />                
+                <input name="hotelname" type="hidden" id="hotelname" value="@Model.hotelname" class="form-control" />                
                 <input name="fdate" type="hidden" id="fdate" value="@Model.fdate" class="form-control" />                
                 <input name="tdate" type="hidden" id="tdate" value="@Model.tdate" class="form-control" />                
               </div>
@@ -46,7 +46,7 @@
 }
  
 <div>
-    <a href="/HotelPromotion/Create/">Quay lại</a>    
+    <a href="/HotelPromotion/Create?id=@Model.idhotel">Quay lại</a>    
 </div>
 </div>
 

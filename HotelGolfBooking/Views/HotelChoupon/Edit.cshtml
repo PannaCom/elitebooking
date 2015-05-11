@@ -6,7 +6,7 @@
 }
 
 <div class="col-md-8">
-<h2>Nhập Choupon cho khách sạn @Session["hotelName"]</h2>
+<h2>Nhập Choupon cho khách sạn @Model.hotelname</h2>
 @using (Html.BeginForm("Edit", "HotelChoupon", FormMethod.Post, new { id = "EditForm" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false)
@@ -17,8 +17,8 @@
                 <select class="form-control" name="roomname" id="roomname" onchange="setIdRoom();">                    
                 </select>                   
                 <input name="idroom" type="hidden" id="idroom" value="@Model.idroom" class="form-control" />                
-                <input name="idhotel" type="hidden" id="idhotel" value="@Session["idhotel"]" class="form-control" />                
-                <input name="hotelname" type="hidden" id="hotelname" value="@Session["hotelname"]" class="form-control" />                
+                <input name="idhotel" type="hidden" id="idhotel" value="@Model.idhotel" class="form-control" />                
+                <input name="hotelname" type="hidden" id="hotelname" value="@Model.hotelname" class="form-control" />                
               </div>
          </div>
         <div class="col-md-6">
@@ -75,7 +75,7 @@
     </fieldset>
 }
 <div>
-    <a href="/HotelChoupon/Create/">Quay lại</a>    
+    <a href="/HotelChoupon/Create?id=@Model.idhotel">Quay lại</a>    
 </div>
 </div>
 
@@ -86,7 +86,7 @@
         $("#idroom").val(idroom);
     }
     
-    getHotelRoomList(@Session["idhotel"]);
+    getHotelRoomList(@Model.idhotel);
     function getHotelRoomList(value) {
         var formdata = new FormData(); //FormData object
         formdata.append("idhotel", value);

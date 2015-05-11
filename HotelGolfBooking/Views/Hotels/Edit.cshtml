@@ -11,13 +11,13 @@
 <script src="/Scripts/ckeditor/ckeditor.js"></script>
 
         <p>
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelRoom(@Session["idhotel"]);">DS Phòng</button>  
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelPrice(@Session["idhotel"]);">Giá phòng</button>     
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelFacilities(@Session["idhotel"]);">Quản lý tiện nghi khách sạn</button>        
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelServices(@Session["idhotel"]);">Quản lý dịch vụ phòng</button>
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelImages(@Session["idhotel"]);">Quản lý album ảnh</button>
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelChoupon(@Session["idhotel"]);">Quản lý coupon</button>
-           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelPromotion(@Session["idhotel"]);">Quản lý khuyến mại</button>
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelRoom(@ViewBag.idhotel);">DS Phòng</button>  
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelPrice(@ViewBag.idhotel);">Giá phòng</button>     
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelFacilities(@ViewBag.idhotel);">Quản lý tiện nghi khách sạn</button>        
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelServices(@ViewBag.idhotel);">Quản lý dịch vụ phòng</button>
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelImages(@ViewBag.idhotel);">Quản lý album ảnh</button>
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelChoupon(@ViewBag.idhotel);">Quản lý coupon</button>
+           <button type="button" class="btn  btn-lg btn-info" onclick="goHotelPromotion(@ViewBag.idhotel);">Quản lý khuyến mại</button>
          </p>
 
 @using (Html.BeginForm("Edit", "Hotels", FormMethod.Post, new { id = "EditForm" })) {
@@ -167,24 +167,24 @@
 
 <script>
     function goHotelRoom(val) {
-        window.open("/HotelRoom/Create","_blank");
+        window.open("/HotelRoom/Create?id="+val,"_blank");
     }
     function goHotelPrice(val) {
-        window.open("/HotelPrice/Create","_blank");
+        window.open("/HotelPrice/Create?id="+val,"_blank");
     } function goHotelFacilities(val) {
-        window.open("/HotelFacilities/Index","_blank");
+        window.open("/HotelFacilities/Index?id=" + val, "_blank");
     }
     function goHotelServices(val) {
-        window.open("/HotelService/Index","_blank");
+        window.open("/HotelService/Index?id=" + val,"_blank");
     }
     function goHotelImages(val) {
-        window.open("/HotelImages/Index","_blank");
+        window.open("/HotelImages/Index?id=" + val, "_blank");
     }
     function goHotelChoupon(val) {
-        window.open("/HotelChoupon/Create","_blank");
+        window.open("/HotelChoupon/Create?id=" + val, "_blank");
     }
     function goHotelPromotion(val) {
-        window.open("/HotelPromotion/Create", "_blank");
+        window.open("/HotelPromotion/Create?id=" + val, "_blank");
     }
     getProvinList("@Html.Raw(@Model.provin)");
     getDisList("@Html.Raw(@Model.provin)", "@Html.Raw(@Model.dis)");

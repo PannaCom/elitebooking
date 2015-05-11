@@ -12,6 +12,6 @@
     @Html.AntiForgeryToken()
     <p>
         <input type="submit" class="btn btn-info" value="Xóa" /> |
-        @Html.ActionLink("Back to List", "Create")
+        @Html.ActionLink("Back to List", "Create", new {id=Model.idhotel })
     </p>
 }

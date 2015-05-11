@@ -167,7 +167,7 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /HotelChoupon/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
             if (Session["idhotel"] == null)
@@ -177,6 +177,16 @@ namespace HotelGolfBooking.Controllers
             if (Session["hotelname"] == null)
             {
                 Session["hotelname"] = Config.getCookie("hotelname");
+            }
+            try
+            {
+                hotel ht = db.hotels.Find(id);
+                ViewBag.idhotel = ht.id;
+                ViewBag.hotelname = ht.name;
+            }
+            catch (Exception ex)
+            {
+
             }
             return View();
         }
@@ -190,10 +200,11 @@ namespace HotelGolfBooking.Controllers
         {
             if (ModelState.IsValid)
             {
+                int? idhotel=hotel_choupon.idhotel;
                 hotel_choupon.deleted = 0;
                 db.hotel_choupon.Add(hotel_choupon);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idhotel });
             }
 
             return View(hotel_choupon);
@@ -222,10 +233,11 @@ namespace HotelGolfBooking.Controllers
         {
             if (ModelState.IsValid)
             {
+                int? idhotel = hotel_choupon.idhotel;
                 hotel_choupon.deleted = 0;
                 db.Entry(hotel_choupon).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idhotel });
             }
             return View(hotel_choupon);
         }
@@ -251,11 +263,13 @@ namespace HotelGolfBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            
             hotel_choupon hotel_choupon = db.hotel_choupon.Find(id);
+            int? idhotel = hotel_choupon.idhotel;
             hotel_choupon.deleted = 1;
             db.Entry(hotel_choupon).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id=idhotel});
         }
 
         protected override void Dispose(bool disposing)

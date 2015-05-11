@@ -86,7 +86,7 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /HotelRoom/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
             if (Session["idhotel"] == null)
@@ -98,6 +98,15 @@ namespace HotelGolfBooking.Controllers
                 Session["hotelname"] = Config.getCookie("hotelname");
             }
             ViewBag.idroom = Guid.NewGuid().ToString();
+            try
+            {
+                hotel ht = db.hotels.Find(id);
+                ViewBag.idhotel = ht.id;
+                ViewBag.hotelname = ht.name;
+            }
+            catch (Exception ex) { 
+
+            }
             return View();
         }
 
@@ -132,7 +141,7 @@ namespace HotelGolfBooking.Controllers
                 catch (Exception ex2) { 
 
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = hotel_room.idhotel});
             }
 
             return View(hotel_room);
@@ -181,7 +190,7 @@ namespace HotelGolfBooking.Controllers
                 }
                 catch (Exception ex) { 
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idhotel });
             }
             return View(hotel_room);
         }
@@ -208,10 +217,11 @@ namespace HotelGolfBooking.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             hotel_room hotel_room = db.hotel_room.Find(id);
+            int idhotel = hotel_room.idhotel;
             hotel_room.deleted = 1;
             db.Entry(hotel_room).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id = idhotel });
         }
 
         protected override void Dispose(bool disposing)

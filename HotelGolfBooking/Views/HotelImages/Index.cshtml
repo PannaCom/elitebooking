@@ -5,7 +5,7 @@
     int maxID = 1;
 }
 <div class="col-md-10" >
-<h2>Cập nhật album ảnh khách sạn @Session["hotelname"] (kích cỡ 750 x 481)</h2>
+<h2>Cập nhật album ảnh khách sạn @ViewBag.hotelname (kích cỡ 750 x 481)</h2>
 <i>Xóa những ảnh mà khách sạn không có</i>
 </div>
 <div class="col-md-10" id="listFacilities">
@@ -30,7 +30,7 @@
                     <div id="progresslabel" class="progressbarlabel"></div>
                  </div>
               </div>
-              <a href="/Hotels/Edit/@Session["idhotel"]">Quay lại</a>     
+              <a href="/Hotels/Edit/@ViewBag.idhotel">Quay lại</a>     
         </div>
 </div>
 <div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
@@ -69,8 +69,8 @@
     
     //Image upload
     function uploadProcess() {
-        var name = unicodeToNoMark("@Html.Raw(@Session["hotelname"])");
-        var dis = unicodeToNoMark("@Html.Raw(@Session["dis"])");
+        var name = unicodeToNoMark("@Html.Raw(@ViewBag.hotelname)");
+        var dis = unicodeToNoMark("@Html.Raw(@ViewBag.dis)");
         var formdata = new FormData(); //FormData object
         var fileInput = document.getElementById('imageFile');
         if (fileInput.files.length<=0) return;

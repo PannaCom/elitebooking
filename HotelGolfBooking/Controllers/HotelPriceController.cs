@@ -37,7 +37,7 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /HotelPrice/Create
 
-        public ActionResult Create(int? idroom)
+        public ActionResult Create(int? idroom,int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
             if (Session["idhotel"] == null)
@@ -50,6 +50,16 @@ namespace HotelGolfBooking.Controllers
             }
             if (idroom == null) idroom = -1;
             ViewBag.idroom = idroom;
+            try
+            {
+                hotel ht = db.hotels.Find(id);
+                ViewBag.idhotel = ht.id;
+                ViewBag.hotelname = ht.name;
+            }
+            catch (Exception ex)
+            {
+
+            }
             return View();
         }
 
@@ -137,6 +147,7 @@ namespace HotelGolfBooking.Controllers
                 hotel_room_price.deleted = 0;
                 db.Entry(hotel_room_price).State = EntityState.Modified;
                 db.SaveChanges();
+                int idhotel = hotel_room_price.idhotel;
                 //Cap nhat minprice cho hotels
                 //Lay ra minprice
                 try
@@ -148,7 +159,7 @@ namespace HotelGolfBooking.Controllers
                 catch (Exception ex)
                 {
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id=hotel_room_price.idhotel});
             }
             return View(hotel_room_price);
         }
@@ -175,8 +186,9 @@ namespace HotelGolfBooking.Controllers
         {
             hotel_room_price hotel_room_price = db.hotel_room_price.Find(id);
             db.hotel_room_price.Remove(hotel_room_price);
+            int idhotel=hotel_room_price .idhotel;
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { id = idhotel});
         }
 
         protected override void Dispose(bool disposing)

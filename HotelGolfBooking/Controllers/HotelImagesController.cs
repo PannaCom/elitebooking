@@ -18,7 +18,7 @@ namespace HotelGolfBooking.Controllers
         //
         // GET: /HotelImages/
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             if (Config.getCookie("logged") == "") return RedirectToAction("Login", "Admin");
             if (Session["idhotel"] == null)
@@ -29,9 +29,19 @@ namespace HotelGolfBooking.Controllers
             {
                 Session["hotelname"] = Config.getCookie("hotelname");
             }
+            //var idhotel=int.Parse(Session["idhotel"].ToString());
+            var p = (from q in db.hotel_image where q.idhotel == id select q);
+            try
+            {
+                hotel ht = db.hotels.Find(id);
+                ViewBag.idhotel = ht.id;
+                ViewBag.hotelname = ht.name;
+                ViewBag.dis = ht.dis;
+            }
+            catch (Exception ex)
+            {
 
-            var idhotel=int.Parse(Session["idhotel"].ToString());
-            var p = (from q in db.hotel_image where q.idhotel == idhotel select q);
+            }
             return View(p.ToList());
         }
         [HttpPost]

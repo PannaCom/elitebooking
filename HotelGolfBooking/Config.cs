@@ -175,7 +175,7 @@ namespace HotelGolfBooking
             {
                 if (!temp[i].Trim().Equals(""))
                 {
-                    rs += "<a href=\"/news/" + temp[i] + "-1\" style=\"display:block;possition:relative;\">" + temp[i] + "</a>";
+                    rs += "<a href=\"/news/" + removeSpecialChar(temp[i]) + "-1\" style=\"display:block;possition:relative;\">" + temp[i] + "</a>";
                 }
             }
             if (rs.Trim().Equals("")) return "";

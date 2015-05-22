@@ -38,10 +38,10 @@
                catid = item.catid.ToString();
                keyword += item.keyword + ","; 
               <div style="margin-bottom:15px;display:block;position:relative;float:left;"> 
-                  <a href="/detail/@item.url-@item.id" class="mask" style="display:block;position:relative;float:left;"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="@item.title" class="imagenewslist"></a>
+                  <a href="/detail/@item.url-@item.id" class="mask" style="display:block;position:relative;float:left;"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="@item.title" class="imagenewslist" style="border:1px solid #808080;width:200px;height:127px;"></a>
                   <div class="row rowimagenewslist" >
                     <div class="col-sm-11 col-xs-10 meta">
-                      <h2 style="font-size:26px;"><a href="/detail/@item.url-@item.id">@Html.Raw(@item.title)</a></h2>
+                      <h2 style="font-size:22px;margin-top:0px;"><a href="/detail/@item.url-@item.id">@Html.Raw(@item.title)</a></h2>
                       <p><span class="meta-category" style="width:auto;display:block;"><i class="fa fa-pencil"></i><a href="/category/all-@catname-@item.catid-1/">@item.catname</a></span>&nbsp;Gửi ngày @item.datetime</p>
 				      <p class="intro">@Html.Raw(@item.des)</p>
                     </div>

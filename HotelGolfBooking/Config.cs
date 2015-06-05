@@ -259,8 +259,8 @@ namespace HotelGolfBooking
                 message.Body = body;
                 var smtp = new System.Net.Mail.SmtpClient();
                 {
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
+                    smtp.Host = "smtp.zoho.com";//"smtp.gmail.com";
+                    smtp.Port = 587;// 465;//587;
                     smtp.EnableSsl = true;                    
                     smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                     smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);

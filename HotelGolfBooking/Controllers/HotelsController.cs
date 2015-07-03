@@ -28,7 +28,7 @@ namespace HotelGolfBooking.Controllers
             ViewBag.page = (page ?? 1);
             ViewBag.name = name;
             ViewBag.provin = provin;
-            var p = (from q in db.hotels where (q.name.Contains(name) && q.provin.Contains(provin)) && q.deleted == 0 select q).OrderByDescending(o=>o.id).Take(10000);
+            var p = (from q in db.hotels where (q.name.Contains(name) && q.provin.Contains(provin)) && q.deleted == 0 select q).OrderByDescending(o=>o.id).Take(5000);
             int pageSize = Config.PageSize;
             int pageNumber = (page ?? 1);
             return View(p.ToPagedList(pageNumber, pageSize));

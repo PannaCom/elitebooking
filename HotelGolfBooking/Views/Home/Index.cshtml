@@ -1,9 +1,14 @@
 ﻿@{
     ViewBag.Title = "EliteHotel - Đặt phòng khách sạn";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string style = "padding-top:0px;";
+    if (ViewBag.ismobile==1){
+        style = "padding-top:7%;";
+    }
 }
+@if (ViewBag.ismobile==0){
 <!-- Revolution Slider -->
-<section class="revolution-slider">
+<section class="revolution-slider" id="slideHome">
   <div class="bannercontainer">
     <div class="banner">
       <ul>
@@ -12,9 +17,9 @@
     </div>
   </div>
 </section>
-
+}
 <!-- Reservation form -->
-<section id="reservation-form">
+<section id="reservation-form" style="@style">
   <div class="container">
     <div class="row">
       <div class="col-md-12">           

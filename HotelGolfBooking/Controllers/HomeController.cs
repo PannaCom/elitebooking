@@ -17,34 +17,45 @@ namespace HotelGolfBooking.Controllers
             DateTime d2 = DateTime.Now.AddDays(2);
             ViewBag.fromdate = Config.convertToDateTimeId(d1.ToString());
             ViewBag.todate = Config.convertToDateTimeId(d2.ToString());
-            try
+            if (!Request.Browser.IsMobileDevice)
             {
-                var hp = (from sl in db.slides where sl.deleted == 0 select sl).OrderBy(o => o.type).ThenByDescending(o=>o.id).Take(20);
-                var rshp = hp.ToList();
-                //ViewBag.image1 = Config.domain + "/" + rshp[0].image;
-                //ViewBag.caption1 = rshp[0].caption;
-                //ViewBag.slogan1 = rshp[0].slogan;
-                //ViewBag.imagelink1 = Config.domain + "/" + rshp[0].imagelink;
-                //ViewBag.link1 = rshp[0].link;
-                //ViewBag.linktext1 = rshp[0].linktext;
-                //ViewBag.image2 = Config.domain + "/" + rshp[1].image;
-                //ViewBag.caption2 = rshp[1].caption;
-                //ViewBag.slogan2 = rshp[1].slogan;
-                //ViewBag.imagelink2 = Config.domain + "/" + rshp[1].imagelink;
-                //ViewBag.link2 = rshp[1].link;
-                //ViewBag.linktext2 = rshp[1].linktext;
-                string slide = "";
-                for (int h = 0; h < rshp.Count; h++) {
-                    slide += "<li data-transition=\"fade\" data-slotamount=\"7\" data-masterspeed=\"1500\">";
-                    slide += "<img src=\""+Config.domain + "/"+rshp[h].image+"\" style=\"opacity:0;\" alt=\"slidebg1\"  data-bgfit=\"cover\" data-bgposition=\"left bottom\" data-bgrepeat=\"no-repeat\">";
-                    slide += " <div class=\"textlink\"><span style=\"text-shadow: 0 0 5px #0026ff, 0 0 7px #0026ff;margin: 10 10 10 10;color:#fff;display: block;font-size:18px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;\">" + rshp[h].caption + "</span><b><a href=\"" + rshp[h].link + "\" style=\"color:#fff;font-weight:bold;font-size:12px;\">" + rshp[h].linktext + "</a></b></div>";
-                    slide +=" <div class=\"caption sft revolution-starhotel smalltext\" data-x=\"35\" data-y=\"330\" data-speed=\"800\" data-start=\"1700\" data-easing=\"easeOutBack\">";
-					slide +=" <span style=\"text-shadow: 0 0 25px #000, 0 0 27px #000;margin: 10px 0;color:#fff;display: block;font-size:28px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;\">"+rshp[h].slogan+"</span><br>";
-                    slide += " </div></li>";
+                try
+                {
+                    var hp = (from sl in db.slides where sl.deleted == 0 select sl).OrderBy(o => o.type).ThenByDescending(o => o.id).Take(20);
+                    var rshp = hp.ToList();
+                    //ViewBag.image1 = Config.domain + "/" + rshp[0].image;
+                    //ViewBag.caption1 = rshp[0].caption;
+                    //ViewBag.slogan1 = rshp[0].slogan;
+                    //ViewBag.imagelink1 = Config.domain + "/" + rshp[0].imagelink;
+                    //ViewBag.link1 = rshp[0].link;
+                    //ViewBag.linktext1 = rshp[0].linktext;
+                    //ViewBag.image2 = Config.domain + "/" + rshp[1].image;
+                    //ViewBag.caption2 = rshp[1].caption;
+                    //ViewBag.slogan2 = rshp[1].slogan;
+                    //ViewBag.imagelink2 = Config.domain + "/" + rshp[1].imagelink;
+                    //ViewBag.link2 = rshp[1].link;
+                    //ViewBag.linktext2 = rshp[1].linktext;
+                    string slide = "";
+                    for (int h = 0; h < rshp.Count; h++)
+                    {
+                        slide += "<li data-transition=\"fade\" data-slotamount=\"7\" data-masterspeed=\"1500\">";
+                        slide += "<img src=\"" + Config.domain + "/" + rshp[h].image + "\" style=\"opacity:0;\" alt=\"slidebg1\"  data-bgfit=\"cover\" data-bgposition=\"left bottom\" data-bgrepeat=\"no-repeat\">";
+                        slide += " <div class=\"textlink\"><span style=\"text-shadow: 0 0 5px #0026ff, 0 0 7px #0026ff;margin: 10 10 10 10;color:#fff;display: block;font-size:18px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;\">" + rshp[h].caption + "</span><b><a href=\"" + rshp[h].link + "\" style=\"color:#fff;font-weight:bold;font-size:12px;\">" + rshp[h].linktext + "</a></b></div>";
+                        slide += " <div class=\"caption sft revolution-starhotel smalltext\" data-x=\"35\" data-y=\"330\" data-speed=\"800\" data-start=\"1700\" data-easing=\"easeOutBack\">";
+                        slide += " <span style=\"text-shadow: 0 0 25px #000, 0 0 27px #000;margin: 10px 0;color:#fff;display: block;font-size:28px;line-height: 1;-webkit-margin-before: 0.67em;-webkit-margin-after: 0.67em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-weight: bold;\">" + rshp[h].slogan + "</span><br>";
+                        slide += " </div></li>";
+                    }
+                    ViewBag.slide = slide;
+                    ViewBag.ismobile = 0;
                 }
-                ViewBag.slide=slide;
+                catch (Exception ex)
+                {
+                    ViewBag.ismobile = 1;
+                }
             }
-            catch (Exception ex) { 
+            else { 
+                ViewBag.slide = "";
+                ViewBag.ismobile = 1;
             }
             //khach san quan tam
             try

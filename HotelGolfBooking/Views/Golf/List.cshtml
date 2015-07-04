@@ -43,7 +43,7 @@
                     <div ><a href="/GolfBooking/Contact?idgolf=@item.id&checkin=@ViewBag.fdate&typebook=@HotelGolfBooking.Config.typebook1"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="room 1" class="img-responsive" /></a>
                       <div class="mask">			
                         <div class="main">
-                          <h4 style="color:#067C02;"><span class="CityName">@item.provin</span> - @item.name</h4>
+                          <h4 style="color:#067C02;"><span class="CityName">@item.name</span> - @item.provin</h4>
                           <h4><span class="CityName" id="price_@item.id"><script>getGolfPrice(@item.id,@ViewBag.fdate);</script></span></h4>
                           <div ><script>getGolfPromotion(@item.id,@ViewBag.fdate);</script></div>  
                         </div>

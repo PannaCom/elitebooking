@@ -127,7 +127,7 @@ namespace HotelGolfBooking.Controllers
                             content += " <div > <img src=\"" + Config.domain + "/" + rscp2.image + "\" alt=\"" + rscp2.name + "\" class=\"img-responsive\"/>";
                             content += "      <div class=\"mask\">";
                             content += "        <div class=\"main\">";
-                            content += "          <h4 style=\"color:#067C02;\"><span class=\"CityName\">" + rscp2.provin + "</span> - " + rscp2.name + "</h6>";
+                            content += "          <h4 style=\"color:#067C02;\"><span class=\"CityName\">" + rscp2.name + "</span> - " + rscp2.provin + "</h6>";
                             content += "          <h5><span style=\"text-decoration: line-through;\">Giá gốc: " + Config.formatNumber((int)oldprice) + "</span><span style=\"margin-left:7px;\">Giá coupon:</span><span style=\"color:#00B08F;font-size:15px;\"><b>" + Config.formatNumber((int)rscp[i].chouponprice) + "</b></span></h5>";
                             content += "        </div>";
                             content += "        <div class=\"content\" style=\"height:62px;\">";

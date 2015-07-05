@@ -64,6 +64,7 @@ namespace HotelGolfBooking.Controllers
         public ActionResult Details(string url,int id = 0)
         {
             news news = db.news.Find(id);
+            ViewBag.url = Config.domain + "detail/" + Config.unicodeToNoMark(news.title.Trim())+"-"+id;
             if (news == null)
             {
                 return HttpNotFound();

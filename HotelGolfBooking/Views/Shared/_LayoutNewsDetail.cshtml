@@ -77,6 +77,23 @@
     </style>
 </head>
     <body>
+       <script>
+           window.fbAsyncInit = function () {
+               FB.init({
+                   appId: '111991195811550',
+                   xfbml: true,
+                   version: 'v2.3'
+               });
+           };
+
+           (function (d, s, id) {
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) { return; }
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+       </script>
        <!-- Top header -->
 <div id="top-header">
   <div class="container">
@@ -208,7 +225,10 @@
 <!-- Go-top Button -->
 <div id="go-top"><i class="fa fa-angle-up fa-2x"></i></div>
 
-        
+        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+        <script src="https://apis.google.com/js/platform.js" async defer>
+            {lang: 'vi'}
+        </script>
      
     </body>
 </html>

@@ -97,7 +97,7 @@ namespace HotelGolfBooking.Controllers
                 Request.Files[i].SaveAs(fullPath);
                 break;
             }
-            string ok = resizeImage(Config.imgWidthNews, Config.imgHeightNews, fullPath, Config.NewsImagePath + "/" + nameFile);
+            //string ok = resizeImage(Config.imgWidthNews, Config.imgHeightNews, fullPath, Config.NewsImagePath + "/" + nameFile);
             return Config.NewsImagePath + "/" + nameFile;
         }
         [HttpPost]

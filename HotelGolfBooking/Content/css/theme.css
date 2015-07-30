@@ -2227,3 +2227,11 @@ border: 1px solid;
 .progressbarlabel {
     color:yellow;
 }
+.itemhotelsearch {
+    width:40%;
+    height:90px;
+    float:left;display:block;position:relative;
+    padding-bottom:4px;
+    /*margin-bottom:14px;
+    margin-top:14px;*/
+}

@@ -117,7 +117,23 @@
                   </div>                 
                 </div> 
             }
-             <div class="col-md-12">
+             @if (ViewBag.gallery!="")
+                {
+                    <text>
+                          <div class="container" style="padding-top:10px;">
+                            <div class="row">
+                              <div class="col-md-8">
+                                <h2 class="lined-heading"><span>@ViewBag.gallerytitle</span></h2>
+                              </div>
+                            </div>
+                          </div>
+                          <div >
+                                @Html.Raw(@ViewBag.gallery)
+                          </div>                        
+                    </text>
+              }
+            @if (totalitem>1){
+            <div class="col-md-12">
             <ul class="pagination clearfix">
                     <li class="disabled"><a href="#">«</a></li>
                     @for (int i = 1; i <= totalitem/HotelGolfBooking.Config.PageSize+1; i++)
@@ -130,7 +146,8 @@
                     }
             </ul>
             </div>
-          </div>  
+            }
+          </div><!-- for -->
            <div class="item TopDealProvinDiv" id="TopDealProvinDiv" style="display:block;float:right;position:relative;">
                     <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:6px;"><span style="color:#067C02;font-size:20px;">Khách Sạn Quan Tâm Nhất</span></h4>
                     

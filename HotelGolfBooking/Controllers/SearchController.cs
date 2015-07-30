@@ -65,26 +65,47 @@ namespace HotelGolfBooking.Controllers
                 {
                     if (name != "" || (rl.Count<=1 && dis!=""))
                     {
-                        var p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff && (q.dis.Contains(near) || q.provin.Contains(near)) select q).OrderByDescending(o => o.rate).ThenBy(o => o.minprice).Take(100);
+                        var p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff && (q.dis.Contains(near) || q.provin.Contains(near)) select q).OrderByDescending(o => o.rate).ThenBy(o => o.minprice).Take(10);
                         var rs2 = p.ToList();
                         string gallery = "";
+                        //if (rs2.Count < 5)
+                        //{
+                        //    p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(100);
+                        //    rs2 = p.ToList();
+                        //    gallery = "";
+                        //    for (int i = 0; i < rs2.Count; i++)
+                        //    {
+                        //        gallery += "<div class=\"item\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs2[i].name + "\"><i class=\"fa fa-search\"></i><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                        //    }
+                        //    ViewBag.gallery = gallery;
+                        //    ViewBag.gallerytitle = "Khách sạn nhiều người quan tâm";
+                        //}
+                        //else
+                        //{
+                        //    for (int i = 0; i < rs2.Count; i++)
+                        //    {
+                        //        gallery += "<div class=\"item\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs2[i].name + "\"><i class=\"fa fa-search\"></i><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                        //    }
+                        //    ViewBag.gallery = gallery;
+                        //    ViewBag.gallerytitle = "Khách sạn cùng khu vực";
+                        //}
                         if (rs2.Count < 5)
                         {
-                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(100);
+                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(10);
                             rs2 = p.ToList();
                             gallery = "";
                             for (int i = 0; i < rs2.Count; i++)
                             {
-                                gallery += "<div class=\"item\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs2[i].name + "\"><i class=\"fa fa-search\"></i><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                                gallery += "<div id=itemhotelsearch style=\"width:50%;float:left;display:block;position:relative;\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"95%\" height=\"45%\" alt=\"" + rs2[i].name + "\"><br><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
                             }
                             ViewBag.gallery = gallery;
-                            ViewBag.gallerytitle = "Khách sạn nhiều người quan tâm";
+                            ViewBag.gallerytitle = "Khách sạn tương tự";
                         }
                         else
                         {
                             for (int i = 0; i < rs2.Count; i++)
                             {
-                                gallery += "<div class=\"item\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"800\" height=\"504\" alt=\"" + rs2[i].name + "\"><i class=\"fa fa-search\"></i><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                                gallery += "<div id=itemhotelsearch style=\"width:50%;float:left;display:block;position:relative;\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"95%\" height=\"45%\" alt=\"" + rs2[i].name + "\"><br><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
                             }
                             ViewBag.gallery = gallery;
                             ViewBag.gallerytitle = "Khách sạn cùng khu vực";
@@ -136,8 +157,52 @@ namespace HotelGolfBooking.Controllers
                 ViewBag.page = page;
                 var rs = db.Database.SqlQuery<viewHotelSearchManager>(query).Distinct();
                 var rl = rs.ToList();
+                string near = "";
+                int iddiff = -1;
+                if (rl.Count > 0)
+                {
+                    near = rl[0].provin;
+                    iddiff = rl[0].id;
+                }
+
                 //ViewBag.Title = keyword;
                 var viewModel = new ModelClassViewHotelSearchManager { ieViewNews = rl };
+                try
+                {
+                    if (name != "" || rl.Count <= 1)
+                    {
+                        var p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff && (q.dis.Contains(near) || q.provin.Contains(near)) select q).OrderByDescending(o => o.rate).ThenBy(o => o.minprice).Take(10);
+                        var rs2 = p.ToList();
+                        string gallery = "";
+                        if (rs2.Count < 5)
+                        {
+                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(10);
+                            rs2 = p.ToList();
+                            gallery = "";
+                            for (int i = 0; i < rs2.Count; i++)
+                            {
+                                gallery += "<div style=\"width:50%;float:left;display:block;position:relative;\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"95%\" height=\"45%\" alt=\"" + rs2[i].name + "\"><br><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                            }
+                            ViewBag.gallery = gallery;
+                            ViewBag.gallerytitle = "Khách sạn tương tự";
+                        }
+                        else
+                        {
+                            for (int i = 0; i < rs2.Count; i++)
+                            {
+                                gallery += "<div style=\"width:50%;float:left;display:block;position:relative;\"><a href=\"/hotel/" + Config.unicodeToNoMark(rs2[i].name.Trim()) + "-" + ViewBag.fdate + "-" + ViewBag.tdate + "-" + rs2[i].id + "-0\" target=\"_blank\"><img src=\"" + Config.domain + "/" + rs2[i].image + "\" width=\"95%\" height=\"45%\" alt=\"" + rs2[i].name + "\"><br><span>" + rs2[i].name.Trim() + "-" + rs2[i].provin.Trim() + "</span></a></div>";
+                            }
+                            ViewBag.gallery = gallery;
+                            ViewBag.gallerytitle = "Khách sạn cùng khu vực";
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 return View(viewModel);
             }
             catch (Exception ex) {

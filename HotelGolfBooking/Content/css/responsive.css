@@ -238,6 +238,12 @@ header #logo, .navbar.shrink #logo {
 header #logo2 #retina-logo {
  display: block;
 }
+#top-header #support {
+    display:none;
+}
+#itemhotelsearch {
+    width:95%;
+}
 body {
 	font-size: 13px;
 }

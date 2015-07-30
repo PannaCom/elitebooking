@@ -62,7 +62,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:36:35</publishTime>
     </File>
     <File Include="bin/HotelGolfBooking.dll">
-      <publishTime>03/17/2015 17:59:49</publishTime>
+      <publishTime>07/30/2015 15:11:42</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/13/2014 13:36:20</publishTime>
@@ -115,6 +115,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Microsoft.Owin.Security.dll">
       <publishTime>02/27/2015 21:38:49</publishTime>
     </File>
+    <File Include="bin/Microsoft.SqlServer.Types.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>12/13/2014 13:36:27</publishTime>
     </File>
@@ -144,6 +147,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/ru/System.Spatial.resources.dll">
       <publishTime>12/13/2014 13:36:35</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="bin/SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>12/13/2014 13:36:37</publishTime>
@@ -272,7 +287,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:36:13</publishTime>
     </File>
     <File Include="Content/css/responsive.css">
-      <publishTime>03/09/2015 12:25:48</publishTime>
+      <publishTime>07/30/2015 15:10:05</publishTime>
     </File>
     <File Include="Content/css/smoothness/images/animated-overlay.gif">
       <publishTime>12/13/2014 13:36:13</publishTime>
@@ -1183,6 +1198,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/background/1200x800.gif">
       <publishTime>12/13/2014 13:36:09</publishTime>
     </File>
+    <File Include="Images/blank.png">
+      <publishTime>06/24/2015 15:54:25</publishTime>
+    </File>
     <File Include="Images/bullet.png">
       <publishTime>12/13/2014 13:36:11</publishTime>
     </File>
@@ -1495,6 +1513,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/rooms/slider/750x481.gif">
       <publishTime>12/13/2014 13:36:05</publishTime>
     </File>
+    <File Include="Images/skype.png">
+      <publishTime>06/24/2015 14:55:32</publishTime>
+    </File>
     <File Include="Images/slides/1.jpg">
       <publishTime>12/13/2014 13:35:53</publishTime>
     </File>
@@ -1526,7 +1547,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/13/2015 15:54:18</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/27/2015 21:41:06</publishTime>
+      <publishTime>06/30/2015 15:21:25</publishTime>
     </File>
     <File Include="Scripts/ckeditor/adapters/jquery.js">
       <publishTime>12/13/2014 13:35:52</publishTime>
@@ -2354,7 +2375,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:46</publishTime>
     </File>
     <File Include="Scripts/core.js">
-      <publishTime>03/17/2015 17:39:12</publishTime>
+      <publishTime>07/30/2015 14:11:43</publishTime>
     </File>
     <File Include="Scripts/howler.js">
       <publishTime>02/27/2015 22:29:50</publishTime>
@@ -2469,6 +2490,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/_references.js">
       <publishTime>12/13/2014 13:35:45</publishTime>
+    </File>
+    <File Include="SqlServerTypes/readme.htm">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/msvcr100.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/msvcr100.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>06/30/2015 15:21:22</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
       <publishTime>12/13/2014 13:35:26</publishTime>
@@ -2591,7 +2627,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/01/2015 20:30:32</publishTime>
     </File>
     <File Include="Views/CustomerRequest/Create.cshtml">
-      <publishTime>02/10/2015 11:26:07</publishTime>
+      <publishTime>05/07/2015 11:53:31</publishTime>
     </File>
     <File Include="Views/CustomerRequest/Delete.cshtml">
       <publishTime>02/01/2015 20:54:40</publishTime>
@@ -2636,13 +2672,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:25</publishTime>
     </File>
     <File Include="Views/Golf/Edit.cshtml">
-      <publishTime>02/13/2015 16:58:47</publishTime>
+      <publishTime>05/07/2015 21:07:36</publishTime>
     </File>
     <File Include="Views/Golf/Index.cshtml">
       <publishTime>01/08/2015 15:53:56</publishTime>
     </File>
     <File Include="Views/Golf/List.cshtml">
-      <publishTime>02/07/2015 23:44:20</publishTime>
+      <publishTime>07/04/2015 14:57:33</publishTime>
     </File>
     <File Include="Views/GolfBooking/ConfirmEmail.cshtml">
       <publishTime>02/03/2015 16:45:40</publishTime>
@@ -2669,16 +2705,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/03/2015 16:36:40</publishTime>
     </File>
     <File Include="Views/GolfChoupon/Create.cshtml">
-      <publishTime>02/03/2015 15:39:47</publishTime>
+      <publishTime>05/07/2015 21:11:46</publishTime>
     </File>
     <File Include="Views/GolfChoupon/Delete.cshtml">
-      <publishTime>12/13/2014 13:35:25</publishTime>
+      <publishTime>05/07/2015 22:09:34</publishTime>
     </File>
     <File Include="Views/GolfChoupon/Details.cshtml">
       <publishTime>12/13/2014 13:35:25</publishTime>
     </File>
     <File Include="Views/GolfChoupon/Edit.cshtml">
-      <publishTime>02/03/2015 15:40:15</publishTime>
+      <publishTime>05/07/2015 21:15:50</publishTime>
     </File>
     <File Include="Views/GolfChoupon/Index.cshtml">
       <publishTime>12/13/2014 13:35:25</publishTime>
@@ -2687,31 +2723,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2015 16:06:52</publishTime>
     </File>
     <File Include="Views/GolfPrice/Create.cshtml">
-      <publishTime>02/05/2015 17:43:49</publishTime>
+      <publishTime>05/07/2015 21:22:43</publishTime>
     </File>
     <File Include="Views/GolfPrice/Delete.cshtml">
-      <publishTime>12/27/2014 21:05:32</publishTime>
+      <publishTime>05/07/2015 22:12:48</publishTime>
     </File>
     <File Include="Views/GolfPrice/Details.cshtml">
       <publishTime>12/26/2014 16:51:05</publishTime>
     </File>
     <File Include="Views/GolfPrice/Edit.cshtml">
-      <publishTime>02/05/2015 17:32:24</publishTime>
+      <publishTime>05/07/2015 22:11:57</publishTime>
     </File>
     <File Include="Views/GolfPrice/Index.cshtml">
       <publishTime>12/26/2014 16:51:03</publishTime>
     </File>
     <File Include="Views/GolfPromotion/Create.cshtml">
-      <publishTime>02/05/2015 14:35:29</publishTime>
+      <publishTime>05/07/2015 21:27:21</publishTime>
     </File>
     <File Include="Views/GolfPromotion/Delete.cshtml">
-      <publishTime>12/27/2014 21:05:17</publishTime>
+      <publishTime>05/07/2015 22:19:51</publishTime>
     </File>
     <File Include="Views/GolfPromotion/Details.cshtml">
       <publishTime>02/11/2015 10:17:13</publishTime>
     </File>
     <File Include="Views/GolfPromotion/Edit.cshtml">
-      <publishTime>02/05/2015 12:20:58</publishTime>
+      <publishTime>05/07/2015 21:28:49</publishTime>
     </File>
     <File Include="Views/GolfPromotion/Index.cshtml">
       <publishTime>12/27/2014 16:23:05</publishTime>
@@ -2741,7 +2777,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:25</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>02/03/2015 11:12:20</publishTime>
+      <publishTime>07/04/2015 15:20:06</publishTime>
     </File>
     <File Include="Views/HotelBooking/Booking.cshtml">
       <publishTime>03/07/2015 10:36:41</publishTime>
@@ -2780,16 +2816,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/03/2015 16:20:48</publishTime>
     </File>
     <File Include="Views/HotelChoupon/Create.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 12:38:04</publishTime>
     </File>
     <File Include="Views/HotelChoupon/Delete.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 12:42:51</publishTime>
     </File>
     <File Include="Views/HotelChoupon/Details.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/HotelChoupon/Edit.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 12:59:51</publishTime>
     </File>
     <File Include="Views/HotelChoupon/Index.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
@@ -2810,7 +2846,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/HotelFacilities/Index.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 11:41:41</publishTime>
     </File>
     <File Include="Views/HotelImages/Create.cshtml">
       <publishTime>12/13/2014 13:35:26</publishTime>
@@ -2825,40 +2861,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:26</publishTime>
     </File>
     <File Include="Views/HotelImages/Index.cshtml">
-      <publishTime>02/02/2015 10:51:44</publishTime>
+      <publishTime>05/11/2015 11:56:35</publishTime>
     </File>
     <File Include="Views/HotelPrice/Create.cshtml">
-      <publishTime>03/09/2015 17:22:31</publishTime>
+      <publishTime>05/11/2015 11:27:53</publishTime>
     </File>
     <File Include="Views/HotelPrice/Delete.cshtml">
-      <publishTime>12/23/2014 17:12:00</publishTime>
+      <publishTime>05/11/2015 11:34:55</publishTime>
     </File>
     <File Include="Views/HotelPrice/Details.cshtml">
       <publishTime>12/23/2014 14:25:47</publishTime>
     </File>
     <File Include="Views/HotelPrice/Edit.cshtml">
-      <publishTime>03/09/2015 17:21:59</publishTime>
+      <publishTime>05/11/2015 11:31:18</publishTime>
     </File>
     <File Include="Views/HotelPrice/Index.cshtml">
       <publishTime>12/23/2014 14:25:46</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Create.cshtml">
-      <publishTime>03/17/2015 17:55:01</publishTime>
+      <publishTime>05/11/2015 12:54:58</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Delete.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 12:58:24</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Details.cshtml">
       <publishTime>03/13/2015 17:40:07</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Edit.cshtml">
-      <publishTime>03/17/2015 17:57:59</publishTime>
+      <publishTime>05/11/2015 13:05:19</publishTime>
     </File>
     <File Include="Views/HotelPromotion/Index.cshtml">
       <publishTime>12/13/2014 13:35:24</publishTime>
     </File>
     <File Include="Views/HotelRoom/Create.cshtml">
-      <publishTime>03/11/2015 16:09:57</publishTime>
+      <publishTime>05/09/2015 11:34:50</publishTime>
     </File>
     <File Include="Views/HotelRoom/Delete.cshtml">
       <publishTime>01/08/2015 15:53:56</publishTime>
@@ -2867,7 +2903,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/HotelRoom/Edit.cshtml">
-      <publishTime>03/17/2015 17:56:07</publishTime>
+      <publishTime>05/09/2015 11:38:33</publishTime>
     </File>
     <File Include="Views/HotelRoom/Index.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
@@ -2897,7 +2933,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:26</publishTime>
     </File>
     <File Include="Views/Hotels/Edit.cshtml">
-      <publishTime>03/06/2015 12:21:46</publishTime>
+      <publishTime>05/11/2015 12:35:11</publishTime>
     </File>
     <File Include="Views/Hotels/Gallery.cshtml">
       <publishTime>02/13/2015 16:30:24</publishTime>
@@ -2918,7 +2954,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:25</publishTime>
     </File>
     <File Include="Views/HotelService/Index.cshtml">
-      <publishTime>01/08/2015 15:53:56</publishTime>
+      <publishTime>05/11/2015 11:48:23</publishTime>
     </File>
     <File Include="Views/HotLine/Create.cshtml">
       <publishTime>01/08/2015 15:53:56</publishTime>
@@ -3002,19 +3038,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/15/2015 12:27:03</publishTime>
     </File>
     <File Include="Views/News/Cat.cshtml">
-      <publishTime>02/10/2015 15:07:21</publishTime>
+      <publishTime>05/22/2015 11:57:51</publishTime>
     </File>
     <File Include="Views/News/Create.cshtml">
-      <publishTime>01/09/2015 11:23:02</publishTime>
+      <publishTime>06/24/2015 15:13:13</publishTime>
     </File>
     <File Include="Views/News/Delete.cshtml">
       <publishTime>01/08/2015 15:53:50</publishTime>
     </File>
     <File Include="Views/News/Details.cshtml">
-      <publishTime>02/11/2015 10:01:21</publishTime>
+      <publishTime>07/05/2015 22:04:04</publishTime>
     </File>
     <File Include="Views/News/Edit.cshtml">
-      <publishTime>01/09/2015 11:22:01</publishTime>
+      <publishTime>06/24/2015 15:13:04</publishTime>
     </File>
     <File Include="Views/News/Index.cshtml">
       <publishTime>01/08/2015 15:53:50</publishTime>
@@ -3023,22 +3059,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/12/2015 16:50:26</publishTime>
     </File>
     <File Include="Views/Search/GoodPrice.cshtml">
-      <publishTime>03/12/2015 08:41:12</publishTime>
+      <publishTime>07/30/2015 14:47:55</publishTime>
     </File>
     <File Include="Views/Search/Promotion.cshtml">
-      <publishTime>03/17/2015 17:43:10</publishTime>
+      <publishTime>03/26/2015 11:00:38</publishTime>
     </File>
     <File Include="Views/Search/SearchHotel.cshtml">
-      <publishTime>03/12/2015 08:39:31</publishTime>
+      <publishTime>07/30/2015 14:49:33</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/12/2015 08:49:48</publishTime>
+      <publishTime>07/30/2015 15:02:18</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAdmin.cshtml">
-      <publishTime>03/12/2015 09:10:34</publishTime>
+      <publishTime>05/07/2015 11:31:20</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAdminBasic.cshtml">
       <publishTime>02/13/2015 16:47:00</publishTime>
@@ -3047,13 +3083,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:27</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHotelDetail.cshtml">
-      <publishTime>03/17/2015 12:34:19</publishTime>
+      <publishTime>07/30/2015 11:23:01</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHotelDetailNoIndex.cshtml">
-      <publishTime>03/06/2015 11:17:42</publishTime>
+      <publishTime>07/30/2015 11:23:17</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutNewsDetail.cshtml">
-      <publishTime>03/17/2015 12:34:36</publishTime>
+      <publishTime>07/30/2015 11:22:23</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>12/13/2014 13:35:27</publishTime>
@@ -3095,7 +3131,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2014 13:35:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/15/2015 12:35:23</publishTime>
+      <publishTime>07/04/2015 15:24:06</publishTime>
     </File>
   </ItemGroup>
 </Project>

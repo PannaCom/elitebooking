@@ -384,7 +384,7 @@ function searchGolf() {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/Golf/getListGolfService');
         xhr.send();
-        //var content = "<table class=\"tbl_price_room\"><tr><th>Ảnh</th><th>Tên sân</th><tr>";
+        //var content = "<table class=\"tbl_price_room\" style=\"width:100%;\"><tr><th>Ảnh</th><th>Tên sân</th><tr>";
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var news = '{"news":' + xhr.responseText + '}';
@@ -1264,9 +1264,9 @@ function searchGolf() {
                         //content += "<li><a href=\"/tin/" + unicodeToNoMark(name) + "\">" + name + "<span class=\"badge pull-right\">" + total + "</span></a></li>";
                         //content += "<div class=\"col-md-3\"><a href=\"/hotel/"+name2+"-"+ fromdate + "-" + todate + "-" + id + "\" style=\"color:#64B342;font-size:14px;\">Khách sạn " + name + " giá rẻ nhất</a></div>";
                         content += "<tr>";
-                        content += "	<td width=250 nowrap><a href=\"/hotel/" + name2 + "-" + fromdate + "-" + todate + "-" + id + "-0\"><h5>" + name + "</h5></a></td>";
+                        content += "	<td width=240><a href=\"/hotel/" + name2 + "-" + fromdate + "-" + todate + "-" + id + "-0\"><h5 style=\"color:#0283df;\">" + name + "</h5></a></td>";
                         //content += "	<td>" + fdate + "->" + tdate + "</td>";
-                        content += "<td nowrap><b style=\"color:#00B08F;font-size:14px;\">" + provin + "</b></td>";
+                        content += "<td nowrap><font style=\"color:#000000;font-size:14px;\">" + provin + "</font></td>";//#00B08F
                         content += "</tr>";
                     }
                 }

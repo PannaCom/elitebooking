@@ -81,7 +81,7 @@ namespace HotelGolfBooking.Controllers
                 Request.Files[i].SaveAs(fullPath);
                 break;
             }
-            string ok = resizeImage(Config.imgWidthHotel, Config.imgHeightHotel, fullPath, Config.HotelImagePath + "/" + nameFile);
+            //string ok = resizeImage(Config.imgWidthHotel, Config.imgHeightHotel, fullPath, Config.HotelImagePath + "/" + nameFile);
             return Config.HotelImagePath+"/"+nameFile;
         }
         public string resizeImage(int maxWidth, int maxHeight, string fullPath,string path)

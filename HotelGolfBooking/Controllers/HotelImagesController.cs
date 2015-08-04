@@ -92,7 +92,7 @@ namespace HotelGolfBooking.Controllers
                     System.IO.File.Delete(fullPath);
                 }
                 Request.Files[i].SaveAs(fullPath);                
-                string ok = resizeImage(Config.imgWidthHotelRoom, Config.imgHeightHotelRoom, fullPath, Config.HotelImagePath + "/" + nameFile);
+                //string ok = resizeImage(Config.imgWidthHotelRoom, Config.imgHeightHotelRoom, fullPath, Config.HotelImagePath + "/" + nameFile);
                 hotelImage.idhotel = int.Parse(Session["idhotel"].ToString());
                 hotelImage.name = Config.HotelImagePath + "/" + nameFile;
                 db.hotel_image.Add(hotelImage);

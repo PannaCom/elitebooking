@@ -47,12 +47,12 @@
     <!-- Reservation form -->
     <section id="reservation-form" class="mt50 clearfix">
       <div class="col-sm-12 col-md-4">
-        <form class="reservation-vertical clearfix" role="form" method="post"  name="reservationform" id="reservationform">
+        <form class="reservation-vertical clearfix" role="form" method="post"  name="reservationform" id="reservationform" style="padding: 4px 30px;">
           <h2 class="lined-heading"><span>Đặt phòng</span></h2>
           <p>Giá phòng đã tính thuế và phí dịch vụ. @Html.Raw(@strDiscount)</p>  
           <div class="price">
             <h4 style="color:#ffffff;">Chọn số lượng</h4>
-            <h5><a onclick="changeOtherRoomBooking();" style="text-decoration:underline;cursor:pointer;color:#ffffff;">Đổi phòng khác</a></h5>
+            <h5><a onclick="changeOtherRoomBooking();$('#btnViewInvoice').show();" style="text-decoration:underline;cursor:pointer;color:#ffffff;">Đổi phòng khác</a></h5>
           </div>
           <div id="message"></div>
           <!-- Error message display -->
@@ -74,7 +74,7 @@
           <button type="button" class="btn btn-info" onclick="addBooking();">Đặt Phòng</button>
           @if (ViewBag.invisibleprice == 0 && ViewBag.ismobile == 0)
           {
-            <button type="button" class="btn btn-info" onclick="viewInvoice();">Chi tiết hóa đơn</button>  
+            <button type="button" class="btn btn-info" onclick="viewInvoice();" id="btnViewInvoice">Chi tiết hóa đơn</button>  
           }
         </form>
       </div>

@@ -864,7 +864,7 @@ header #logo {
 	z-index: 9999;
 	/*background-color: #ebebeb;*/
     color:#ffffff;
-    background-color: #343C5F;
+    background-color: #1F497D;/*#343C5F;*/
 }
 #reservation-form .reservation-vertical h2 {
 	margin-top: 0;
@@ -2228,7 +2228,7 @@ border: 1px solid;
     color:yellow;
 }
 .itemhotelsearch {
-    width:40%;
+    width:40%;    
     height:90px;
     float:left;display:block;position:relative;
     padding-bottom:4px;

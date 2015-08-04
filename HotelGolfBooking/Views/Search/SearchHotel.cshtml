@@ -139,7 +139,7 @@
                               </div>
                             </div>
                           </div>
-                          <div >
+                          <div class="container">
                                 @Html.Raw(@ViewBag.gallery)
                           </div>                        
                     </text>
@@ -177,10 +177,13 @@
           <div class="item TopDealProvinDiv" id="ListGolfServiceDiv" style="display:block;float:right;position:relative;margin-top:5px;">
                     <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:12px;margin-top:12px;"><span style="color:#067C02;"><a href="/Golf/List" style="color:#067C02;font-size:20px;">Dịch Vụ Golf</a></span></h4>
                     <!-- Tab panes -->
-                    <div class="tab-content" >
-                      <div class="tab-pane fade in active" id="ListGolfService">
+                    <div class="tab-content" style="width:100%;">
+                      @*<div class="tab-pane fade in active" id="ListGolfService">
                	            <img src="/Images/loading.gif">
-                      </div>          
+                      </div>  *@    
+                      <table class="tbl_price_room" id="ListGolfService">
+					            <tr><th colspan="2"><img src="/Images/loading.gif"></th></tr>
+				       </table>    
                         <script>getListGolfService(@ViewBag.fdate);</script>	
                     </div>
           </div>     

@@ -55,9 +55,11 @@ namespace HotelGolfBooking.Controllers
                 var rl = rs.ToList();
                 string near="";
                 int iddiff = -1;
+                int idstar = -1;
                 if (rl.Count > 0) {
                     near = rl[0].provin;
                     iddiff = rl[0].id;
+                    idstar = rl[0].rate;
                 }
                 //ViewBag.Title = keyword;
                 var viewModel = new ModelClassViewHotelSearchManager { ieViewNews = rl };
@@ -91,7 +93,7 @@ namespace HotelGolfBooking.Controllers
                         //}
                         if (rs2.Count < 5)
                         {
-                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(10);
+                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff && q.rate == idstar select q).OrderByDescending(o => o.minprice).Take(10);
                             rs2 = p.ToList();
                             gallery = "";
                             for (int i = 0; i < rs2.Count; i++)
@@ -160,10 +162,12 @@ namespace HotelGolfBooking.Controllers
                 var rl = rs.ToList();
                 string near = "";
                 int iddiff = -1;
+                int idstar = -1;
                 if (rl.Count > 0)
                 {
                     near = rl[0].provin;
                     iddiff = rl[0].id;
+                    idstar = rl[0].rate;
                 }
 
                 //ViewBag.Title = keyword;
@@ -177,7 +181,7 @@ namespace HotelGolfBooking.Controllers
                         string gallery = "";
                         if (rs2.Count < 5)
                         {
-                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff select q).OrderByDescending(o => o.totalviews).Take(10);
+                            p = (from q in db.hotels where q.deleted == 0 && q.minprice > 0 && q.id != iddiff && q.rate == idstar select q).OrderByDescending(o => o.minprice).Take(10);
                             rs2 = p.ToList();
                             gallery = "";
                             for (int i = 0; i < rs2.Count; i++)

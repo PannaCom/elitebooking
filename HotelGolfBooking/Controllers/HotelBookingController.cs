@@ -1677,7 +1677,7 @@ namespace HotelGolfBooking.Controllers
             var p = (from q in db.hotel_image where q.idhotel == idhotel select q).ToList();
             var content = "";
             for (int i = 0; i < p.Count; i++) {
-                content += "<div class=\"item\"><a href=\"" + p[i].name + "\" data-rel=\"prettyPhoto[gallery1]\"><img src=\"" + Config.domain+"/"+p[i].name + "\" alt=\"" + p[i].caption + "\" class=\"img-responsive\" width=\"750\" height=\"481\"></a> </div>";
+                content += "<div class=\"item\"><a href=\"" + p[i].name + "\" data-rel=\"prettyPhoto[gallery1]\"><img src=\"" + Config.domain+"/"+p[i].name + "\" alt=\"" + p[i].caption + "\" class=\"img-responsive\" width=750 height=481 style=\"width=750px;height:481px;\"></a> </div>";
             }
             int? discount = db.hotel_promotion.Where(o => o.idhotel == idhotel).Where(o => o.fdate <= fromdate).Where(o => o.tdate >= fromdate).Max(o=>o.discount);
             if (discount != null && discount > 0)

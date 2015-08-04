@@ -1259,12 +1259,12 @@ function searchGolf() {
                         //var discount = json_parsed.news[i].discount;
                         ////alert(price + "-" + discount);
                         //price = (price - price * discount / 100);
-                        var name2 = unicodeToNoMark(name);
+                        var name2 = fromdate + "-" + todate + "-" + removeSpecialCharater(name).trim().replace(/\s/g, "_") + "-0rate-all-page1";//unicodeToNoMark(name);
                         //alert(name);
                         //content += "<li><a href=\"/tin/" + unicodeToNoMark(name) + "\">" + name + "<span class=\"badge pull-right\">" + total + "</span></a></li>";
                         //content += "<div class=\"col-md-3\"><a href=\"/hotel/"+name2+"-"+ fromdate + "-" + todate + "-" + id + "\" style=\"color:#64B342;font-size:14px;\">Khách sạn " + name + " giá rẻ nhất</a></div>";
                         content += "<tr>";
-                        content += "	<td width=240><a href=\"/hotel/" + name2 + "-" + fromdate + "-" + todate + "-" + id + "-0\"><h5 style=\"color:#0283df;\">" + name + "</h5></a></td>";
+                        content += "	<td width=240><a href=\"/" + name2+"\"><h5 style=\"color:#0283df;\">" + name + "</h5></a></td>";
                         //content += "	<td>" + fdate + "->" + tdate + "</td>";
                         content += "<td nowrap><font style=\"color:#000000;font-size:14px;\">" + provin + "</font></td>";//#00B08F
                         content += "</tr>";

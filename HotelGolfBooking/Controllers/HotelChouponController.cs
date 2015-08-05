@@ -36,7 +36,7 @@ namespace HotelGolfBooking.Controllers
         public string getHotelChouponDetail(int idhotel,int idroom)
         {
             //var p = db.hotel_choupon.Where(o => o.idhotel == idhotel).Where(o => o.total > 0).Where(o => o.idroom == idroom).Min(o => o.chouponprice);
-            var p = db.hotel_choupon.Where(o => o.idhotel == idhotel).Where(o => o.total > 0).Where(o => o.idroom == idroom).OrderBy(o=>o.chouponprice).Take(1);
+            var p = db.hotel_choupon.Where(o => o.idhotel == idhotel).Where(o => o.total > 0).Where(o => o.idroom == idroom).Where(o=>o.deleted==0).OrderBy(o=>o.chouponprice).Take(1);
             return JsonConvert.SerializeObject(p.ToList());
         }
         //

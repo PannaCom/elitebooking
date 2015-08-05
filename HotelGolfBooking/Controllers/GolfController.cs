@@ -40,8 +40,28 @@ namespace HotelGolfBooking.Controllers
             if (provin == null) provin = "";
             ViewBag.provin = provin;
             if (name == null) name = "";
+            name = name.Replace("_", " ");
             ViewBag.name = name;
-            var p = (from q in db.golves where q.deleted == 0 select q).OrderBy(o=>o.provin).ThenBy(o => o.minprice).Take(100);
+            string selectprovin = "<li class='active has-sub'><a >Chọn sân</a>";
+            string provinpr = "";
+            selectprovin += "<ul >";
+            var ps = (from q in db.golves where q.deleted == 0 select q).OrderBy(o => o.provin).Take(100).ToList();
+            for (int i = 0; i < ps.Count; i++) {
+                if (provinpr != ps[i].provin)
+                {
+
+                    if (!provinpr.Equals("")) { selectprovin += "</ul></li>"; }
+                    provinpr = ps[i].provin;
+                    selectprovin += "<li class='has-sub'><a href='/Golf/List?provin=" + ps[i].provin + "&checkin=" + ViewBag.fdate + "'>" + ps[i].provin + "</a>";
+                    selectprovin += "<ul >";
+                }
+                selectprovin += "<li><a href='/Golf/List?name=" + ps[i].name.Trim().Replace(" ","_")+ "&checkin=" + ViewBag.fdate + "'>" + ps[i].name + "</a></li>";
+            }
+            selectprovin += "</ul></li>";
+            selectprovin += "</ul>";
+            selectprovin += "</li>";
+            ViewBag.selectprovin = selectprovin;
+            var p = (from q in db.golves where q.deleted == 0 && q.name.Contains(name) select q).OrderBy(o=>o.name).ThenBy(o => o.minprice).Take(100);
             int pageSize = Config.PageSize;
             int pageNumber = (page ?? 1);
             return View(p.ToPagedList(pageNumber, pageSize));

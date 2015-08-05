@@ -6,8 +6,8 @@
     
     if (ViewBag.fdate == null) {ViewBag.fdate = HotelGolfBooking.Config.datetimeid();}
     string provinpr = "";
-    string selectprovin = "<li class='active has-sub'><a >Chọn sân</a>";
-    selectprovin += "<ul >";
+    //string selectprovin = "<li class='active has-sub'><a >Chọn sân</a>";
+    //selectprovin += "<ul >";
     string name = ViewBag.name;
     string provin = ViewBag.provin;
     if (name == null) {name = "";}
@@ -37,8 +37,8 @@
   <div class="container">
     <div class="row room-list fadeIn appear"> 
             @foreach (var item in Model){
-                if ((name=="" && provin=="") || (name != "" && name.Contains(item.name)) || (provin != "" && provin.Contains(item.provin)))
-                {
+                //if ((name=="" && provin=="") || (name != "" && name.Contains(item.name)) || (provin != "" && provin.Contains(item.provin)))
+                //{
                     <div class="col-sm-4 single" style="height:345px;">
                     <div ><a href="/GolfBooking/Contact?idgolf=@item.id&checkin=@ViewBag.fdate&typebook=@HotelGolfBooking.Config.typebook1"><img src="@HotelGolfBooking.Config.domain/@item.image" alt="room 1" class="img-responsive" /></a>
                       <div class="mask">			
@@ -51,25 +51,25 @@
                       </div>
                     </div>
                    </div>
-                 }
-                 if (provinpr != item.provin)
-                 {
+                 //}
+                // if (provinpr != item.provin)
+                // {
 
-                        if (!provinpr.Equals("")) { selectprovin += "</ul></li>"; }
-                        provinpr = item.provin;
-                        selectprovin += "<li class='has-sub'><a href='/Golf/List?provin=" + item.provin + "&checkin="+ViewBag.fdate+"'>" + item.provin + "</a>";
-                        selectprovin += "<ul >";
-                 }
-                selectprovin += "<li><a href='/Golf/List?name=" + item.name + "&checkin="+ViewBag.fdate+"'>" + item.name + "</a></li>";
+                //        if (!provinpr.Equals("")) { selectprovin += "</ul></li>"; }
+                //        provinpr = item.provin;
+                //        selectprovin += "<li class='has-sub'><a href='/Golf/List?provin=" + item.provin + "&checkin="+ViewBag.fdate+"'>" + item.provin + "</a>";
+                //        selectprovin += "<ul >";
+                // }
+                //selectprovin += "<li><a href='/Golf/List?name=" + item.name + "&checkin="+ViewBag.fdate+"'>" + item.name + "</a></li>";
 
                 
             }      
-            @{     
-              selectprovin += "</ul></li>";
-              selectprovin += "</ul>";
-              selectprovin += "</li>";
+            @*@{     
+              //selectprovin += "</ul></li>";
+              //selectprovin += "</ul>";
+              //selectprovin += "</li>";
               //selectprovin = "<li><a href='/Golf/List?name='>aaaa</a></li>";
-            }
+            }*@
       </div>
   </div>
 </section>
@@ -84,7 +84,7 @@
               </ul>
             </div>
 <script>
-    $("#cssmenu").html("<ul>@Html.Raw(@selectprovin)</ul>");
+    $("#cssmenu").html("<ul>@Html.Raw(@ViewBag.selectprovin)</ul>");
     function selectGolfProvin(obj){
         window.location.href="/Golf/List?provin="+obj.value;
     }

@@ -161,11 +161,13 @@
             }
           </div><!-- for -->
           <div class="item TopDealProvinDiv" id="TopDealProvinDiv" style="display:block;float:right;position:relative;">
-                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:6px;"><span style="color:#067C02;font-size:20px;font-weight:normal;">Khách Sạn Quan Tâm Nhất</span></h4>
-                    
+                    @*<h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:6px;"><span style="color:#067C02;font-size:20px;font-weight:normal;">Khách Sạn Quan Tâm Nhất</span></h4>*@
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#" data-toggle="tab" style="background-color: #1F497D;color:#fff;">Khách Sạn Quan Tâm Nhất</a></li>
+                    </ul>
                     <!-- Tab panes -->
                     <div class="tab-content" >
-                      <div class="tab-pane fade in active" id="hotel">
+                      <div class="tab-pane fade in active" id="hotel" style="padding-top:5px;">
 				            <table class="tbl_price_room" id="TopDealProvinView">
 					            <tr><th colspan="2"><img src="/Images/loading.gif"></th></tr>
 				            </table>
@@ -173,9 +175,12 @@
                       </div>          
                     </div>
           </div>  
-          @if (totalitem>=3){
+          
           <div class="item TopDealProvinDiv" id="ListGolfServiceDiv" style="display:block;float:right;position:relative;margin-top:5px;">
-                    <h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:12px;margin-top:12px;"><span style="color:#067C02;"><a href="/Golf/List" style="color:#067C02;font-size:20px;font-weight:normal;">Dịch Vụ Golf</a></span></h4>
+                    @*<h4 class="lined-heading bounceInRight appear" data-start="800" style="margin-bottom:12px;margin-top:12px;"><span style="color:#067C02;"><a href="/Golf/List" style="color:#067C02;font-size:20px;font-weight:normal;">Dịch Vụ Golf</a></span></h4>*@
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#" data-toggle="tab" style="background-color: #1F497D;color:#fff;">Dịch Vụ Golf</a></li>
+                    </ul>
                     <!-- Tab panes -->
                     <div class="tab-content" style="width:100%;">
                       @*<div class="tab-pane fade in active" id="ListGolfService">
@@ -187,7 +192,7 @@
                         <script>getListGolfService(@ViewBag.fdate);</script>	
                     </div>
           </div>     
-          }
+          
       </div>
     </section>
     @*@if (ViewBag.gallery!="")

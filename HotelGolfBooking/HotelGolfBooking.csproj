@@ -734,6 +734,7 @@
     <Content Include="Images\slides\2.jpg" />
     <Content Include="Images\tab\197x147.gif" />
     <Content Include="Images\tab\golf.jpg" />
+    <Content Include="Images\tick.png" />
     <Content Include="Images\ui\AjaxLoader.gif" />
     <Content Include="Images\ui\gmap-icon.png" />
     <Content Include="Images\ui\grabbing.png" />

@@ -38,7 +38,7 @@ namespace HotelGolfBooking.Controllers
                      where q.fdate <= fromdate && q.tdate >= fromdate
                      select new
                      {
-                         hotelname = q.hotelname,
+                         hotelname = db.hotels.Where(o => o.deleted == 0).Where(o => o.id == q.idhotel).FirstOrDefault().name,
                          idhotel = q.idhotel,
                          fdate = q.fdate,
                          tdate = q.tdate,

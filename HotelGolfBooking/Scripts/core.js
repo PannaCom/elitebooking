@@ -495,7 +495,7 @@ function searchGolf() {
         xhr.open('POST', '/HotelFacilities/getHotelFacilities');
         xhr.send(formdata);
         var content = "";
-        var space = ", ";
+        var space = " ";
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var news = '{"news":' + xhr.responseText + '}';
@@ -503,7 +503,7 @@ function searchGolf() {
                 $("#facilityList_" + idhotel).html("");
                 for (var i = 0; i < json_parsed.news.length; i++) {
                     if (json_parsed.news[i]) {
-                        var name = json_parsed.news[i].facility;
+                        var name = "<img src='/images/tick.png'\" width=12 height=12>&nbsp;"+json_parsed.news[i].facility;
                         if (i >= 5) { space = "..."; }
                         $("#facilityList_" + idhotel).append(name + space);
                         if (type==1 && i >= 5) break;
@@ -1170,12 +1170,12 @@ function searchGolf() {
                         var discount = json_parsed.news[i].discount;
                         //alert(price + "-" + discount);
                         price=(price-price*discount/100);
-                        var name2 = unicodeToNoMark(name);
+                        var name2 = fromdate + "-" + todate + "-" + removeSpecialCharater(name).trim().replace(/\s/g, "_") + "-0rate-all-page1";////unicodeToNoMark(name);
                         //alert(name);
                         //content += "<li><a href=\"/tin/" + unicodeToNoMark(name) + "\">" + name + "<span class=\"badge pull-right\">" + total + "</span></a></li>";
                         //content += "<div class=\"col-md-3\"><a href=\"/hotel/"+name2+"-"+ fromdate + "-" + todate + "-" + id + "\" style=\"color:#64B342;font-size:14px;\">Khách sạn " + name + " giá rẻ nhất</a></div>";
                         content +="<tr>";
-                        content +="	<td><a href=\"/hotel/"+name2+"-"+ fromdate + "-" + todate + "-" + id + "-0\"><h5>"+name+"</h5></a></td>";						
+                        content +="	<td><a href=\"/"+name2+ "\"><h5>"+name+"</h5></a></td>";						
                         content +="	<td>"+fdate+"->"+tdate+"</td>";
                         content += "<td><b style=\"color:#00B08F;font-size:18px;\">" + formatCurrency(price) + "</b></td>";
                         content += "</tr>";

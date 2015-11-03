@@ -233,6 +233,11 @@ namespace HotelGolfBooking
             }
             return des;
         }
+        public static string smoothLink(string link)
+        {
+            if (!link.Contains("http://")) link = "http://" + link;
+            return link;
+        }
         public static string StripTagsRegex(string source)
         {
             return Regex.Replace(source, "<.*?>", string.Empty);

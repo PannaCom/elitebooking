@@ -1134,7 +1134,7 @@ function searchGolf() {
                         var name2 = name.replace(/ /g, "_");
                         //alert(name);
                         //content += "<li><a href=\"/tin/" + unicodeToNoMark(name) + "\">" + name + "<span class=\"badge pull-right\">" + total + "</span></a></li>";
-                        content += "<div class=\"col-md-3\"><a href=\"/GoodPrice/" + fromdate + "-" + todate + "-all-0rate-" + name2 + "-page1\" style=\"color:#2870B8;font-size:14px;\">Khách sạn " + name + " giá rẻ nhất</a></div>";
+                        content += "<div class=\"col-md-3\"><a href=\"/GoodPrice/" + fromdate + "-" + todate + "-all-0rate-" + name2 + "-page1\" style=\"color:#2870B8;font-size:14px;\">" + name + " giá rẻ nhất</a></div>";
 
                     }
                 }

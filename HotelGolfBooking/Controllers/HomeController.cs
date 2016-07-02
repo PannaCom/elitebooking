@@ -65,7 +65,7 @@ namespace HotelGolfBooking.Controllers
                 string goodhotel="";
                 for(int j=0;j<prs.Count;j++){
                     ///hotel/" + Config.unicodeToNoMark(prs[j].name) + "-" + ViewBag.fromdate + "-" + ViewBag.todate + "-" + prs[j].id + "
-                    goodhotel += "<div class=\"item\"><a href=\"" + Config.domain + "/" + prs[j].image + "\" data-rel=\"prettyPhoto[gallery1]\"><img src=\"" + Config.domain + "/" + prs[j].image + "\" width=\"600\" height=\"400\" alt=\"" + prs[j].name + "-" + prs[j].dis + "-" + prs[j].provin + "\"><i class=\"fa fa-search\"></i><span>" + prs[j].name.Trim() + "-"+prs[j].provin.Trim() + "</span></a></div>";
+                    goodhotel += "<div class=\"item\"><a href=\"" + Config.domain + "/" + prs[j].image + "\" data-rel=\"prettyPhoto[gallery1]\"><img src=\"" + Config.domain + "/" + prs[j].image + "\" style=\"width:600px;height:200px;\" alt=\"" + prs[j].name + "-" + prs[j].dis + "-" + prs[j].provin + "\"><i class=\"fa fa-search\"></i><span>" + prs[j].name.Trim() + "-" + prs[j].provin.Trim() + "</span></a></div>";
                 }
                 ViewBag.goodhotel = goodhotel;
             }
